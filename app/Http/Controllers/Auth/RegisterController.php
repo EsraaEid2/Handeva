@@ -17,7 +17,7 @@ class RegisterController extends Controller
     |----------------------------------------------------------------------
     |
     | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
+    | validation and creation. By default, this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
     */
@@ -50,7 +50,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -61,15 +62,21 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \App\Models\User
+     * @throws \Exception
      */
     protected function create(array $data)
     {
         // Assign the default "customer" role to the new user
         $role = Role::where('role_type', 'customer')->first();
-
+    
+        if (!$role) {
+            throw new \Exception('Default role "customer" not found in roles table.');
+        }
+    
         // Create and return the new user
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id' => $role->id, // Assign the default role

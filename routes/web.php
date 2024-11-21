@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     // Admin Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index']);
     
+    // Users Dashboard Route
+    Route::resource('/users',UserController::class);
+
     // Category Management Routes
     Route::get('/category', [CategoryController::class, 'index']);
     Route::get('add-category', [CategoryController::class, 'create']);
