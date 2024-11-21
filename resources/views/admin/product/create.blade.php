@@ -1,4 +1,3 @@
-<!-- admin/products/create.blade.php -->
 <form action="{{ route('admin.products.store') }}" method="POST">
     @csrf
     <div>

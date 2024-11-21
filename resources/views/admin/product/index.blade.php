@@ -1,4 +1,3 @@
-<!-- admin/products/index.blade.php -->
 <table>
     <thead>
         <tr>

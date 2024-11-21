@@ -43,9 +43,21 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-        // Define relationship to Role
-        public function role()
-        {
-            return $this->belongsTo(Role::class);
-        }
+    // Define relationship to Role
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    
+    // Define the relationship with the Wishlist model
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    // Define the relationship with the Review model
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

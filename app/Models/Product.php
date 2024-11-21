@@ -21,9 +21,15 @@ class Product extends Model
         return $this->belongsTo(Vendor::class);
     }
 
-    // Optionally, if you have an Image model, define the relationship
-    public function images()
+    // Define the relationship with ProductImage
+    public function productImages()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(ProductImage::class);
+    }
+
+    // Define the relationship with the Review model
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
