@@ -82,6 +82,14 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
     Route::put('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
     Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+
+    // Admin Profile Routes
+    Route::get('profile', [DashboardController::class, 'editProfile'])->name('admin.profile');
+    Route::put('profile', [DashboardController::class, 'updateProfile'])->name('admin.updateProfile');
+
+    // Admin logout route
+    Route::post('logout', [DashboardController::class, 'logout'])->name('admin.logout');
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -101,3 +109,8 @@ Route::put('/order-items/{orderItemId}/update-quantity', [OrderItemController::c
 Route::put('/order-items/{orderItemId}/adjust-price', [OrderItemController::class, 'adjustPrice']);
 Route::put('/order-items/{orderItemId}/handle-return', [OrderItemController::class, 'handleReturn']);
 Route::delete('/order-items/{orderItemId}', [OrderItemController::class, 'destroy']);
+
+// Admin Messages Route
+Route::get('admin/messages', [DashboardController::class, 'showMessages'])->name('admin.messages');
+
+Route::get('admin/messages/count', [DashboardController::class, 'getUnreadMessagesCount']);
