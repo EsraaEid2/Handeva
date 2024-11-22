@@ -9,6 +9,15 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
+    // Display all reviews (Admin)
+    public function index()
+    {
+        $reviews = Review::with('product', 'user') // Load associated product and user
+                        ->where('status', 'pending') // Get only pending reviews (if needed)
+                        ->get();
+
+        return view('admin.reviews.index', compact('reviews'));
+    }
     // Store a review from the user
     public function store(Request $request, $productId)
     {

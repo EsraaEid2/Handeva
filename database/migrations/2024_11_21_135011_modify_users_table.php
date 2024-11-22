@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             
-            // Add 'role_id' column with foreign key constraint
-            $table->unsignedBigInteger('role_id');
+            // Add 'role_id' column with foreign key constraint and default to 1
+            $table->unsignedBigInteger('role_id')->default(1); // Default to "customer"
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             
             // Add optional columns
             $table->string('address')->nullable();
@@ -29,9 +30,6 @@ return new class extends Migration
             $table->boolean('is_deleted')->default(0);
             $table->integer('age')->nullable();
             $table->integer('points')->default(0);
-
-            // Set foreign key constraint on 'role_id'
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 
@@ -41,8 +39,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Drop the foreign key first
-            $table->dropForeign(['role_id']);
+            // Drop the foreign key constraint
+            $table->dropForeign(['role_id']); // Ensure to drop the foreign key first
             
             // Drop the columns we added
             $table->dropColumn([
@@ -53,7 +51,7 @@ return new class extends Migration
                 'phone_number',
                 'is_deleted',
                 'age',
-                'points'
+                'points',
             ]);
 
             // Re-add the 'name' column if rolling back

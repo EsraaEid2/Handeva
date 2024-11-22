@@ -1,8 +1,8 @@
 <?php
 
-// app/Http/Controllers/ProductImageController.php
 
 namespace App\Http\Controllers;
+
 
 use App\Models\ProductImage;
 use App\Models\Product;

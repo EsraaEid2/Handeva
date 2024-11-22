@@ -8,10 +8,10 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\OrderItemController;
 
 Route::get('/', function () {
@@ -28,7 +28,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     
     // Users Dashboard Route
-    Route::resource('/users',UserController::class);
+    Route::resource('users', UserController::class, ['as' => 'admin']);
 
     // Category Management Routes
     Route::get('/category', [CategoryController::class, 'index']);
