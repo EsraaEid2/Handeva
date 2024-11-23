@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('name');
-            
+            // Check if 'name' column exists before attempting to drop it
+            if (Schema::hasColumn('users', 'name')) {
+                $table->dropColumn('name');
+            }
+    
             // Add the 'first_name' and 'last_name' columns
             $table->string('first_name');
             $table->string('last_name');
@@ -32,6 +35,7 @@ return new class extends Migration
             $table->integer('points')->default(0);
         });
     }
+    
 
     /**
      * Reverse the migrations.
@@ -55,7 +59,7 @@ return new class extends Migration
             ]);
 
             // Re-add the 'name' column if rolling back
-            $table->string('name');
+            // $table->string('name');
         });
     }
 };

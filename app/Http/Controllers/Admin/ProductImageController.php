@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-
+use App\Http\Controllers\Controller;
 use App\Models\ProductImage;
 use App\Models\Product;
 use Illuminate\Http\Request;

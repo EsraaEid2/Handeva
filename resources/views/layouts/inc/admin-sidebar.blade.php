@@ -2,52 +2,68 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
+
+                <!-- Dashboard Section -->
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link {{ request()->is('admin*') ? 'active' : '' }}" href="{{ url('admin') }}">
+                <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" href="{{ url('admin/dashboard') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Dashboard
+                    Handi
                 </a>
 
-                <div class="sb-sidenav-menu-heading">Interface</div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                    aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Category
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                <!-- Users Section -->
+                <div class="sb-sidenav-menu-heading">Management</div>
+                <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}"
+                    href="{{ route('admin.users.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                    Users
                 </a>
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ url('admin/add-category')}}">Add Category</a>
-                        <a class="nav-link" href="{{ url('admin/category')}}">View Categories</a>
-                    </nav>
-                </div>
 
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseContactUs"
-                    aria-expanded="false" aria-controls="collapseContactUs">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Contact Us
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                <!-- Vendors Section -->
+                <a class="nav-link {{ request()->is('admin/vendors*') ? 'active' : '' }}"
+                    href="{{ url('admin/vendors') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
+                    Vendors
                 </a>
-                <div class="collapse" id="collapseContactUs" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('contact_us.index') }}">View Contact Messages</a>
-                    </nav>
-                </div>
 
-                <div class="sb-sidenav-menu-heading">Addons</div>
-                <a class="nav-link" href="charts.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Charts
+                <!-- Categories Section -->
+                <a class="nav-link {{ request()->is('admin/category*') ? 'active' : '' }}"
+                    href="{{ url('admin/category') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></div>
+                    Categories
                 </a>
-                <a class="nav-link" href="tables.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Tables
+
+                <!-- Products Section -->
+                <a class="nav-link {{ request()->is('admin/products*') ? 'active' : '' }}"
+                    href="{{ route('admin.products.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                    Products
                 </a>
+
+                <!-- Reviews Section -->
+                <a class="nav-link {{ request()->is('admin/reviews*') ? 'active' : '' }}"
+                    href="{{ route('admin.reviews.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
+                    Reviews
+                </a>
+
+                <!-- Orders Section -->
+                <a class="nav-link {{ request()->is('admin/orders*') ? 'active' : '' }}"
+                    href="{{ route('admin.orders.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+                    Orders
+                </a>
+
+                <!-- Roles Section -->
+                <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}"
+                    href="{{ route('roles.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-tag"></i></div>
+                    Roles
+                </a>
+
             </div>
         </div>
 
+        <!-- Footer Section -->
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
             {{ Auth::user()->name }}

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -8,15 +10,21 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductImageController;
-use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\Admin\OrderItemController;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    return redirect()->route('login');
 });
+
+Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+
+Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Auth::routes();
 
@@ -28,7 +36,11 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     
     // Users Dashboard Route
-    Route::resource('users', UserController::class, ['as' => 'admin']);
+    Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::post('users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
 
     // Category Management Routes
     Route::get('/category', [CategoryController::class, 'index']);
@@ -46,8 +58,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::get('products/{product}', [ProductController::class, 'show'])->name('admin.products.show');
     Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
-    Route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-    Route::put('admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+    
     
     // Routes for managing product images
     Route::resource('product_images', ProductImageController::class);
@@ -62,7 +73,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::delete('/contact-us/{id}', [ContactUsController::class, 'destroy'])->name('contact_us.destroy');
 
     // Roles Management Routes
-    Route::resource('roles', RoleController::class);
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::get('/roles/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::get('/roles/destroy', [RoleController::class, 'destroy'])->name('roles.destroy');
+    
+    // Route::resource('roles', RoleController::class);
 
     // Vendors Management Routes
     Route::get('vendors', [VendorController::class, 'index'])->name('admin.vendors.index');
@@ -88,9 +104,14 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('profile', [DashboardController::class, 'updateProfile'])->name('admin.updateProfile');
 
     // Admin logout route
-    Route::post('logout', [DashboardController::class, 'logout'])->name('admin.logout');
+    // Route::post('logout', [DashboardController::class, 'logout'])->name('admin.logout');
+
 
 });
+
+// Route::get('auth/login', function () {
+//     return view('auth.login');
+// })->name('login');
 
 Route::middleware('auth')->group(function () {
     

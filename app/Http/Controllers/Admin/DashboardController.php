@@ -78,8 +78,10 @@ class DashboardController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        Session::flush();
-        return redirect('/login');  // Redirect to the login page or admin login page
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/auth/login');
     }
+    
 
 }

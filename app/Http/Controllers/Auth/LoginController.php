@@ -28,11 +28,11 @@ class LoginController extends Controller
      */
     // protected $redirectTo = '/home';
     public function authenticated(){
-        if(Auth::user()->role == '1')// 1<< Admin
+        if(Auth::user()->role == '3')// 1<< Admin
         {
             return redirect('admin/dashboard')->with('status','Welcome to Admin Dashboard');
         }
-        else if (Auth::user()->role == '0'){ // 0<< user
+        else if (Auth::user()->role == '1' || Auth::user()->role == '2'){ // 1< customer ,2> vendor
             return redirect('/home')->with('status','Logged in successful');
         }
         else{
@@ -51,4 +51,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
 }

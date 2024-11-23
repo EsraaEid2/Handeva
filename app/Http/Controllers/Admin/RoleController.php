@@ -15,11 +15,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        // Get all roles
-        $roles = Role::all();
+        $roles = Role::all(); // Retrieve all roles
         return view('admin.roles.index', compact('roles'));
     }
-
     /**
      * Show the form for creating a new role.
      *

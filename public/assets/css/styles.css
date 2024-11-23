@@ -11346,6 +11346,23 @@ body {
   color: #555;
 }
 
+/* Style for the Search Form */
+input[type="text"] {
+  font-size: 1.1rem;
+  padding: 0.8rem 1rem;
+}
+
+button[type="submit"] {
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+button[type="submit"] i {
+  margin-right: 10px;
+}
+
 
 /* Responsive Design */
 @media (max-width: 767px) {

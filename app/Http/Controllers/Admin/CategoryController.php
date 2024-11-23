@@ -10,40 +10,46 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Retrieve all categories, including soft-deleted ones
-        $category = Category::all();
-        return view('admin.category.index', compact('category'));
+        $query = Category::query();
+    
+        // Check if there's a search query
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+    
+        // Paginate the categories
+        $categories = $query->paginate(10); // Adjust the number of categories per page as needed
+    
+        return view('admin.categories.index', compact('categories'));
     }
-
-    public function create()
-    {
-        return view('admin.category.create');
-    }
+    
 
     public function store(CategoryFormRequest $request)
     {
         $data = $request->validated();
-
+    
         $category = new Category();
         $category->name = $data['name'];
         $category->description = $data['description'];
-
+    
         if ($request->hasFile('image')) {
             $category->image = $this->uploadImage($request->file('image'));
         }
-
+    
         $category->save();
-
-        return redirect('admin/category')->with('message', 'Category Added Successfully');
+    
+        // Sending SweetAlert message on success
+        return redirect('admin/category')->with('successAdd', 'Category Added Successfully');
     }
 
     public function edit($category_id)
     {
         $category = Category::findOrFail($category_id);
-        return view('admin.category.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
+
 
     public function update(CategoryFormRequest $request, $category_id)
     {
@@ -60,7 +66,8 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect('admin/category')->with('message', 'Category Updated Successfully');
+        // Sending SweetAlert message on success
+        return redirect('admin/category')->with('successUpdate', 'Category Updated Successfully');
     }
 
     public function destroy($category_id)
@@ -70,9 +77,9 @@ class CategoryController extends Controller
         // Perform a soft delete
         $category->delete();
     
-        return redirect('admin/category')->with('message', 'Category Deleted Successfully');
+        // Sending SweetAlert message on success
+        return redirect('admin/category')->with('successDelete', 'Category Deleted Successfully');
     }
-    
 
     private function uploadImage($file)
     {

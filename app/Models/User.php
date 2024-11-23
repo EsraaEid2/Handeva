@@ -22,8 +22,14 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'role_id',
+        'address',
+        'phone_number',
+        'age',
+        'points',
+        'is_deleted'
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -47,8 +53,9 @@ class User extends Authenticatable
     // Define relationship to Role
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
+    
     
     // Define the relationship with the Wishlist model
     public function wishlists()
@@ -61,4 +68,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+    
+    public function scopeActive($query)
+{
+    return $query->where('is_deleted', 0);
+}
+
 }

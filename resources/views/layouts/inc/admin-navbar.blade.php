@@ -24,12 +24,20 @@
                 <i class="fas fa-user fa-fw"></i> {{ Auth::user()->name }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ url('admin/settings') }}">Settings</a></li>
-                <li><a class="dropdown-item" href="{{ url('admin/activity-log') }}">Activity Log</a></li>
+                <!-- <li><a class="dropdown-item" href="{{ url('admin/settings') }}">Settings</a></li>
+                <li><a class="dropdown-item" href="{{ url('admin/activity-log') }}">Activity Log</a></li> -->
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="{{ url('logout') }}">Logout</a></li>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                </li>
+
+
+
             </ul>
         </li>
     </ul>
