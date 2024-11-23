@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
@@ -20,11 +21,20 @@ class Product extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     // Define the relationship with ProductImage
     public function productImages()
     {
         return $this->hasMany(ProductImage::class);
+    }
+    // app/Models/Product.php
+    public function primaryImage()
+    {
+        return $this->hasOne(ProductImage::class)->where('is_primary', 1);
     }
 
     // Define the relationship with the Review model
