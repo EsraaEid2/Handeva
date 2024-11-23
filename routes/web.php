@@ -90,8 +90,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     // Reviews Management Routes
     Route::get('reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
-    Route::post('reviews/{reviewId}/approve', [ReviewController::class, 'approveReview'])->name('admin.reviews.approve');
-    Route::post('reviews/{reviewId}/reject', [ReviewController::class, 'rejectReview'])->name('admin.reviews.reject');
+    Route::post('reviews/{reviewId}/approve', [ReviewController::class, 'approve'])->name('admin.reviews.approve');
+    Route::post('reviews/{reviewId}/reject', [ReviewController::class, 'reject'])->name('admin.reviews.reject');
 
     // Orders Management Routes
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');

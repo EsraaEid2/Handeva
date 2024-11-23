@@ -9,15 +9,20 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
-    // Display all reviews (Admin)
-    public function index()
+
+    public function index(Request $request)
     {
-        $reviews = Review::with('product', 'user') // Load associated product and user
-                        ->where('status', 'pending') // Get only pending reviews (if needed)
-                        ->get();
+        // Search reviews
+        $search = $request->input('search');
+        $reviews = Review::where('status', 'pending')
+            ->when($search, function ($query, $search) {
+                $query->where('comment', 'like', "%{$search}%");
+            })
+            ->paginate(10);
 
         return view('admin.reviews.index', compact('reviews'));
     }
+    
     // Store a review from the user
     public function store(Request $request, $productId)
     {
@@ -38,22 +43,22 @@ class ReviewController extends Controller
  
         return redirect()->back()->with('message', 'Your review is submitted and is awaiting approval.');
     }
- 
-    // Admin approves the review
-    public function approveReview($reviewId)
+    
+    public function approve($id)
     {
-        $review = Review::findOrFail($reviewId);
-        $review->update(['status' => 'approved']);
- 
-        return redirect()->route('admin.reviews.index')->with('message', 'Review approved.');
+        $review = Review::findOrFail($id);
+        $review->status = 'approved';
+        $review->save();
+
+        return redirect()->back()->with('successUpdate', 'Review approved successfully.');
     }
- 
-    // Admin rejects the review
-    public function rejectReview($reviewId)
+
+    public function reject($id)
     {
-        $review = Review::findOrFail($reviewId);
-        $review->delete(); // You can also choose to soft delete if preferred
- 
-        return redirect()->route('admin.reviews.index')->with('message', 'Review rejected.');
+        $review = Review::findOrFail($id);
+        $review->delete(); // Soft delete if your model uses `SoftDeletes`
+
+        return redirect()->back()->with('successDelete', 'Review rejected and deleted successfully.');
     }
+
 }
