@@ -10,6 +10,8 @@ class Vendor extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
     'role_id', 'social_links', 'bio', 'profile_pic',
     'first_name', 'last_name', 'email', 'password', 'phone', 'is_deleted'

@@ -25,5 +25,10 @@ class Role extends Model
     {
         return $this->hasMany(User::class, 'role_id');
     }
+    public function vendors()
+    {
+        return $this->hasMany(Vendor::class);
+    }
+
     
 }

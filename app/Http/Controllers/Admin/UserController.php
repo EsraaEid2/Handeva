@@ -16,7 +16,7 @@ class UserController extends Controller
         
         // If there's a search term, filter users
         $users = User::with('role') // Ensure to load the role relationship
-            ->where('is_deleted', 0)  // Add condition to filter by 'is_deleted = 0'
+            ->where('is_deleted', 0)
             ->where(function($query) use ($search) {
                 $query->where('first_name', 'like', "%{$search}%")
                     ->orWhere('last_name', 'like', "%{$search}%")
