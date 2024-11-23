@@ -13,11 +13,27 @@ class RoleController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::all(); // Retrieve all roles
-        return view('admin.roles.index', compact('roles'));
+        // Retrieve the search query from the request
+        $search = $request->input('search');
+    
+        // Query the roles with optional search filtering
+        $roles = Role::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('role_type', 'LIKE', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc') // Default sorting by newest roles
+            ->paginate(10); // Paginate with 10 items per page
+    
+        // Pass the roles and search term to the view
+        return view('admin.roles.index', [
+            'roles' => $roles,
+            'search' => $search, // Include the search term for reuse in the view
+        ]);
     }
+    
+    
     /**
      * Show the form for creating a new role.
      *
@@ -36,18 +52,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the data
         $request->validate([
-            'role_type' => ['required', 'string', 'in:customer,vendor,admin'],
+            'role_type' => 'required|string|max:255|unique:roles',
         ]);
-
-        // Create the new role
+    
         Role::create([
-            'role_type' => $request->role_type,
+            'role_type' => $request->input('role_type'),
         ]);
-
-        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+    
+        return redirect()->route('roles.index')->with('successAdd', 'Role added successfully.');
     }
+    
 
     /**
      * Show the form for editing the specified role.
@@ -79,7 +94,7 @@ class RoleController extends Controller
             'role_type' => $request->role_type,
         ]);
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+        return redirect()->route('roles.index')->with('successUpdate', 'Role updated successfully.');
     }
 
     /**
@@ -90,8 +105,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
-        
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully.');
+        try {
+            $role->delete();
+            return response()->json(['success' => true, 'successDelete' => 'Role deleted successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'successDelete' => 'Failed to delete the role.']);
+        }
     }
+    
+    
 }

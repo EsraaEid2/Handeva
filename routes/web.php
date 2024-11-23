@@ -74,9 +74,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     // Roles Management Routes
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
     Route::get('/roles/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    Route::get('/roles/destroy', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::delete('/admin/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
     
     // Route::resource('roles', RoleController::class);
 

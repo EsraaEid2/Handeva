@@ -54,11 +54,11 @@
                 </a>
 
                 <!-- Roles Section -->
-                <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}"
+                <!-- <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}"
                     href="{{ route('roles.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-user-tag"></i></div>
                     Roles
-                </a>
+                </a> -->
 
             </div>
         </div>

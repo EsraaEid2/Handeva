@@ -9,11 +9,6 @@ class Role extends Model
 {
     use HasFactory;
     
-    // Define constants for roles
-    const CUSTOMER = 'customer';
-    const VENDOR = 'vendor';
-    const ADMIN = 'admin';
-    
     protected $table = 'roles';
 
     protected $fillable = [
