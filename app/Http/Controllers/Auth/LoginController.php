@@ -3,22 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\support\facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
@@ -26,19 +15,18 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/home';
-    public function authenticated(){
-        if(Auth::user()->role == '3')// 1<< Admin
-        {
-            return redirect('admin/dashboard')->with('status','Welcome to Admin Dashboard');
+    public function authenticated()
+    {
+        if (Auth::user()->role == '3') { // Admin
+            return redirect('admin/dashboard')
+                ->with('status', 'Welcome to the Admin Dashboard!');
+        } elseif (in_array(Auth::user()->role, ['1', '2'])) { // Customer or Vendor
+            return redirect('/home')
+                ->with('status', 'You have successfully logged in!');
+        } else {
+            return redirect('/')
+                ->withErrors(['error' => 'Unauthorized access. Please contact support if you believe this is a mistake.']);
         }
-        else if (Auth::user()->role == '1' || Auth::user()->role == '2'){ // 1< customer ,2> vendor
-            return redirect('/home')->with('status','Logged in successful');
-        }
-        else{
-            return redirect('/');
-        }
-   
     }
 
     /**
@@ -56,5 +44,4 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-
 }

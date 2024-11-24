@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,7 +47,7 @@ class UserController extends Controller
             'phone_number' => 'nullable|string|max:20',
             'age' => 'nullable|integer',
             'points' => 'nullable|integer',
-            'is_deleted' => 'required|boolean',  // Handling soft delete status
+            'is_deleted' => 'nullable|boolean',  // Handling soft delete status
         ]);
     
         // Hash the password before storing
@@ -64,13 +65,6 @@ class UserController extends Controller
         }
     }
     
-
-    // public function edit(User $user)
-    // {
-    //     // Pass the user data to the edit view
-    //     return view('admin.users.edit', compact('user'));
-    // }
-
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
@@ -83,22 +77,68 @@ class UserController extends Controller
             'phone_number' => 'nullable|string|max:20',
             'age' => 'nullable|integer|min:1',
             'points' => 'nullable|integer',
-            'is_deleted' => 'required|boolean',  // Allow admin to update the soft delete status
+            'is_deleted' => 'nullable|boolean', // Allow admin to update the soft delete status
         ]);
-
-        // If password is filled, hash it
+    
+        // Check if the password is being updated
         if ($request->filled('password')) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
-            // If password is not updated, keep the existing password
-            unset($validated['password']);
+            unset($validated['password']); // Keep the current password
         }
-
+    
+        // Check if the role_id has changed
+        $originalRole = $user->role_id;
+        if ($originalRole != $validated['role_id']) {
+            // Role is being updated
+            if ($validated['role_id'] == 2) { // Role 2 is vendor
+                // Check if the user is already a vendor
+                $vendorExists = Vendor::where('role_id', $user->id)->exists();
+    
+                if (!$vendorExists) {
+                    // Create a new vendor record
+                    Vendor::create([
+                        'user_id' => $user->id,
+                        'role_id' => 2, // Ensure role_id is set to 2 for vendors
+                        'first_name' => $validated['first_name'],
+                        'last_name' => $validated['last_name'],
+                        'email' => $validated['email'],
+                        'password' => $user->password, // Pass the password as it is from the User table
+                    ]);
+                }
+            } elseif ($originalRole == 2 && $validated['role_id'] != 2) {
+                // Role changed from vendor to another role
+                // Optionally handle vendor removal (e.g., soft delete the vendor record)
+                Vendor::where('user_id', $user->id)->delete();
+            }
+        }
+    
         // Update the user with the validated data
         $user->update($validated);
-
+    
         return redirect()->route('admin.users.index')->with('successUpdate', 'User updated successfully!');
     }
+    
+
+//     public function updateUserRole(Request $request, $id)
+// {
+//     $user = User::findOrFail($id);
+//     $newRole = $request->input('role_id'); 
+
+  
+//     if ($newRole == 2 && $user->role_id != 2) {
+        
+//         Vendor::updateOrCreate(
+//             ['user_id' => $user->id],
+//             ['business_name' => $request->input('business_name', 'Default Vendor Name')]
+//         );
+//     }
+
+//     $user->role_id = $newRole;
+//     $user->save();
+
+//     return redirect()->back()->with('status', 'Role updated successfully.');
+// }
 
     public function destroy(User $user)
     {

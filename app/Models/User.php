@@ -70,8 +70,14 @@ class User extends Authenticatable
     }
     
     public function scopeActive($query)
-{
-    return $query->where('is_deleted', 0);
-}
+    {
+        return $query->where('is_deleted', 0);
+    }
+
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
+    }
+
 
 }

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Role;
 
 class AdminMiddleware
 {
@@ -17,18 +17,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check()){
-            if(Auth::user()->role_id == 3){ // 3 is admin , 1 user 2 vendor
+        if (Auth::check()) {
+            if (Auth::user()->role_id == Role::ROLE_ADMIN) { // Using constant
                 return $next($request);
             }
-            else{
-                return redirect('/home')->withErrors('status','Access Denied! As you are not an Admin');
-            }
+            return redirect('/login')->with('status', 'Access Denied! As you are not an Admin');
         }
-        else{
-            return redirect('/login')->withErrors('status','Please login first!');
-        }
-        
-      
+        return redirect('/login')->with('status', 'Please login first!');
     }
 }

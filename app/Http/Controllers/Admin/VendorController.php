@@ -16,20 +16,34 @@ class VendorController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-    
-        // Using withCount to fetch the count of non-deleted products for each vendor
-        $vendors = Vendor::withCount(['products' => function ($query) {
-            $query->whereNull('deleted_at');  // Filtering products that are not soft-deleted
+        
+        // Fetch vendors with user details and count of non-deleted products
+        $vendors = Vendor::with(['user' => function ($query) {
+            // Select only relevant columns for user
+            $query->select('id', 'first_name', 'last_name', 'email');
         }])
+        ->withCount(['products' => function ($query) {
+            // Count products that are not soft deleted
+            $query->whereNull('deleted_at');
+        }])
+        // Filter vendors with role_id = 2 (vendor role)
+        ->where('role_id', 2)
         ->when($search, function ($query) use ($search) {
-            $query->where('first_name', 'like', "%$search%")
-                ->orWhere('last_name', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%");
+            // Apply search filter to user details
+            $query->whereHas('user', function ($subQuery) use ($search) {
+                $subQuery->where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%");
+            });
         })
         ->paginate(10);
+    
+        // Fetch all roles to display in the view
         $roles = Role::all();
-        return view('admin.vendors.index', compact('vendors','roles'));
+    
+        return view('admin.vendors.index', compact('vendors', 'roles'));
     }
+    
     
 
 

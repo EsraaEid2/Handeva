@@ -211,11 +211,6 @@
                         <label for="points">Points</label>
                         <input type="number" name="points" class="form-control" value="">
                     </div>
-                    <div class="mb-3">
-                        <label for="is_deleted">Is Deleted</label>
-                        <input type="checkbox" name="is_deleted" value="1" class="form-check-input">
-                    </div>
-
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </div>
