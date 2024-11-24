@@ -1,7 +1,41 @@
 @extends('layouts.master')
 
-
 @section('content')
+/* Custom dashboard styling */
+.metric-card {
+border-radius: 10px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card-body {
+padding: 20px;
+color: white;
+}
+
+.metric-card-title {
+font-size: 18px;
+font-weight: bold;
+}
+
+.metric-card-text {
+font-size: 24px;
+font-weight: bold;
+}
+
+.activity-table th, .activity-table td {
+font-size: 14px;
+padding: 12px;
+}
+
+.activity-table tr:nth-child(even) {
+background-color: #f9f9f9;
+}
+
+.activity-table th {
+background-color: #007bff;
+color: white;
+}
+
 <div class="admin-dashboard container-fluid">
     <div class="row mt-4">
         <!-- Key Metrics Cards -->
@@ -9,7 +43,7 @@
             <div class="metric-card metric-card-primary">
                 <div class="metric-card-body">
                     <h5 class="metric-card-title">Total Sales</h5>
-                    <p class="metric-card-text">₪ 150,000</p>
+                    <p class="metric-card-text">₪ {{ number_format($totalSales, 2) }}</p>
                 </div>
             </div>
         </div>
@@ -18,7 +52,7 @@
             <div class="metric-card metric-card-success">
                 <div class="metric-card-body">
                     <h5 class="metric-card-title">Total Orders</h5>
-                    <p class="metric-card-text">250</p>
+                    <p class="metric-card-text">{{ $totalOrders }}</p>
                 </div>
             </div>
         </div>
@@ -27,7 +61,7 @@
             <div class="metric-card metric-card-warning">
                 <div class="metric-card-body">
                     <h5 class="metric-card-title">Active Vendors</h5>
-                    <p class="metric-card-text">15</p>
+                    <p class="metric-card-text">{{ $activeVendors }}</p>
                 </div>
             </div>
         </div>
@@ -36,7 +70,7 @@
             <div class="metric-card metric-card-info">
                 <div class="metric-card-body">
                     <h5 class="metric-card-title">Products Listed</h5>
-                    <p class="metric-card-text">320</p>
+                    <p class="metric-card-text">{{ $productsListed }}</p>
                 </div>
             </div>
         </div>
@@ -57,25 +91,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($recentActivities as $activity)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>New product added: "Handmade Necklace"</td>
-                        <td>2 hours ago</td>
+                        <th scope="row">{{ $activity->id }}</th>
+                        <td>{{ $activity->action }}</td>
+                        <td>{{ $activity->created_at->diffForHumans() }}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Order #12045 shipped</td>
-                        <td>3 hours ago</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Vendor "Amani" updated their store</td>
-                        <td>5 hours ago</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 @endsection

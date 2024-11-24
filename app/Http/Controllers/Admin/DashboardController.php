@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\VendorController;
+use App\Models\Order;
+use App\Models\Vendor;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        return view('admin.dashboard');
+    public function index()
+    {
+        $totalSales = Order::sum('total_price');
+        $totalOrders = Order::count();
+        $activeVendors = Vendor::whereNotNull('deleted_at')->count();
+        $productsListed = Product::count();
+        
+        return view('admin.dashboard', compact('totalSales', 'totalOrders', 'activeVendors', 'productsListed'));
     }
-
+    
     public function showMessages()
     {
         // Fetch all messages from contact_us table
