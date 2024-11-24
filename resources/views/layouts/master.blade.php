@@ -40,7 +40,7 @@
             @include('layouts.inc.admin-footer')
         </div>
     </div>
-
+    @yield('scripts')
     <script src="{{ asset ('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset ('assets/js/scripts.js')}}"></script>
     <script>

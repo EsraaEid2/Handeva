@@ -68,10 +68,13 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::delete('products/{productId}/images/{imageId}', [ProductImageController::class, 'destroy'])->name('admin.product_images.destroy');
     
     // Contact Us Management Routes
-    Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact_us.index');
-    Route::get('/contact-us/{id}', [ContactUsController::class, 'show'])->name('contact_us.show');
-    Route::delete('/contact-us/{id}', [ContactUsController::class, 'destroy'])->name('contact_us.destroy');
+    Route::get('/contactus', [ContactUsController::class, 'index'])->name('contactus.index');
+    Route::get('/contactus/{id}', [ContactUsController::class, 'show'])->name('contactus.show');
+    Route::put('/contactus/{id}', [ContactUsController::class, 'update'])->name('contactus.update');
+    Route::put('/contactus/{id}/mark-read', [ContactUsController::class, 'markAsRead']);
 
+
+    
     // Roles Management Routes
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
