@@ -38,7 +38,7 @@
             class="mb-4 mt-4 d-flex justify-content-between align-items-center">
             <div class="input-group w-50">
                 <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
-                    placeholder="Search Revie" value="{{ request('search') }}">
+                    placeholder="Search Review" value="{{ request('search') }}">
                 <button class="btn btn-primary rounded-pill px-4" type="submit">
                     <i class="fas fa-search"></i> Search
                 </button>

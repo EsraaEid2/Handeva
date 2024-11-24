@@ -14,12 +14,12 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!--css styles -->
-    <link href="{{ asset('assets/css/styles.css')}}" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
+
     <!-- Scripts -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}" defer></script>
-    <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) 
-    -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -52,8 +52,8 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="{{ asset('path_to_profile_image.jpg') }}" alt="Profile Picture"
-                                    class="rounded-circle" width="30" height="30">
+                                <img src="{{ asset(Auth::user()->profile_image ?? 'default_profile.jpg') }}"
+                                    alt="Profile Picture" class="rounded-circle" width="30" height="30">
                                 {{ Auth::user()->name }}
                             </a>
 
@@ -61,15 +61,13 @@
                                 <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                     <i class="fas fa-user"></i> Profile
                                 </a>
-                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
-                                    class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-                                <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
                             </div>
                         </li>
                         @else
@@ -90,12 +88,22 @@
             </div>
         </nav>
 
-
-
         <main class="py-4">
             @yield('content')
         </main>
+
+        @yield('scripts')
     </div>
+
+    <!-- Tooltip Initialization -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function(tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+    </script>
 </body>
 
 </html>

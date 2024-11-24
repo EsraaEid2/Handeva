@@ -8,13 +8,6 @@
                 <div class="card-header">{{ __('Admin Profile') }}</div>
 
                 <div class="card-body">
-                    <!-- Success Message -->
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
                     <form method="POST" action="{{ route('admin.updateProfile') }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -63,24 +56,6 @@
                                 name="password_confirmation">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="profile_picture" class="form-label">{{ __('Profile Picture') }}</label>
-                            <input type="file" class="form-control @error('profile_picture') is-invalid @enderror"
-                                id="profile_picture" name="profile_picture" accept="image/*">
-                            @error('profile_picture')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            @if ($admin->profile_picture)
-                            <img src="{{ asset('storage/' . $admin->profile_picture) }}" alt="Profile Picture"
-                                class="img-thumbnail" width="100">
-                            @else
-                            <p>No profile picture uploaded</p>
-                            @endif
-                        </div>
-
                         <button type="submit" class="btn btn-primary">{{ __('Update Profile') }}</button>
                     </form>
                 </div>
@@ -88,4 +63,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+@if(session('successUpdate'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Updated Successfully',
+    text: '{{ session('
+    successUpdate ') }}',
+    showConfirmButton: false,
+    timer: 3000
+});
+</script>
+@endif
 @endsection

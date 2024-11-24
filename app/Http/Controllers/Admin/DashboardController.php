@@ -32,7 +32,7 @@ class DashboardController extends Controller
         // Get the authenticated user
         $admin = Auth::user();
     
-        return view('admin.profile', compact('admin'));
+        return view('profile', compact('admin'));
     }
     
     public function updateProfile(Request $request)
@@ -43,7 +43,6 @@ class DashboardController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'password' => 'nullable|string|min:8|confirmed',
-            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
         ]);
 
         // Get the authenticated user
@@ -60,19 +59,20 @@ class DashboardController extends Controller
         }
 
         // Update profile picture if provided
-        if ($request->hasFile('profile_picture')) {
-            // Delete old picture if it exists
-            if ($admin->profile_picture) {
-                Storage::delete('public/' . $admin->profile_picture);
-            }
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $admin->profile_picture = $path;
-        }
+        // if ($request->hasFile('profile_picture')) {
+        //     // Delete old picture if it exists
+        //     if ($admin->profile_picture) {
+        //         Storage::delete('public/' . $admin->profile_picture);
+        //     }
+        //     $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        //     $admin->profile_picture = $path;
+        // }
 
         // Save the updated data
         $admin->save();
 
-        return redirect()->route('admin.profile')->with('status', 'Profile updated successfully!');
+        return redirect()->route('admin.profile')->with('successUpdate', 'Profile updated successfully!');
+
     }
     
     public function logout(Request $request)
