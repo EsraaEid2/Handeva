@@ -20,7 +20,7 @@ class CategoryController extends Controller
         }
     
         // Paginate the categories
-        $categories = $query->paginate(5); // Adjust the number of categories per page as needed
+        $categories = $query->paginate(10); // Adjust the number of categories per page as needed
     
         return view('admin.categories.index', compact('categories'));
     }

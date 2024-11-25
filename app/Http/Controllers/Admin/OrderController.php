@@ -24,7 +24,7 @@ class OrderController extends Controller
                        });
              })
              ->latest()
-             ->paginate(5); // Use pagination
+             ->paginate(10); // Use pagination
      
          return view('admin.orders.index', compact('orders'));
      }

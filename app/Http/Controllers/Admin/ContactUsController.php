@@ -18,7 +18,7 @@ class ContactUsController extends Controller
                                  $query->where('subject', 'like', '%' . $request->search . '%')
                                        ->orWhere('message', 'like', '%' . $request->search . '%');
                              })
-                             ->paginate(5);  // You can change 10 to any number you prefer
+                             ->paginate(10);  // You can change 10 to any number you prefer
     
         // Pass the paginated results to the view
         return view('admin.contactus.index', compact('messages'));
