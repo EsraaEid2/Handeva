@@ -24,14 +24,6 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('totalSales', 'totalOrders', 'activeVendors', 'productsListed'));
     }
     
-    public function showMessages()
-    {
-        // Fetch all messages from contact_us table
-        $messages = ContactUs::all();  // Or use pagination: ContactUs::paginate(10)
-    
-        return view('admin.messages', compact('messages'));
-    }
-
     public function getUnreadMessagesCount()
     {
         $unreadCount = ContactUs::where('is_read', 0)->count();  // Assuming 'is_read' is a column

@@ -98,10 +98,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('reviews/{reviewId}/reject', [ReviewController::class, 'reject'])->name('admin.reviews.reject');
 
     // Orders Management Routes
-    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
-    Route::put('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
-    Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
 
     // Admin Profile Routes
     Route::get('profile', [DashboardController::class, 'editProfile'])->name('admin.profile');
