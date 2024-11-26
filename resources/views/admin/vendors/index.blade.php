@@ -20,7 +20,7 @@
                 <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
                     placeholder="Search Vendors" value="{{ request('search') }}">
                 <button class="btn btn-primary rounded-pill px-4" type="submit">
-                    <!-- <i class="fas fa-search"></i> -->Search
+                    Search
                 </button>
             </div>
         </form>
@@ -269,47 +269,5 @@ function deleteVendor(userId) {
     });
 }
 </script>
-
-@if(session('successUpdate'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Updated Successfully',
-    text: '{{ session('
-    successUpdate ') }}',
-    showConfirmButton: false,
-    timer: 3000
-});
-</script>
-@endif
-
-@if(session('successAdd'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Added Successfully',
-    text: '{{ session('
-    successAdd ') }}',
-    showConfirmButton: false,
-    timer: 3000
-});
-</script>
-@endif
-
-@if(session('successDelete'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Deleted Successfully',
-    text: '{{ session('
-    successDelete ') }}',
-    showConfirmButton: false,
-    timer: 3000
-});
-</script>
-@endif
-
-
-
 
 @endsection

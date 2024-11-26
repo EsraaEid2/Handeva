@@ -54,6 +54,74 @@
             });
     });
     </script>
+    @if(session('successUpdate'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Updated Successfully',
+        text: '{{ session('
+        successUpdate ') }}',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    </script>
+    @endif
+
+    @if(session('successAdd'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Added Successfully',
+        text: '{{ session('
+        successAdd ') }}',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    </script>
+    @endif
+
+    @if(session('successDelete'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Deleted Successfully',
+        text: '{{ session('
+        successDelete ') }}',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    </script>
+    @endif
+
+    @if($errors->any())
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Validation Errors',
+        html: `
+        <ul style="text-align: left; padding-left: 20px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    `,
+        confirmButtonText: 'Okay'
+    });
+    </script>
+    @endif
+    <!-- SweetAlert for Success Messages -->
+    @if(session('success'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '{{ session('
+        success ') }}',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    </script>
+    @endif
 </body>
 
 </html>

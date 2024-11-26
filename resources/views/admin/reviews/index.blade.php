@@ -174,17 +174,4 @@
     </div>
 </div>
 
-<!-- SweetAlert for Success Messages -->
-@if(session('success'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Success',
-    text: '{{ session('
-    success ') }}',
-    showConfirmButton: false,
-    timer: 3000
-});
-</script>
-@endif
 @endsection
