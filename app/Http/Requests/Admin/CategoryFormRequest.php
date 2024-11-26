@@ -19,25 +19,13 @@ class CategoryFormRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
-        $rules = [
-          'name'=>[
-            'required',
-            'string',
-            'max:200'
-          ],
-          'description'=>[
-            'required',
-            'string'
-          ],
-          'image'=>[
-            'nullable',
-            'mimes:jpeg,jpg,png',
-            'max:2048' // Max size in KB (2MB)
-          ],
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
         ];
-        return  $rules;
     }
 
         /**
@@ -46,16 +34,18 @@ class CategoryFormRequest extends FormRequest
      * @return array<string, string>
      */
     
-    public function messages()
-    {
-        return [
-            'name.required' => 'The category name is required.',
-            'name.max' => 'The category name must not exceed 200 characters.',
-            'description.required' => 'A description is required.',
-            'image.required' => 'Please upload an image for the category.',
-            'image.mimes' => 'The image must be in JPEG, JPG, or PNG format.',
-            'image.max' => 'The image size must not exceed 2MB.',
-        ];
-    }
+     public function messages()
+     {
+         return [
+             'name.required' => 'The category name is required.',
+             'name.string' => 'The category name must be a string.',
+             'name.max' => 'The category name must not exceed 255 characters.',
+             'description.string' => 'The description must be a string.',
+             'description.max' => 'The description must not exceed 500 characters.',
+             'image.image' => 'The file must be an image.',
+             'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif.',
+             'image.max' => 'The image size must not exceed 2MB.',
+         ];
+     }
 
 }

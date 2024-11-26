@@ -29,18 +29,17 @@ class CategoryController extends Controller
     public function store(CategoryFormRequest $request)
     {
         $data = $request->validated();
-    
+
         $category = new Category();
         $category->name = $data['name'];
         $category->description = $data['description'];
-    
+
         if ($request->hasFile('image')) {
             $category->image = $this->uploadImage($request->file('image'));
         }
-    
+
         $category->save();
-    
-        // Sending SweetAlert message on success
+
         return redirect('admin/category')->with('successAdd', 'Category Added Successfully');
     }
 
@@ -66,10 +65,9 @@ class CategoryController extends Controller
 
         $category->save();
 
-        // Sending SweetAlert message on success
         return redirect('admin/category')->with('successUpdate', 'Category Updated Successfully');
     }
-
+    
     public function destroy($category_id)
     {
         $category = Category::findOrFail($category_id);

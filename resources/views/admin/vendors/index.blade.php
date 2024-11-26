@@ -20,7 +20,7 @@
                 <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
                     placeholder="Search Vendors" value="{{ request('search') }}">
                 <button class="btn btn-primary rounded-pill px-4" type="submit">
-                    <i class="fas fa-search"></i> Search
+                    <!-- <i class="fas fa-search"></i> -->Search
                 </button>
             </div>
         </form>
@@ -204,55 +204,22 @@
     </div>
 </div>
 
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
-@if(session('successUpdate'))
+@if($errors->any())
 <script>
 Swal.fire({
-    icon: 'success',
-    title: 'Updated Successfully',
-    text: '{{ session('
-    successUpdate ') }}',
-    showConfirmButton: false,
-    timer: 3000
+    icon: 'error',
+    title: 'Validation Errors',
+    html: `
+            <ul style="text-align: left; padding-left: 20px;">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        `,
+    confirmButtonText: 'Okay'
 });
 </script>
 @endif
-
-@if(session('successAdd'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Added Successfully',
-    text: '{{ session('
-    successAdd ') }}',
-    showConfirmButton: false,
-    timer: 3000
-});
-</script>
-@endif
-
-@if(session('successDelete'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Deleted Successfully',
-    text: '{{ session('
-    successDelete ') }}',
-    showConfirmButton: false,
-    timer: 3000
-});
-</script>
-@endif
-
 <script>
 function deleteVendor(userId) {
     Swal.fire({
@@ -302,5 +269,47 @@ function deleteVendor(userId) {
     });
 }
 </script>
+
+@if(session('successUpdate'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Updated Successfully',
+    text: '{{ session('
+    successUpdate ') }}',
+    showConfirmButton: false,
+    timer: 3000
+});
+</script>
+@endif
+
+@if(session('successAdd'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Added Successfully',
+    text: '{{ session('
+    successAdd ') }}',
+    showConfirmButton: false,
+    timer: 3000
+});
+</script>
+@endif
+
+@if(session('successDelete'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Deleted Successfully',
+    text: '{{ session('
+    successDelete ') }}',
+    showConfirmButton: false,
+    timer: 3000
+});
+</script>
+@endif
+
+
+
 
 @endsection

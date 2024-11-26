@@ -19,9 +19,9 @@
             <div class="input-group w-50">
                 <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
                     placeholder="Search Users" value="{{ request('search') }}">
-                <button class="btn btn-primary rounded-pill px-4" type="submit">
+                <!-- <button class="btn btn-primary rounded-pill px-4" type="submit">
                     <i class="fas fa-search"></i> Search
-                </button>
+                </button> -->
             </div>
         </form>
 

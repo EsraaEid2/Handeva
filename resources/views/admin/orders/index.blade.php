@@ -16,9 +16,9 @@
             <div class="input-group w-50">
                 <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
                     placeholder="Search Orders" value="{{ request('search') }}">
-                <button class="btn btn-primary rounded-pill px-4" type="submit">
+                <!-- <button class="btn btn-primary rounded-pill px-4" type="submit">
                     <i class="fas fa-search"></i> Search
-                </button>
+                </button> -->
             </div>
         </form>
 
@@ -149,22 +149,6 @@ Swal.fire({
 </script>
 @endif
 
-<script>
-function deleteCategory(categoryId) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = '/admin/delete-category/' + categoryId;
-        }
-    });
-}
-</script>
+
 
 @endsection

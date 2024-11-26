@@ -19,9 +19,9 @@
             <div class="input-group w-50">
                 <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
                     placeholder="Search Categories" value="{{ request('search') }}">
-                <button class="btn btn-primary rounded-pill px-4" type="submit">
+                <!-- <button class="btn btn-primary rounded-pill px-4" type="submit">
                     <i class="fas fa-search"></i> Search
-                </button>
+                </button> -->
             </div>
         </form>
 
@@ -139,7 +139,23 @@
         </div>
     </div>
 </div>
-
+<script>
+function deleteCategory(categoryId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/admin/delete-category/' + categoryId;
+        }
+    });
+}
+</script>
 @if(session('successUpdate'))
 <script>
 Swal.fire({
@@ -179,22 +195,22 @@ Swal.fire({
 </script>
 @endif
 
+@if($errors->any())
 <script>
-function deleteCategory(categoryId) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = '/admin/delete-category/' + categoryId;
-        }
-    });
-}
+Swal.fire({
+    icon: 'error',
+    title: 'Validation Errors',
+    html: `
+            <ul style="text-align: left; padding-left: 20px;">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        `,
+    confirmButtonText: 'Okay'
+});
 </script>
+@endif
+
 
 @endsection

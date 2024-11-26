@@ -9,56 +9,58 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
-
+    // Display reviews
     public function index(Request $request)
     {
-        // Search reviews
-        $search = $request->input('search');
-        $reviews = Review::where('status', 'pending')
-            ->when($search, function ($query, $search) {
-                $query->where('comment', 'like', "%{$search}%");
+        $status = $request->get('status'); // Get the selected status filter
+    
+        // Build the query
+        $reviews = Review::query()
+            ->when($status, function ($query) use ($status) {
+                // Filter reviews by status if a status is selected
+                return $query->where('status', $status);
             })
-            ->paginate(10);
-
+            ->paginate(10); // Paginate the results
+    
         return view('admin.reviews.index', compact('reviews'));
     }
     
-    // Store a review from the user
+
+    // Store a new review
     public function store(Request $request, $productId)
     {
         $request->validate([
-            'rating' => 'required|in:1,2,3,4,5',
+            'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:500',
         ]);
- 
-        $product = Product::findOrFail($productId);
- 
+
         Review::create([
             'product_id' => $productId,
             'user_id' => auth()->id(),
             'rating' => $request->rating,
             'comment' => $request->comment,
-            'status' => 'pending', // Review starts as 'pending'
+            'status' => 'pending',
         ]);
- 
-        return redirect()->back()->with('message', 'Your review is submitted and is awaiting approval.');
+
+        return redirect()->back()->with('success', 'Your review has been submitted for approval.');
     }
-    
+
+    // Approve a review
     public function approve($id)
     {
         $review = Review::findOrFail($id);
-        $review->status = 'approved';
-        $review->save();
+        $review->update(['status' => 'approved']);
 
-        return redirect()->back()->with('successUpdate', 'Review approved successfully.');
+        return redirect()->back()->with('success', 'Review approved successfully.');
     }
 
+    // Reject a review
     public function reject($id)
     {
         $review = Review::findOrFail($id);
-        $review->delete(); // Soft delete if your model uses `SoftDeletes`
-
-        return redirect()->back()->with('successDelete', 'Review rejected and deleted successfully.');
+        $review->update(['status' => 'rejected']); // Update status to rejected
+    
+        return redirect()->back()->with('success', 'Review rejected successfully.');
     }
-
+    
 }
