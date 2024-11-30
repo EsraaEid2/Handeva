@@ -1,24 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Admin\ContactUsController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactUsController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderItemController;
+use App\Http\Controllers\Admin\ProductImageController;
 
-Route::get('/', function () {
+Route::controller(ThemeController::class)->name('theme.')->group(function(){
+    Route::get('/','index')->name('index');
+    Route::get('/login-register','login_register')->name('login_register'); 
+    Route::get('/about','about')->name('about');// no view
+    Route::get('/cart','cart')->name('cart');
+    Route::get('/checkout','checkout')->name('checkout');
+    Route::get('/compare','compare')->name('compare');
+    Route::get('/contact','contact')->name('contact'); 
+    Route::get('/my-account','my_account')->name('my_account');
+    Route::get('/shop','shop')->name('shop');
+    Route::get('/single-product','single_product')->name('single_product');
+    Route::get('/wishlist','wishlist')->name('wishlist');
 
-    return redirect()->route('login');
 });
+
+
+
+
+
+// Route::get('/', function () {
+
+//     return view('welcome');
+// });
 
 Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 
@@ -117,9 +137,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 Route::middleware('auth')->group(function () {
     
-    Route::post('wishlist/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
-    Route::delete('wishlist/{productId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
-    Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+    // Route::post('wishlist/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+    // Route::delete('wishlist/{productId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+    // Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
 });
 
 // User submits a review for a product

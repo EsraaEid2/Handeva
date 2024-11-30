@@ -17,11 +17,11 @@ class LoginController extends Controller
      */
     public function authenticated()
     {
-        if (Auth::user()->role == '3') { // Admin
+        if (Auth::user()->role_id == '3') { // Admin
             return redirect('admin/dashboard')
                 ->with('status', 'Welcome to the Admin Dashboard!');
-        } elseif (in_array(Auth::user()->role, ['1', '2'])) { // Customer or Vendor
-            return redirect('/home')
+        } elseif (in_array(Auth::user()->role_id, ['1', '2'])) { // Customer or Vendor
+            return redirect('/')
                 ->with('status', 'You have successfully logged in!');
         } else {
             return redirect('/')
