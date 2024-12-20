@@ -6,7 +6,7 @@
                 <div class="page-title-content">
                     <h1>{{$title}}</h1>
                     <ul class="breadcrumb">
-                        <li><a href="{{route('theme.index')}}">Home</a></li>
+                        <li><a href="{{route('theme.home')}}">Home</a></li>
                         <li><a href="shop-left-full-wide.html">Shop</a></li>
                         <li><a href="cart.html" class="active">Cart</a></li>
                     </ul>

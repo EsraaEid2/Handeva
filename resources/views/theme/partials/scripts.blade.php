@@ -17,3 +17,5 @@
 
  <!--=== Active Js ===-->
  <script src="{{ asset('assets') }}/js/active.js"></script>
+ <!--=== wishlist ===-->
+ <script src="{{ asset('assets') }}/js/wishlist.js"></script>

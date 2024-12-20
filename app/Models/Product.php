@@ -17,36 +17,36 @@ class Product extends Model
     ];
 
     // Relationship to Vendor
-    public function vendor()
+        public function vendor()
+            {
+                return $this->belongsTo(Vendor::class);
+            }
+        public function category()
+            {
+                return $this->belongsTo(Category::class);
+            }
+
+        // Define the relationship with ProductImage
+        public function productImages()
+            {
+                return $this->hasMany(ProductImage::class);
+            }
+        // app/Models/Product.php
+        public function primaryImage()
+            {
+                return $this->hasOne(ProductImage::class)->where('is_primary', 1);
+            }
+
+        // Define the relationship with the Review model
+        public function reviews()
         {
-            return $this->belongsTo(Vendor::class);
-        }
-    public function category()
-        {
-            return $this->belongsTo(Category::class);
+            return $this->hasMany(Review::class);
         }
 
-    // Define the relationship with ProductImage
-    public function productImages()
+        // app/Models/Product.php
+        public function orderItems()
         {
-            return $this->hasMany(ProductImage::class);
+            return $this->hasMany(OrderItem::class);
         }
-    // app/Models/Product.php
-    public function primaryImage()
-        {
-            return $this->hasOne(ProductImage::class)->where('is_primary', 1);
-        }
-
-    // Define the relationship with the Review model
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
-
-    // app/Models/Product.php
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class);
-    }
 
 }

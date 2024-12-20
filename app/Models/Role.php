@@ -12,8 +12,8 @@ class Role extends Model
     protected $table = 'roles';
     
     const ROLE_ADMIN = 3;
-const ROLE_USER = 1;
-const ROLE_VENDOR = 2;
+    const ROLE_USER = 1;
+    const ROLE_VENDOR = 2;
 
     protected $fillable = [
         'role_type', // 'customer', 'vendor', 'admin'

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
     public function index(){
-        return view('theme.index');
+        return view('theme.home');
     }
     public function login_register(){
         return view('theme.login-register');

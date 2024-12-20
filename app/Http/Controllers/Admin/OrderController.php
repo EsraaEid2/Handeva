@@ -26,7 +26,7 @@ class OrderController extends Controller
              ->latest()
              ->paginate(10); // Use pagination
      
-         return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders'));
      }
      
  
@@ -36,6 +36,22 @@ class OrderController extends Controller
          $order->load(['orderItems.product', 'user']);
          return view('admin.orders.show', compact('order'));
      }
+
+    // Method to update the order status
+    public function updateStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,processing,delivered,cancelled', // Correct enum values
+        ]);
+        
+
+        // Update the order status
+        $order->status = $request->status;
+        $order->save();
+
+        // Redirect back with success message
+        return redirect()->back()->with('successUpdate', 'Order status updated successfully.');
+    }
      
     public function placeOrder(Request $request)
     {

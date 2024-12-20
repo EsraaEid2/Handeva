@@ -103,6 +103,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Add Category Button (Trigger for Modal) -->
+                    <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2"
+                        data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Category</span>
+                    </button>
+
                     <!-- Add Category Modal -->
                     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
                         aria-hidden="true">
@@ -137,6 +144,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     @empty
                     <tr>
                         <td colspan="4" class="text-muted">No categories found</td>
@@ -165,7 +174,16 @@ function deleteCategory(categoryId) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '/admin/delete-category/' + categoryId;
+            // Create a form for deletion request
+            let form = document.createElement('form');
+            form.action = '/admin/delete-category/' + categoryId;
+            form.method = 'POST';
+            form.innerHTML = `
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            `;
+            document.body.appendChild(form);
+            form.submit(); // Submit the form
         }
     });
 }

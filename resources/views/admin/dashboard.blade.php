@@ -90,15 +90,7 @@ color: white;
                         <th scope="col">Time</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($recentActivities as $activity)
-                    <tr>
-                        <th scope="row">{{ $activity->id }}</th>
-                        <td>{{ $activity->action }}</td>
-                        <td>{{ $activity->created_at->diffForHumans() }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
+
             </table>
         </div>
     </div>

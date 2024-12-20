@@ -27,7 +27,8 @@ class User extends Authenticatable
         'phone_number',
         'age',
         'points',
-        'is_deleted'
+        'is_deleted',
+        'is_pending_vendor',
     ];
     
     /**

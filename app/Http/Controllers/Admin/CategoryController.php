@@ -25,7 +25,6 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
     
-
     public function store(CategoryFormRequest $request)
     {
         $data = $request->validated();
@@ -48,7 +47,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($category_id);
         return view('admin.categories.edit', compact('category'));
     }
-
 
     public function update(CategoryFormRequest $request, $category_id)
     {

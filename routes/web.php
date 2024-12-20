@@ -1,10 +1,7 @@
 <?php
+// Admin routes
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ThemeController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ReviewController;
@@ -15,24 +12,8 @@ use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderItemController;
 use App\Http\Controllers\Admin\ProductImageController;
-
-Route::controller(ThemeController::class)->name('theme.')->group(function(){
-    Route::get('/','index')->name('index');
-    Route::get('/login-register','login_register')->name('login_register'); 
-    Route::get('/about','about')->name('about');// no view
-    Route::get('/cart','cart')->name('cart');
-    Route::get('/checkout','checkout')->name('checkout');
-    Route::get('/compare','compare')->name('compare');
-    Route::get('/contact','contact')->name('contact'); 
-    Route::get('/my-account','my_account')->name('my_account');
-    Route::get('/shop','shop')->name('shop');
-    Route::get('/single-product','single_product')->name('single_product');
-    Route::get('/wishlist','wishlist')->name('wishlist');
-
-});
-
-
-
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 
 
 // Route::get('/', function () {
@@ -120,6 +101,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     // Orders Management Routes
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+    Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+
 
     // Admin Profile Routes
     Route::get('profile', [DashboardController::class, 'editProfile'])->name('admin.profile');

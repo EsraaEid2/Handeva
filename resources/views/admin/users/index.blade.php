@@ -195,22 +195,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" class="form-control" value="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone_number">Phone Number</label>
-                        <input type="text" name="phone_number" class="form-control" value="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="age">Age</label>
-                        <input type="number" name="age" class="form-control" value="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="points">Points</label>
-                        <input type="number" name="points" class="form-control" value="">
-                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Add User</button>
                     </div>

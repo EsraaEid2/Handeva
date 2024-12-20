@@ -4,7 +4,7 @@
             <div class="row">
                 <!-- Logo Area Start -->
                 <div class="col-3 col-lg-1 col-xl-2 m-auto">
-                    <a href="{{route('theme.index')}}" class="logo-area">
+                    <a href="{{route('theme.home')}}" class="logo-area">
                         <img src="{{ asset('assets') }}/img/logo.png" alt="Logo" class="img-fluid" />
                     </a>
                 </div>
@@ -16,41 +16,33 @@
                         <nav id="mainmenu">
                             <ul>
                                 <li class="dropdown-show @yield('home-active')"><a
-                                        href="{{ route('theme.index')}}">Home</a>
-                                    <ul class="dropdown-nav sub-dropdown">
+                                        href="{{ route('theme.home')}}">Home</a>
+                                    <!-- <ul class="dropdown-nav sub-dropdown">
                                         <li><a href="index.html">Home Layout 1</a></li>
                                         <li><a href="index2.html">Home Layout 2</a></li>
                                         <li><a href="index3.html">Home Layout 3</a></li>
                                         <li><a href="index4.html">Home Layout 4</a></li>
                                         <li><a href="index5.html">Home Layout 5</a></li>
                                         <li><a href="index6.html">Home Layout 6</a></li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
                                 <li class="dropdown-show @yield('shop-active')"><a
-                                        href="{{ route('theme.shop')}}">Shop</a>
+                                        href="{{ route('shop.index')}}">Shop</a>
                                     <ul class="mega-menu-wrap dropdown-nav">
-                                        <li class="mega-menu-item"><a href="shop.html" class="mega-item-title">Shop
-                                                Layout</a>
-                                            <ul>
-                                                <li><a href="shop.html">Shop Left Sidebar</a></li>
-                                                <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                                <li><a href="shop-left-full-wide.html">Shop Left Full Wide</a></li>
-                                                <li><a href="shop-right-full-wide.html">Shop Right Full Wide</a></li>
-                                                <li><a href="shop-full-wide.html">Shop Without Sidebar</a></li>
-                                            </ul>
+                                        <li class="mega-menu-item"><a href="shop.html"
+                                                class="mega-item-title">Necklaces</a>
                                         </li>
 
                                         <li class="mega-menu-item"><a href="single-product.html"
-                                                class="mega-item-title">Single
-                                                Products</a>
-                                            <ul>
-                                                <li><a href="single-product.html">Single Product</a></li>
-                                                <li><a href="single-product-normal.html">Single Product Normal</a></li>
-                                                <li><a href="single-product-group.html">Single Product Group</a></li>
-                                                <li><a href="single-product-external.html">Single Product External</a>
-                                                </li>
-                                            </ul>
+                                                class="mega-item-title">Earrings</a>
                                         </li>
+                                        <li class="mega-menu-item"><a href="single-product.html"
+                                                class="mega-item-title">Bracelets</a>
+                                        </li>
+                                        <li class="mega-menu-item"><a href="single-product.html"
+                                                class="mega-item-title">Rings</a>
+                                        </li>
+
                                     </ul>
                                 </li>
                                 <!-- <li class="dropdown-show"><a href="#">Pages</a>
@@ -64,90 +56,7 @@
                                         <li><a href="404.html">404 Error</a></li>
                                     </ul>
                                 </li> -->
-                                <li class="dropdown-show"><a href="#">Necklaces</a>
-                                    <ul class="mega-menu-wrap dropdown-nav">
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Shirt</a>
-                                            <ul>
-                                                <li><a href="shop.html">Tops & Tees</a></li>
-                                                <li><a href="shop.html">Polo Short Sleeve</a></li>
-                                                <li><a href="shop.html">Graphic T-Shirts</a></li>
-                                                <li><a href="shop.html">Jackets & Coats</a></li>
-                                                <li><a href="shop.html">Fashion Jackets</a></li>
-                                            </ul>
-                                        </li>
 
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Jeans</a>
-                                            <ul>
-                                                <li><a href="shop.html">Crochet</a></li>
-                                                <li><a href="shop.html">Sleeveless</a></li>
-                                                <li><a href="shop.html">Stripes</a></li>
-                                                <li><a href="shop.html">Sweaters</a></li>
-                                                <li><a href="shop.html">Hoodies</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Shoes</a>
-                                            <ul>
-                                                <li><a href="shop.html">Tops & Tees</a></li>
-                                                <li><a href="shop.html">Polo Short Sleeve</a></li>
-                                                <li><a href="shop.html">Graphic T-Shirts</a></li>
-                                                <li><a href="shop.html">Jackets & Coats</a></li>
-                                                <li><a href="shop.html">Fashion Jackets</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Watches</a>
-                                            <ul>
-                                                <li><a href="shop.html">Crochet</a></li>
-                                                <li><a href="shop.html">Sleeveless</a></li>
-                                                <li><a href="shop.html">Stripes</a></li>
-                                                <li><a href="shop.html">Sweaters</a></li>
-                                                <li><a href="shop.html">Hoodies</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown-show"><a href="shop-left-full-wide.html">Bracelets</a>
-                                    <ul class="mega-menu-wrap dropdown-nav">
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Kamiz</a>
-                                            <ul>
-                                                <li><a href="shop.html">Tops & Tees</a></li>
-                                                <li><a href="shop.html">Polo Short Sleeve</a></li>
-                                                <li><a href="shop.html">Graphic T-Shirts</a></li>
-                                                <li><a href="shop.html">Jackets & Coats</a></li>
-                                                <li><a href="shop.html">Fashion Jackets</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Life Style</a>
-                                            <ul>
-                                                <li><a href="shop.html">Crochet</a></li>
-                                                <li><a href="shop.html">Sleeveless</a></li>
-                                                <li><a href="shop.html">Stripes</a></li>
-                                                <li><a href="shop.html">Sweaters</a></li>
-                                                <li><a href="shop.html">Hoodies</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="mega-menu-item"><a href="shop-left-full-wide.html"
-                                                class="mega-item-title">Shoes</a>
-                                            <ul>
-                                                <li><a href="shop.html">Tops & Tees</a></li>
-                                                <li><a href="shop.html">Polo Short Sleeve</a></li>
-                                                <li><a href="shop.html">Graphic T-Shirts</a></li>
-                                                <li><a href="shop.html">Jackets & Coats</a></li>
-                                                <li><a href="shop.html">Fashion Jackets</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li class="dropdown-show"><a href="#">Blog</a>
                                     <ul class="dropdown-nav">
                                         <li><a href="blog.html">Blog Right Sidebar</a></li>
@@ -158,6 +67,9 @@
                                 </li>
                                 <li class="@yield('contact-active')">
                                     <a href="{{ route('theme.contact') }}">Contact Us</a>
+                                </li>
+                                <li class="@yield('contact-active')">
+                                    <a href="{{ route('theme.about') }}">About Us</a>
                                 </li>
 
                             </ul>

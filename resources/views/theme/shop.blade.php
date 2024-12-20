@@ -11,162 +11,68 @@
             <!-- Sidebar Area Start -->
             <div class="col-lg-3 mt-5 mt-lg-0 order-last order-lg-first">
                 <div id="sidebar-area-wrap">
-                    <!-- Single Sidebar Item Start -->
+                    <!-- Single Sidebar Item: Categories -->
                     <div class="single-sidebar-wrap">
-                        <h2 class="sidebar-title">Shop By</h2>
-                        <div class="sidebar-body">
-                            <div class="shopping-option">
-                                <h3>Shopping Options</h3>
-                                <div class="shopping-option-item">
-                                    <h4>Color</h4>
-                                    <ul class="color-option-select d-flex">
-                                        <li class="color-item black">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">Black</span>
-                                            </div>
-                                        </li>
-
-                                        <li class="color-item green">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">green</span>
-                                            </div>
-                                        </li>
-
-                                        <li class="color-item red">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">red</span>
-                                            </div>
-                                        </li>
-
-                                        <li class="color-item yellow">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">yellow</span>
-                                            </div>
-                                        </li>
-
-                                        <li class="color-item orange">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">Orange</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="shopping-option-item">
-                                    <h4>MANUFACTURER</h4>
-                                    <ul class="sidebar-list">
-                                        <li><a href="#">Dolce (19)</a></li>
-                                        <li><a href="#">Gabbana (4)</a></li>
-                                        <li><a href="#">Nike (3)</a></li>
-                                        <li><a href="#">Nokia (5)</a></li>
-                                        <li><a href="#">Xiaomi (7)</a></li>
-                                        <li><a href="#">Other (33)</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="shopping-option-item">
-                                    <h4>Price</h4>
-                                    <ul class="sidebar-list">
-                                        <li><a href="#">$0.00 - $9.99 (2)</a></li>
-                                        <li><a href="#">$10.00 - $19.99 (3)</a></li>
-                                        <li><a href="#">$20.00 - $29.99 (5)</a></li>
-                                        <li><a href="#">$30.00 - $39.99 (2)</a></li>
-                                        <li><a href="#">$40.00 - $49.99 (10)</a></li>
-                                        <li><a href="#">$50.00 - $59.99 (12)</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <h2 class="sidebar-title">Categories</h2>
+                        <ul class="sidebar-list">
+                            <!-- Categories -->
+                            @foreach($categories as $category)
+                            <li>
+                                <a
+                                    href="{{ route('shop.index', array_merge(request()->all(), ['category_id' => $category->id])) }}">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
                     </div>
-                    <!-- Single Sidebar Item End -->
 
-                    <!-- Single Sidebar Item Start -->
+                    <!-- Single Sidebar Item: Product Types -->
                     <div class="single-sidebar-wrap">
-                        <h2 class="sidebar-title">My Wish List</h2>
-                        <div class="sidebar-body">
-                            <div class="small-product-list">
-                                <div class="single-product-item">
-                                    <figure class="product-thumb">
-                                        <a href="#"><img class="mr-2 img-fluid"
-                                                src="{{ asset('assets') }}/img/product-2.jpg" alt="Products" /></a>
-                                    </figure>
-                                    <div class="product-details">
-                                        <h2><a href="single-product.html">Sprite Yoga Companion Kit</a></h2>
-                                        <span class="price">$6.00</span>
-
-                                    </div>
-                                </div>
-
-                                <div class="single-product-item">
-                                    <figure class="product-thumb">
-                                        <a href="single-product.html"><img class="mr-2 img-fluid"
-                                                src="{{ asset('assets') }}/img/product-3.jpg" alt="Products" /></a>
-                                    </figure>
-                                    <div class="product-details">
-                                        <h2><a href="single-product.html">Set of Sprite Yoga Straps</a></h2>
-                                        <span class="price">$88.00</span>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h2 class="sidebar-title">Product Type</h2>
+                        <ul class="sidebar-list">
+                            <!-- Product Types -->
+                            <li><a
+                                    href="{{ route('shop.index', array_merge(request()->all(), ['type' => 'custom'])) }}">Custom
+                                    Products</a></li>
+                            <li><a
+                                    href="{{ route('shop.index', array_merge(request()->all(), ['type' => 'traditional'])) }}">Traditional</a>
+                            </li>
+                            <li><a href="{{ route('shop.index', array_merge(request()->all(), ['type' => 'sale'])) }}">On
+                                    Sale</a></li>
+                        </ul>
                     </div>
-                    <!-- Single Sidebar Item End -->
 
-                    <!-- Single Sidebar Item Start -->
+                    <!-- Single Sidebar Item: Price Filter -->
                     <div class="single-sidebar-wrap">
-                        <h2 class="sidebar-title">MOSTVIEWED PRODUCTS</h2>
-                        <div class="sidebar-body">
-                            <div class="small-product-list">
-                                <div class="single-product-item">
-                                    <figure class="product-thumb">
-                                        <a href="single-product.html"><img class="mr-2 img-fluid"
-                                                src="{{ asset('assets') }}/img/product-1.jpg" alt="Products" /></a>
-                                    </figure>
-                                    <div class="product-details">
-                                        <h2><a href="single-product.html">Beginner's Yoga</a></h2>
-                                        <span class="price">$50.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="single-product-item">
-                                    <figure class="product-thumb">
-                                        <a href="single-product.html"><img class="mr-2 img-fluid"
-                                                src="{{ asset('assets') }}/img/product-2.jpg" alt="Products" /></a>
-                                    </figure>
-                                    <div class="product-details">
-                                        <h2><a href="single-product.html">Sprite Yoga Companion Kit</a></h2>
-                                        <span class="price">$6.00</span>
-                                    </div>
-                                </div>
-
-                                <div class="single-product-item">
-                                    <figure class="product-thumb">
-                                        <a href="single-product.html"><img class="mr-2 img-fluid"
-                                                src="{{ asset('assets') }}/img/product-3.jpg" alt="Products" /></a>
-                                    </figure>
-                                    <div class="product-details">
-                                        <h2><a href="single-product.html">Set of Sprite Yoga Straps</a></h2>
-                                        <span class="price">$88.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h2 class="sidebar-title">Price Range</h2>
+                        <ul class="sidebar-list">
+                            <!-- Price Range -->
+                            @foreach($priceRanges as $range)
+                            <li>
+                                <a
+                                    href="{{ route('shop.index', array_merge(request()->all(), ['min_price' => $range['min'], 'max_price' => $range['max']])) }}">
+                                    ${{ number_format($range['min'], 2) }} - ${{ number_format($range['max'], 2) }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
                     </div>
-                    <!-- Single Sidebar Item End -->
+
+                    <!-- Reset Button -->
+                    <div class="single-sidebar-wrap text-center mt-3">
+                        <a href="{{ route('shop.index') }}" class="btn btn-secondary">Reset Filters</a>
+
+                    </div>
                 </div>
             </div>
             <!-- Sidebar Area End -->
 
-            <!-- Shop Page Content Start -->
+            <!-- Products Area Start -->
             <div class="col-lg-9">
                 <div class="shop-page-content-wrap">
-                    <div class="products-settings-option d-block d-md-flex">
+                    <!-- Product Sort Options -->
+                    <div class="products-settings-option d-flex justify-content-between">
                         <div class="product-cong-left d-flex align-items-center">
                             <ul class="product-view d-flex align-items-center">
                                 <li class="current column-gird"><i class="fa fa-bars fa-rotate-90"></i></li>
@@ -175,476 +81,111 @@
                             </ul>
                             <span class="show-items">Items 1 - 9 of 17</span>
                         </div>
-
-                        <div class="product-sort_by d-flex align-items-center mt-3 mt-md-0">
+                        <form method="GET" id="sortForm">
                             <label for="sort">Sort By:</label>
-                            <select name="sort" id="sort">
-                                <option value="Position">Relevance</option>
-                                <option value="Name Ascen">Name, A to Z</option>
-                                <option value="Name Decen">Name, Z to A</option>
-                                <option value="Price Ascen">Price low to heigh</option>
-                                <option value="Price Decen">Price heigh to low</option>
+                            <select name="sort" id="sort" onchange="this.form.submit();">
+                                <option value="relevance">Relevance</option>
+                                <option value="name_asc">Name, A to Z</option>
+                                <option value="name_desc">Name, Z to A</option>
+                                <option value="price_asc">Price: Low to High</option>
+                                <option value="price_desc">Price: High to Low</option>
                             </select>
-                        </div>
+                        </form>
                     </div>
 
+                    <!-- Products Grid -->
                     <div class="shop-page-products-wrap">
                         <div class="products-wrapper">
                             <div class="row">
+                                @foreach($products as $product)
+                                @if($product->is_visible)
                                 <div class="col-lg-4 col-sm-6">
                                     <!-- Single Product Item -->
                                     <div class="single-product-item text-center">
                                         <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-1.jpg" alt="Products"
-                                                    class="img-fluid"></a>
+                                            <a href="{{ route('product.showProductDetails', $product->id) }}">
+                                                <img src="{{ asset($product->primaryImage?->image_url) }}"
+                                                    alt="{{ $product->title }}" class="img-fluid">
+                                            </a>
                                         </figure>
 
                                         <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
+                                            <h2>
+                                                <a
+                                                    href="{{ route('product.showProductDetails', $product->id) }}">{{ $product->title }}</a>
+                                            </h2>
+                                            <span class="price">
+                                                @if($product->price_after_discount)
+                                                <del>${{ $product->price }}</del> ${{ $product->price_after_discount }}
+                                                @else
+                                                ${{ $product->price }}
+                                                @endif
+                                            </span>
+                                            @if($product->stock_quantity > 0)
+                                            <a href="{{ route('cart.add', $product->id) }}"
+                                                class="btn btn-add-to-cart">+ Add to Cart</a>
+                                            @else
+                                            <span class="text-danger">Out of Stock</span>
+                                            @endif
+
+                                            <form action="{{ route('wishlist.add') }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <button type="submit" class="btn btn-add-to-cart btn-whislist">+
+                                                    Wishlist</button>
+                                            </form>
+
+
+                                            <a href="#" class="btn btn-add-to-cart btn-compare">+ Compare</a>
                                         </div>
 
+
                                         <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
+
+                                            <button type="button" data-toggle="modal" data-target="#quickView"
+                                                data-id="{{ $product->id }}">
+                                                <span data-toggle="tooltip" data-placement="left" title="Quick View">
+                                                    <i class="fa fa-compress"></i>
+                                                </span>
                                             </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
+                                            <a href="javascript:void(0);" onclick="addToWishlist({{ $product->id }})"
+                                                data-toggle="tooltip" data-placement="left" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+
+
+                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare">
+                                                <i class="fa fa-tags"></i>
+                                            </a>
                                         </div>
-                                        <span class="product-bedge">New</span>
+
+                                        <!-- Conditional "New" Badge -->
+                                        @if($product->created_at && $product->created_at->diffInDays(now()) <= 30) <span
+                                            class="product-bedge">New</span>
+                                            @endif
+
                                     </div>
                                     <!-- Single Product Item -->
                                 </div>
 
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-2.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge sale">Sale</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-3.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge">New</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-4.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge">New</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/product-4.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge sale">Sale</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/product-3.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge sale">Sale</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-1.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge">New</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-2.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge sale">Sale</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Single Product Item -->
-                                    <div class="single-product-item text-center">
-                                        <figure class="product-thumb">
-                                            <a href="single-product.html"><img
-                                                    src="{{ asset('assets') }}/img/new-product-3.jpg" alt="Products"
-                                                    class="img-fluid"></a>
-                                        </figure>
-
-                                        <div class="product-details">
-                                            <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                            <span class="price">$52.00</span>
-                                            <p class="products-desc">Ideal for cold-weathered training worked lorem
-                                                outdoors, the Chaz Hoodie promises superior warmth with every wear.
-                                                Thick material blocks out the wind as ribbed cuffs and bottom band
-                                                seal
-                                                in body heat.</p>
-                                            <a href="single-product.html" class="btn btn-add-to-cart">+ Add to
-                                                Cart</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+
-                                                Wishlist</a>
-                                            <a href="single-product.html" class="btn btn-add-to-cart btn-compare">+
-                                                Compare</a>
-                                        </div>
-
-                                        <div class="product-meta">
-                                            <button type="button" data-toggle="modal" data-target="#quickView">
-                                                <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
-                                                        class="fa fa-compress"></i></span>
-                                            </button>
-                                            <a href="#" data-toggle="tooltip" data-placement="left"
-                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                            <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
-                                                    class="fa fa-tags"></i></a>
-                                        </div>
-                                        <span class="product-bedge">New</span>
-                                    </div>
-                                    <!-- Single Product Item -->
-                                </div>
+                                @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
 
-                    <div class="products-settings-option d-block d-md-flex">
-                        <nav class="page-pagination">
-                            <ul class="pagination">
-                                <li><a href="#" aria-label="Previous">&laquo;</a></li>
-                                <li><a class="current" href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#" aria-label="Next">&raquo;</a></li>
-                            </ul>
-                        </nav>
-
-                        <div class="product-per-page d-flex align-items-center mt-3 mt-md-0">
-                            <label for="show-per-page">Show Per Page</label>
-                            <select name="sort" id="show-per-page">
-                                <option value="9">9</option>
-                                <option value="15">15</option>
-                                <option value="21">21</option>
-                                <option value="6">27</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!-- Pagination -->
+                    <nav class="page-pagination">
+                        {{ $products->appends(request()->input())->links() }}
+                    </nav>
                 </div>
             </div>
-            <!-- Shop Page Content End -->
+            <!-- Products Area End -->
         </div>
     </div>
 </div>
 <!--== Page Content Wrapper End ==-->
+
 
 <!-- Start All Modal Content -->
 <!--== Product Quick View Modal Area Wrap ==-->
@@ -652,7 +193,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><img src="{{ asset('assets') }}/img/cancel.png" alt="Close"
+                <span aria-hidden="true"><img src="{{ asset('assets/img/cancel.png') }}" alt="Close"
                         class="img-fluid" /></span>
             </button>
             <div class="modal-body">
@@ -661,30 +202,8 @@
                         <!-- Product Thumbnail Start -->
                         <div class="col-lg-5 col-md-6">
                             <div class="product-thumbnail-wrap">
-                                <div class="product-thumb-carousel owl-carousel">
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb.jpg"
-                                                alt="Product" /></a>
-                                    </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-2.jpg"
-                                                alt="Product" /></a>
-                                    </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-3.jpg"
-                                                alt="Product" /></a>
-                                    </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-4.jpg"
-                                                alt="Product" /></a>
-                                    </div>
+                                <div class="product-thumb-carousel owl-carousel" id="quickViewImages">
+                                    <!-- Images will be appended dynamically -->
                                 </div>
                             </div>
                         </div>
@@ -693,62 +212,23 @@
                         <!-- Product Details Start -->
                         <div class="col-lg-7 col-md-6 mt-5 mt-md-0">
                             <div class="product-details">
-                                <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
-
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half"></i>
-                                    <i class="fa fa-star-o"></i>
+                                <h2 id="quickViewTitle"></h2>
+                                <div id="quickViewRating" class="rating">
+                                    <!-- Ratings will be dynamically added -->
                                 </div>
-
-                                <span class="price">$52.00</span>
-
+                                <span id="quickViewPrice" class="price"></span>
                                 <div class="product-info-stock-sku">
-                                    <span class="product-stock-status">In Stock</span>
-                                    <span class="product-sku-status ml-5"><strong>SKU</strong> MH03</span>
+                                    <span id="quickViewStock" class="product-stock-status"></span>
+                                    <span id="quickViewSku" class="product-sku-status ml-5"></span>
                                 </div>
-
-                                <p class="products-desc">Ideal for cold-weathered training worked lorem ipsum
-                                    outdoors,
-                                    the Chaz Hoodie promises superior warmth with every wear. Thick material blocks
-                                    out
-                                    the wind as ribbed cuffs and bottom band seal in body heat Lorem ipsum dolor sit
-                                    amet, consectetur adipisicing elit. Enim, reprehenderit.</p>
-                                <div class="shopping-option-item">
-                                    <h4>Color</h4>
-                                    <ul class="color-option-select d-flex">
-                                        <li class="color-item black">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">Black</span>
-                                            </div>
-                                        </li>
-
-                                        <li class="color-item green">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">green</span>
-                                            </div>
-                                        </li>
-
-                                        <li class="color-item orange">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">Orange</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
+                                <p id="quickViewDescription" class="products-desc"></p>
+                                <div id="quickViewColors" class="shopping-option-item"></div>
                                 <div class="product-quantity d-flex align-items-center">
                                     <div class="quantity-field">
                                         <label for="qty">Qty</label>
                                         <input type="number" id="qty" min="1" max="100" value="1" />
                                     </div>
-
-                                    <a href="cart.html" class="btn btn-add-to-cart">Add to Cart</a>
+                                    <button id="quickViewAddToCart" class="btn btn-add-to-cart">Add to Cart</button>
                                 </div>
                             </div>
                         </div>
@@ -760,6 +240,67 @@
     </div>
 </div>
 <!--== Product Quick View Modal Area End ==-->
-<!-- End All Modal Content -->
 
+<!--== Product Quick View Modal Area End ==-->
+<!-- End All Modal Content -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const quickViewModal = document.getElementById('quickView');
+
+    document.querySelectorAll('.btn-quick-view').forEach((button) => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+
+            // Fetch product details via AJAX
+            fetch(`/product/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Populate modal content
+                    document.getElementById('quickViewTitle').innerText = data.title;
+                    document.getElementById('quickViewPrice').innerHTML = data
+                        .price_after_discount ?
+                        `<del>${data.price}</del> ${data.price_after_discount}` :
+                        data.price;
+                    document.getElementById('quickViewStock').innerText = data
+                        .stock_quantity > 0 ? 'In Stock' : 'Out of Stock';
+                    document.getElementById('quickViewSku').innerText = `SKU: ${data.sku}`;
+                    document.getElementById('quickViewDescription').innerText = data
+                        .description;
+
+                    // Populate images
+                    const imagesContainer = document.getElementById('quickViewImages');
+                    imagesContainer.innerHTML = ''; // Clear previous images
+                    data.images.forEach(image => {
+                        const imgElement = document.createElement('div');
+                        imgElement.className = 'single-thumb-item';
+                        imgElement.innerHTML =
+                            `<img src="${image.url}" class="img-fluid" alt="Product Image">`;
+                        imagesContainer.appendChild(imgElement);
+                    });
+
+                    // Populate colors
+                    const colorsContainer = document.getElementById('quickViewColors');
+                    colorsContainer.innerHTML = `<h4>Color</h4>`;
+                    const colorList = document.createElement('ul');
+                    colorList.className = 'color-option-select d-flex';
+                    data.colors.forEach(color => {
+                        const colorItem = document.createElement('li');
+                        colorItem.className = `color-item ${color.toLowerCase()}`;
+                        colorItem.innerHTML = `<div class="color-hvr">
+                            <span class="color-fill"></span>
+                            <span class="color-name">${color}</span>
+                        </div>`;
+                        colorList.appendChild(colorItem);
+                    });
+                    colorsContainer.appendChild(colorList);
+
+                    // Add to cart button
+                    const addToCartButton = document.getElementById('quickViewAddToCart');
+                    addToCartButton.setAttribute('data-id', data.id);
+                })
+                .catch(err => console.error(err));
+        });
+    });
+});
+</script>
 @endsection
