@@ -5,9 +5,9 @@ use App\Http\Controllers\User\ShopController;
 use App\Http\Controllers\User\ThemeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\User\WishlistController;
+use App\Http\Controllers\User\Vendor\VendorController;
 use App\Http\Controllers\User\Auth\UserLoginController;
 use App\Http\Controllers\User\Auth\UserRegisterController;
-use App\Http\Controllers\Vendor\VendorController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 
 
@@ -39,7 +39,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
 // Vendor routes
 Route::middleware(['auth', 'role:2'])->group(function () {
-    Route::get('vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
+    
+    Route::get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
+    Route::post('/vendor/update-account', [VendorController::class, 'updateAccount'])->name('vendor.updateAccount');
+    Route::post('/vendor/upload-product', [VendorController::class, 'uploadProduct'])->name('vendor.uploadProduct');
 });
 
 

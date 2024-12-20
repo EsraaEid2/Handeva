@@ -33,4 +33,6 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(Image::class);
     }
+
+
 }

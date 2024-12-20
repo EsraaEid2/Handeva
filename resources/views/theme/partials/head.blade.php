@@ -26,6 +26,9 @@
     <!--=== Main Style CSS ===-->
     <link href="{{ asset('assets') }}/css/style.css" rel="stylesheet">
 
+    <!-- Add Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Modernizer JS -->
     <script src="{{ asset('assets') }}/js/vendor/modernizr-2.8.3.min.js"></script>
 
