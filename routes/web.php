@@ -114,16 +114,6 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 });
 
-// Route::get('auth/login', function () {
-//     return view('auth.login');
-// })->name('login');
-
-Route::middleware('auth')->group(function () {
-    
-    // Route::post('wishlist/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
-    // Route::delete('wishlist/{productId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
-    // Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-});
 
 // User submits a review for a product
 Route::middleware('auth')->group(function () {

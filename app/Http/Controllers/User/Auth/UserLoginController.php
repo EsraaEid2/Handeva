@@ -32,7 +32,7 @@ class UserLoginController extends Controller
             if ($user->role_id == 1) { // Customer
                 return redirect()->route('shop.index');
             } elseif ($user->role_id == 2) { // Vendor
-                return redirect()->route('shop.index');
+                return redirect()->route('vendor.dashboard');
             } else {
                 // Logout unknown roles
                 Auth::logout();

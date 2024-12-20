@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\Auth\UserLoginController;
 use App\Http\Controllers\User\Auth\UserRegisterController;
+use App\Http\Controllers\Vendor\VendorController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 
 
@@ -21,8 +22,8 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/product/{id}', [UserProductController::class, 'show'])->name('product.showProductDetails');
 Route::post('/cart/add', [OrderController::class, 'addToCart'])->name('cart.add');
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
-Route::get('/wishlist', [WishlistController::class, 'viewWishlist'])->name('wishlist.view');
-Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+Route::delete('/wishlist/remove/{product_id}', [WishlistController::class, 'removeProduct'])->name('wishlist.remove');
 
 Route::get('/test-session', function () {
     session()->put('wishlist', [11, 12,13]);
@@ -38,8 +39,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
 // Vendor routes
 Route::middleware(['auth', 'role:2'])->group(function () {
-  
-    // Other vendor-specific routes
+    Route::get('vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
 });
 
 

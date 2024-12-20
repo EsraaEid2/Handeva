@@ -24,48 +24,63 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($wishlistItems as $item)
                             <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-1.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Zeon Zen 4 Pro</a></td>
-                                <td class="pro-price"><span>$295.00</span></td>
-                                <td class="pro-quantity"><span class="text-success">In Stock</span></td>
-                                <td class="pro-subtotal"><a href="cart.html" class="btn-add-to-cart">Add to Cart</a>
+                                <!-- Product Thumbnail -->
+                                <td class="pro-thumbnail">
+                                    <a href="#">
+                                        <img class="img-fluid"
+                                            src="{{ asset($item->product->primaryImage->image_url ?? 'default_image.jpg') }}"
+                                            alt="{{ $item->product->title }}" />
+                                    </a>
                                 </td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-2.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Aquet Drone D 420</a></td>
-                                <td class="pro-price"><span>$275.00</span></td>
-                                <td class="pro-quantity"><span class="text-success">In Stock</span></td>
-                                <td class="pro-subtotal"><a href="cart.html" class="btn-add-to-cart">Add to Cart</a>
+
+                                <!-- Product Title -->
+                                <td class="pro-title">
+                                    <a href="#">{{ $item->product->title }}</a>
                                 </td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-3.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Game Station X 22</a></td>
-                                <td class="pro-price"><span>$295.00</span></td>
-                                <td class="pro-quantity"><span class="text-danger">Stock Out</span></td>
-                                <td class="pro-subtotal"><a href="cart.html" class="btn-add-to-cart disabled">Add to
-                                        Cart</a></td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-4.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Roxxe Headphone Z 75 </a></td>
-                                <td class="pro-price"><span>$110.00</span></td>
-                                <td class="pro-quantity"><span class="text-success">In Stock</span></td>
-                                <td class="pro-subtotal"><a href="cart.html" class="btn-add-to-cart">Add to Cart</a>
+
+                                <!-- Product Price -->
+                                <td class="pro-price">
+                                    <span>JOD {{ number_format($item->product->price, 2) }}</span>
                                 </td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+
+                                <!-- Product Stock Status -->
+                                <td class="pro-quantity">
+                                    @if ($item->product->stock_quantity > 0)
+                                    <span class="text-success">In Stock</span>
+                                    @else
+                                    <span class="text-danger">Out of Stock</span>
+                                    @endif
+                                </td>
+
+                                <!-- Add to Cart Button -->
+                                <td class="pro-subtotal">
+                                    @if ($item->product->stock_quantity > 0)
+                                    <a href="{{ route('cart.add', $item->product->id) }}" class="btn-add-to-cart"
+                                        data-id="{{ $item->product->id }}">Add to Cart</a>
+                                    @else
+                                    <button class="btn-add-to-cart disabled" disabled>Out of Stock</button>
+                                    @endif
+                                </td>
+
+                                <!-- Remove from Wishlist Button -->
+                                <td class="pro-remove">
+                                    <a href="{{ route('wishlist.remove', $item->id) }}" class="btn-remove-wishlist"
+                                        data-id="{{ $item->id }}">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
                             </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Your wishlist is empty.</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
+
+
                 </div>
             </div>
         </div>

@@ -69,35 +69,82 @@ class WishlistController extends Controller
     /**
      * View the wishlist.
      */
-    public function viewWishlist()
+    public function showWishlist()
     {
-        // Fetch wishlist from session
-        $wishlist = session()->get('wishlist', []);
-
-        return view('theme.wishlist', compact('wishlist'));
+        if (Auth::check() && Auth::user()->role_id == 1) {
+            // Fetch wishlist items for logged-in users
+            $wishlistItems = \DB::table('wishlists')
+                ->join('products', 'wishlists.product_id', '=', 'products.id')
+                ->leftJoin('product_images', function ($join) {
+                    $join->on('product_images.product_id', '=', 'products.id')
+                         ->where('product_images.is_primary', '=', 1);
+                })
+                ->where('wishlists.user_id', Auth::id())
+                ->where('wishlists.is_deleted', 0)
+                ->select(
+                    'products.id',
+                    'products.title',
+                    'products.price',
+                    'products.stock_quantity',
+                    'product_images.image_url'
+                )
+                ->get();
+        } else {
+            // Fetch wishlist items for guest users
+            $wishlistProductIds = session()->get('wishlist', []);
+            $wishlistItems = \DB::table('products')
+                ->leftJoin('product_images', function ($join) {
+                    $join->on('product_images.product_id', '=', 'products.id')
+                         ->where('product_images.is_primary', '=', 1);
+                })
+                ->whereIn('products.id', $wishlistProductIds)
+                ->select(
+                    'products.id',
+                    'products.title',
+                    'products.price',
+                    'products.stock_quantity',
+                    'product_images.image_url'
+                )
+                ->get();
+        }
+    
+        return view('theme.wishlist', ['wishlistItems' => $wishlistItems]);
     }
-
+    
+    
     /**
      * Remove a product from the wishlist.
      */
-    public function removeFromWishlist(Request $request)
+    public function removeProduct($product_id)
     {
-        $wishlist = session()->get('wishlist', []);
-
-        // Remove the product from session
-        if (($key = array_search($request->product_id, $wishlist)) !== false) {
-            unset($wishlist[$key]);
-            session()->put('wishlist', $wishlist); // Update the session
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Product successfully removed from the wishlist.'
-            ]);
+        if (Auth::check() && Auth::user()->role_id == 1) {
+            // If the user is logged in, remove from the database
+            $wishlist = \DB::table('wishlists')
+                ->where('user_id', Auth::id())
+                ->where('product_id', $product_id)
+                ->where('is_deleted', 0)
+                ->first();
+    
+            if ($wishlist) {
+                \DB::table('wishlists')
+                    ->where('id', $wishlist->id)
+                    ->update(['is_deleted' => 1]); // Soft delete by marking as deleted
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Product not found in wishlist']);
+            }
+        } else {
+            // Handle guest user (if applicable)
+            $wishlist = session()->get('wishlist', []);
+            if (($key = array_search($product_id, $wishlist)) !== false) {
+                unset($wishlist[$key]);
+                session()->put('wishlist', $wishlist); // Update the session after removing the product
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Product not found in wishlist']);
+            }
         }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Product not found in the wishlist.'
-        ]);
     }
+    
+    
 }

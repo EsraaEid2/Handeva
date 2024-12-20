@@ -24,8 +24,9 @@ class Wishlist extends Model
     // Define the relationship with the Product model
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
+    
 
     // Soft delete the wishlist item
     public function softDelete()
