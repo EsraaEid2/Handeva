@@ -4982,7 +4982,7 @@ fieldset legend {
     font-size: 1.4rem;
     color: #333;
 }
-
+/* vendor dashboard start*/
 .vendordashboard-update-account-form {
     max-width: 650px;
     margin: 0 auto;
@@ -5153,28 +5153,96 @@ fieldset legend {
 
 /*== upload product section Content End ==*/
 /*== View products Page Content Start ==*/
-/* DataTable Custom Styling */
-#products-table {
-    font-size: 14px;
-    color: #333;
+/* Custom Styling */
+.edit-product-btn,
+.delete-product-btn {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-#products-table thead {
-    background-color: #007bff;
+.edit-product-btn:hover {
+    background-color: #a82727; /* Dark red */
+}
+
+.delete-product-btn:hover {
+    background-color: #d32f2f; /* Red */
+}
+
+/* Vendor Dashboard Modal Form */
+.vendordashboard-form {
+    max-width: 750px;
+    margin: 0 auto;
+    background: #fafafa;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vendordashboard-form-group {
+    margin-bottom: 20px;
+}
+
+.vendordashboard-form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.vendordashboard-form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.vendordashboard-btn {
+    background-color: #d32f2f; /* Red */
     color: #fff;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-#products-table tbody tr:hover {
-    background-color: #f1f1f1;
+.vendordashboard-btn:hover {
+    background-color: #a82727; /* Dark red */
 }
 
-.table-responsive {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+/* Modal Header */
+.modal-header.bg-primary {
+    background-color: #d32f2f; /* Red color for consistency with your design */
+    color: #fff; /* White text */
 }
+
+.modal-header .btn-close {
+    border: none;
+    background: transparent;
+}
+
+/* Table Customization */
+.table thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #ddd;
+}
+
+/* Table Row Highlight */
+.table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
 /*== View products Page Content End ==*/
+
 /*== Contact Page Content Start ==*/
 .contact-method-wrap {
     margin-top: -30px;

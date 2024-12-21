@@ -132,12 +132,20 @@ class VendorController extends Controller
             return redirect()->back()->with('error', 'Product not found or unauthorized access.');
         }
     
+        // عرض محتوى الطلب للتأكد من القيم المرسلة
+        // dd($request->all());
+    
         // التحقق من البيانات المدخلة
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
+            'description' => 'nullable|string|max:1000',
         ]);
+    
+        // تحويل قيم الحقول is_visible و is_customizable
+        $validatedData['is_visible'] = $request->has('is_visible') ? 1 : 0;
+        $validatedData['is_customizable'] = $request->has('is_customizable') ? 1 : 0;
     
         // تحديث بيانات المنتج
         $product->update($validatedData);
