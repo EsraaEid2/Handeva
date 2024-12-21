@@ -79,6 +79,12 @@
                             class="vendordashboard-form-control" value="{{ $product->price }}" step="0.01" required>
                     </div>
                     <div class="vendordashboard-form-group">
+                        <label for="edit-price-{{ $product->id }}" class="form-label">Stock Quantity</label>
+                        <input type="number" id="edit-price-{{ $product->id }}" name="stock_quantity"
+                            class="vendordashboard-form-control" value="{{ $product->stock_quantity }}" step="0.01"
+                            required>
+                    </div>
+                    <div class="vendordashboard-form-group">
                         <div class="form-check">
                             <input type="checkbox" id="edit-visible-{{ $product->id }}" name="is_visible"
                                 class="form-check-input" {{ $product->is_visible ? 'checked' : '' }}>
