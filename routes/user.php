@@ -32,14 +32,13 @@ Route::get('/test-session', function () {
 
 
 // Customer routes
-Route::middleware(['auth', 'role:1'])->group(function () {
+Route::middleware(['auth:', 'role:1'])->group(function () {
 
     // Other customer-specific routes
 });
 
 // Vendor routes
-Route::middleware(['auth', 'role:2'])->group(function () {
-    
+Route::middleware(['auth:vendor', 'role:2'])->group(function () {
     Route::get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
     Route::post('/vendor/update-account', [VendorController::class, 'updateAccount'])->name('vendor.updateAccount');
     Route::post('/vendor/upload-product', [VendorController::class, 'uploadProduct'])->name('vendor.uploadProduct');

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\User\Vendor;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -13,55 +13,67 @@ class VendorController extends Controller
 
 public function index()
 {
-    // جلب المستخدم الحالي
-    $user = auth()->user();
-
-    // محاولة جلب البائع باستخدام البريد الإلكتروني للمستخدم
-    $vendor = Vendor::where('email', $user->email)->first();
+    // Use the correct guard to get the vendor
+    $vendor = Auth::guard('vendor')->user();  // Change from auth()->user()
 
     if (!$vendor) {
-        // إذا لم يتم العثور على البائع، يمكنك إعادة توجيه المستخدم أو عرض رسالة خطأ
         return redirect()->route('vendor.dashboard')->with('error', 'Vendor not found');
     }
 
-    // إرسال بيانات البائع إلى الـ View
     return view('theme.vendor.dashboard', compact('vendor'));
 }
 
+    
 
     public function updateAccount(Request $request)
     {
-        $vendor = auth()->user()->vendor; // جلب بيانات البائع
-
+        // جلب بيانات البائع من الـ guard المخصص للبائعين
+        $vendor = Auth::guard('vendor')->user();
         // التحقق من صحة البيانات
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:vendors,email,' . $vendor->id,
-            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'social_links' => 'nullable|url',
+            'email' => 'required|email|unique:vendors,email,' . $vendor->id, // تحقق من البريد الإلكتروني مع استثناء الحالي
+            'profile_pic' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'bio' => 'nullable|string',
+            'social_links' => 'nullable|string',
         ]);
-
+        
+        // تحقق إذا كان البريد الإلكتروني قد تم تغييره
+        if ($request->email !== $vendor->email) {
+            // إذا تم تغييره، تأكد من أنه فريد في قاعدة البيانات
+            $request->validate([
+                'email' => 'unique:vendors,email',
+            ]);
+        }
+        
         // تحديث البيانات
         $vendor->first_name = $request->first_name;
         $vendor->last_name = $request->last_name;
         $vendor->email = $request->email;
-        $vendor->social_links = $request->social_links;
         $vendor->bio = $request->bio;
-
-        // تحديث الصورة الشخصية إذا تم رفعها
+        $vendor->social_links = $request->social_links;
+        
+        // رفع الصورة إذا كانت موجودة
         if ($request->hasFile('profile_pic')) {
-            $imagePath = $request->file('profile_pic')->store('profile_pics', 'public');
-            $vendor->profile_pic = $imagePath;
+            // حذف الصورة القديمة إذا كانت موجودة
+            if ($vendor->profile_pic) {
+                Storage::delete($vendor->profile_pic);
+            }
+        
+            // رفع الصورة الجديدة
+            $path = $request->file('profile_pic')->store('vendor/profile_pictures', 'public');
+            $vendor->profile_pic = $path;
         }
-
-        $vendor->save(); // حفظ التغييرات
-
-        // إعادة توجيه مع رسالة نجاح
-        return redirect()->route('vendor.dashboard')->with('success', 'Account updated successfully');
+        
+        // حفظ التحديثات في قاعدة البيانات
+        $vendor->save();
+        
+        return back()->with('success', 'Account updated successfully!');
     }
-
+    
+    
+    
     public function uploadProduct(Request $request)
     {
         // التحقق من المدخلات

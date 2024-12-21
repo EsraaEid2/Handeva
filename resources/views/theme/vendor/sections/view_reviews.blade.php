@@ -1,5 +1,3 @@
-// resources/views/vendor/sections/reviews.blade.php
-
 <table id="reviews-table" class="table">
     <thead>
         <tr>

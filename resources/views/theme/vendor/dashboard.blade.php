@@ -1,55 +1,71 @@
 @extends('theme.master')
-@section('title','Dashboard')
+@section('title', 'Vendor Dashboard')
 @section('content')
 
-@include('theme.partials.hero',['title' => 'Vendor Dashboard'])
+@include('theme.partials.hero', ['title' => 'Vendor Dashboard'])
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <!-- Sidebar -->
-            <div class="list-group">
-                <a href="#account" class="list-group-item list-group-item-action" data-toggle="collapse">Account
-                    Details</a>
-                <a href="#upload-product" class="list-group-item list-group-item-action" data-toggle="collapse">Upload
-                    Product</a>
-                <a href="#view-products" class="list-group-item list-group-item-action" data-toggle="collapse">View
-                    Products</a>
-                <a href="#reviews" class="list-group-item list-group-item-action" data-toggle="collapse">View
-                    Reviews</a>
-                <a href="#customization-orders" class="list-group-item list-group-item-action"
-                    data-toggle="collapse">Customization Orders</a>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <!-- Sections -->
-            <div id="account" class="collapse">
-                @include('theme.vendor.sections.account_details', ['vendor' => $vendor])
-            </div>
-            <div id="upload-product" class="collapse">
-                @include('theme.vendor.sections.upload_product')
-            </div>
-            <div id="view-products" class="collapse">
-                @include('theme.vendor.sections.view_products')
-            </div>
-            <div id="reviews" class="collapse">
-                @include('theme.vendor.sections.reviews')
-            </div>
-            <div id="customization-orders" class="collapse">
-                @include('theme.vendor.sections.customization_orders')
+<!--== Page Content Wrapper Start ==-->
+<div id="page-content-wrapper" class="p-9">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Vendor Dashboard Page Start -->
+                <div class="myaccount-page-wrapper">
+                    <!-- Vendor Dashboard Tab Menu Start -->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="myaccount-tab-menu nav" role="tablist">
+                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user-circle"></i> Account
+                                    Details</a>
+                                <a href="#upload-product" class="active" data-toggle="tab"><i class="fa fa-upload"></i>
+                                    Upload Product</a>
+                                <a href="#view-products" data-toggle="tab"><i class="fa fa-eye"></i> View Products</a>
+                                <a href="#view-reviews" data-toggle="tab"><i class="fa fa-star"></i> View Reviews</a>
+                                <a href="#customization-orders" data-toggle="tab"><i class="fa fa-paint-brush"></i>
+                                    Customization Orders</a>
+                                <a href="login-register.html"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+
+                        <!-- Vendor Dashboard Tab Menu End -->
+
+                        <!-- Vendor Dashboard Tab Content Start -->
+                        <div class="col-lg-9 mt-5 mt-lg-0">
+                            <div class="tab-content" id="myaccountContent">
+                                <!-- Account Details Tab -->
+                                <div class="tab-pane fade" id="account-info" role="tabpanel">
+                                    @include('theme.vendor.sections.account_details')
+                                </div>
+
+                                <!-- Upload Product Tab -->
+                                <div class="tab-pane fade show active" id="upload-product" role="tabpanel">
+                                    @include('theme.vendor.sections.upload_product')
+                                </div>
+
+                                <!-- View Products Tab -->
+                                <div class="tab-pane fade" id="view-products" role="tabpanel">
+                                    @include('theme.vendor.sections.view_products')
+                                </div>
+
+                                <!-- View Reviews Tab -->
+                                <div class="tab-pane fade" id="view-reviews" role="tabpanel">
+                                    @include('theme.vendor.sections.view_reviews')
+                                </div>
+
+                                <!-- Customization Orders Tab -->
+                                <div class="tab-pane fade" id="customization-orders" role="tabpanel">
+                                    @include('theme.vendor.sections.customization_orders')
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Vendor Dashboard Tab Content End -->
+                    </div>
+                </div>
+                <!-- Vendor Dashboard Page End -->
             </div>
         </div>
     </div>
 </div>
+<!--== Page Content Wrapper End ==-->
+
 @endsection
-@push('scripts')
-<script>
-$(document).ready(function() {
-    // تأكد من أن القائمة تكون مفتوحة فقط عند النقر عليها
-    $('#sidebar a').on('click', function() {
-        var target = $(this).attr('href');
-        $(target).collapse('toggle');
-    });
-});
-</script>
-@endpush

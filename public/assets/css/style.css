@@ -4913,105 +4913,199 @@ fieldset legend {
 }
 
 /*  Single Blog Page Content End */
-/*== My Account Page Start ==*/
+/* == Custom My Account Page Start == */
+
 .myaccount-tab-menu {
-    -webkit-flex-direction: column;
-    -moz-flex-direction: column;
-    -ms-flex-direction: column;
+    display: flex;
     flex-direction: column;
+    gap: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .myaccount-tab-menu a {
-    border: 1px solid #c5c5c5;
-    border-bottom: none;
-    color: #727272;
-    font-weight: 700;
-    font-size: 1.2rem;
-    line-height: 1.5;
-    display: block;
-    padding: 15px;
-    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #555;
+    background-color: #fff;
+    padding: 12px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
 }
 
-.myaccount-tab-menu a:last-child {
-    border-bottom: 1px solid #c5c5c5;
-}
-
-.myaccount-tab-menu a:hover, .myaccount-tab-menu a.active {
-    background-color: #d82e2e;
-    color: #fff;
-}
-
-.myaccount-tab-menu a i.fa {
+.myaccount-tab-menu a i {
     font-size: 1.6rem;
-    line-height: 1.5;
-    text-align: center;
-    width: 25px;
-}
-
-.myaccount-content {
-    font-size: 1.6rem;
-    line-height: 1.5;
-    border: 1px solid #c5c5c5;
-    padding: 30px;
-}
-
-@media only screen and (min-width: 320px) and (max-width: 575px) {
-    .myaccount-content {
-        padding: 20px 15px;
-    }
-}
-
-.myaccount-content h3 {
-    font-family: "Montserrat";
-    font-size: 2.2rem;
-    line-height: 1.5;
-    border-bottom: 1px dashed #c5c5c5;
-    padding-bottom: 10px;
-    margin-bottom: 25px;
-}
-
-.myaccount-content .welcome a {
-    color: #000;
-}
-
-.myaccount-content .welcome a:hover {
     color: #d82e2e;
 }
 
-.myaccount-table {
-    white-space: nowrap;
-    font-size: 1.5rem;
-    line-height: 1.5;
+.myaccount-tab-menu a:hover,
+.myaccount-tab-menu a.active {
+    background-color: #d82e2e;
+    color: #fff;
+    border-color: #d82e2e;
 }
 
-.myaccount-table table th, .myaccount-table .table th {
-    color: #202020;
-    padding: 10px;
+.myaccount-tab-menu a:hover i,
+.myaccount-tab-menu a.active i {
+    color: #fff;
 }
 
-.myaccount-table table td, .myaccount-table .table td {
-    padding: 20px 10px;
+.myaccount-content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.myaccount-table table .btn-add-to-cart, .myaccount-table .table .btn-add-to-cart {
-    border-width: 1px;
+.myaccount-content h3 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 2.4rem;
+    color: #333;
+    border-bottom: 2px solid #d82e2e;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .saved-message {
-    background-color: #f4f5f7;
+    background-color: #ffefe5;
     border-top: 3px solid #d82e2e;
-    -webkit-border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
-    font-weight: 700;
-    font-size: 1.3rem;
-    line-height: 1.5;
-    color: #202020;
+    border-radius: 8px;
     padding: 20px;
+    font-size: 1.4rem;
+    color: #333;
 }
 
-/*== My Account Page End ==*/
+.vendordashboard-update-account-form {
+    max-width: 650px;
+    margin: 0 auto;
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.vendordashboard-profile-pic-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.vendordashboard-profile-pic {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+}
+
+.vendordashboard-profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vendordashboard-edit-icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: #d32f2f;
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid #fff;
+    transition: background 0.3s ease;
+}
+
+.vendordashboard-edit-icon:hover {
+    background: #a82727;
+}
+
+.vendordashboard-form-group {
+    margin-bottom: 20px;
+}
+
+.vendordashboard-form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+
+.vendordashboard-form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.vendordashboard-attachment-field {
+    position: relative;
+    padding-left: 50px;
+}
+
+.vendordashboard-attachment-field::before {
+    content: "📎";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    color: #888;
+}
+
+.vendordashboard-btn {
+    background-color: #d32f2f;
+    color: #fff;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.vendordashboard-btn:hover {
+    background-color: #a82727;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .myaccount-tab-menu {
+        padding: 15px;
+    }
+
+    .myaccount-tab-menu a {
+        font-size: 1.2rem;
+        padding: 10px;
+    }
+
+    .myaccount-content {
+        padding: 20px;
+    }
+}
+/* == Custom My Account Page End == */
+
 /*== Contact Page Content Start ==*/
 .contact-method-wrap {
     margin-top: -30px;

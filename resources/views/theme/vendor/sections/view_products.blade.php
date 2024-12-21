@@ -1,5 +1,3 @@
-// resources/views/vendor/sections/view_products.blade.php
-
 <table id="products-table" class="table">
     <thead>
         <tr>

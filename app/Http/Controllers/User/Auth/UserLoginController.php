@@ -19,35 +19,38 @@ class UserLoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-
-        // Attempt login with the default 'web' guard
-        if (Auth::guard('web')->attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-        ], $request->remember)) {
-
-            $user = Auth::user();
-
-            // Redirect based on role_id
-            if ($user->role_id == 1) { // Customer
-                return redirect()->route('shop.index');
-            } elseif ($user->role_id == 2) { // Vendor
-                return redirect()->route('vendor.dashboard');
-            } else {
-                // Logout unknown roles
-                Auth::logout();
-                throw ValidationException::withMessages([
-                    'email' => ['Unauthorized role.'],
-                ]);
+    
+        // Attempt login based on the role
+        // Check if user is customer or vendor
+        $user = \App\Models\User::where('email', $request->email)->first(); // أو إذا كان عندك جدول للبائعين استخدمه هنا
+    
+        if ($user) {
+            // إذا كان عميل، استخدم guard: web
+            if ($user->role_id == 1) { 
+                if (Auth::guard('web')->attempt([
+                    'email' => $request->email,
+                    'password' => $request->password,
+                ], $request->remember)) {
+                    return redirect()->route('shop.index');
+                }
+            }
+            // إذا كان بائع، استخدم guard: vendor
+            elseif ($user->role_id == 2) { 
+                if (Auth::guard('vendor')->attempt([
+                    'email' => $request->email,
+                    'password' => $request->password,
+                ], $request->remember)) {
+                    return redirect()->route('vendor.dashboard');
+                }
             }
         }
-
+    
         // If authentication fails
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
         ]);
     }
-
+    
     /**
      * Handle logout for both customers and vendors.
      */

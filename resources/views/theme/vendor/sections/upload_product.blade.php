@@ -1,5 +1,3 @@
-// resources/views/vendor/sections/upload_product.blade.php
-
 <form action="{{ route('vendor.uploadProduct') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
