@@ -1,30 +1,36 @@
 <?php
 
 namespace App\Http\Controllers\User\Vendor;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use App\Models\Vendor;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\ProductCustomization;
+use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
 {
 
-// app/Http/Controllers/VendorController.php
-
-public function index()
-{
-    // Use the correct guard to get the vendor
-    $vendor = Auth::guard('vendor')->user();  // Change from auth()->user()
-
-    if (!$vendor) {
-        return redirect()->route('vendor.dashboard')->with('error', 'Vendor not found');
-    }
-
-    return view('theme.vendor.dashboard', compact('vendor'));
-}
-
+    public function index()
+    {
+        // جلب معلومات البائع
+        $vendor = Auth::guard('vendor')->user(); 
     
-
+        if (!$vendor) {
+            return redirect()->route('vendor.dashboard')->with('error', 'Vendor not found');
+        }
+    
+        // جلب الفئات من قاعدة البيانات
+        $categories = Category::all();
+        $customizations = ProductCustomization::all();
+    
+        // تمرير البيانات إلى الـ View
+        return view('theme.vendor.dashboard', compact('vendor', 'categories','customizations'));
+    }
+    
+    
     public function updateAccount(Request $request)
     {
         // جلب بيانات البائع من الـ guard المخصص للبائعين
@@ -72,36 +78,49 @@ public function index()
         return back()->with('success', 'Account updated successfully!');
     }
     
-    
-    
     public function uploadProduct(Request $request)
     {
-        // التحقق من المدخلات
-        $validated = $request->validate([
-            'product.title' => 'required|string|max:255',
-            'product.description' => 'required|string',
-            'product.price' => 'required|numeric',
-            'product.image' => 'required|image|max:1024', // الصورة لا تتجاوز 1MB
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'stock_quantity' => 'required|integer|min:0',
+            'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-
-        // تحميل الصورة
-        $imageUrl = $request->file('product.image')->store('product_images', 'public');
-
-        // تخزين المنتج في قاعدة البيانات
-        Product::create([
-            'title' => $request->product['title'],
-            'description' => $request->product['description'],
-            'price' => $request->product['price'],
-            'image_url' => $imageUrl,
-            'vendor_id' => Auth::user()->vendor->id,
-            'category_id' => $request->product['category_id'], // تأكد من أن هذه القيمة موجودة في النموذج
-            'is_traditional' => $request->product['is_traditional'],
-            'is_customizable' => $request->product['is_customizable'],
-            'price_after_discount' => $request->product['price_after_discount'], // حفظ السعر بعد الخصم
+    
+        $vendorId = Auth::id(); // يمكن الحصول على الـ ID مباشرة لأن الميدل وير يضمن أن المستخدم هو Vendor
+    
+        // حساب السعر بعد الخصم إذا كان هناك خصم
+        $priceAfterDiscount = $request->discount ? 
+            $request->price - ($request->price * ($request->discount / 100)) : null;
+    
+        // إنشاء المنتج
+        $product = Product::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+            'stock_quantity' => $request->stock_quantity,
+            'is_traditional' => $request->has('is_traditional'),
+            'is_customizable' => $request->has('is_customizable'),
+            'price_after_discount' => $priceAfterDiscount,
+            'vendor_id' => $vendorId,
         ]);
-
-        session()->flash('message', 'Product uploaded successfully.');
-        return redirect()->route('vendor.dashboard');
+    
+        // رفع الصور
+        foreach ($request->file('images') as $index => $image) {
+            $path = $image->store('product_images', 'public');
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image_url' => $path,
+                'is_primary' => $index === 0, // الصورة الأولى هي الرئيسية
+            ]);
+        }
+    
+        // إرجاع رسالة النجاح
+        return redirect()->back()->with('success', 'Product uploaded successfully!');
     }
-
+    
+    
 }
