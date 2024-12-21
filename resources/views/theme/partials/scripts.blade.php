@@ -19,6 +19,7 @@
  <script src="{{ asset('assets') }}/js/active.js"></script>
  <!--=== wishlist ===-->
  <script src="{{ asset('assets') }}/js/wishlist.js"></script>
- <script src="{{ asset('assets') }}/js/profile.js') }}"></script>
+ <script src="{{ asset('assets') }}/js/profile.js"></script>
  <!-- Add SweetAlert2 -->
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

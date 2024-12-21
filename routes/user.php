@@ -42,6 +42,8 @@ Route::middleware(['auth:vendor', 'role:2'])->group(function () {
     Route::get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
     Route::post('/vendor/update-account', [VendorController::class, 'updateAccount'])->name('vendor.updateAccount');
     Route::post('/vendor/upload-product', [VendorController::class, 'uploadProduct'])->name('vendor.uploadProduct');
+    Route::put('/vendor/products/{id}', [VendorController::class, 'updateProduct'])->name('vendor.products.update');
+    Route::delete('/vendor/products/{id}', [VendorController::class, 'destroyProduct'])->name('vendor.products.destroy');
 });
 
 

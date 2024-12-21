@@ -25,11 +25,11 @@ class VendorController extends Controller
         // جلب الفئات من قاعدة البيانات
         $categories = Category::all();
         $customizations = ProductCustomization::all();
+        $products = Product::where('vendor_id', $vendor->id)->with('category')->get();
     
         // تمرير البيانات إلى الـ View
-        return view('theme.vendor.dashboard', compact('vendor', 'categories','customizations'));
+        return view('theme.vendor.dashboard', compact('vendor', 'categories','customizations','products'));
     }
-    
     
     public function updateAccount(Request $request)
     {
@@ -121,6 +121,43 @@ class VendorController extends Controller
         // إرجاع رسالة النجاح
         return redirect()->back()->with('success', 'Product uploaded successfully!');
     }
+    
+    public function updateProduct(Request $request, $id)
+    {
+        // التحقق من صلاحية الـVendor
+        $vendor = Auth::guard('vendor')->user();
+        $product = Product::where('id', $id)->where('vendor_id', $vendor->id)->first();
+    
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found or unauthorized access.');
+        }
+    
+        // التحقق من البيانات المدخلة
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+        ]);
+    
+        // تحديث بيانات المنتج
+        $product->update($validatedData);
+    
+        // إعادة توجيه مع رسالة نجاح
+        return redirect()->back()->with('success', 'Product updated successfully!');
+    }
+    
+    public function destroyProduct($id)
+    {
+        $vendor = Auth::guard('vendor')->user();
+        $product = Product::where('id', $id)->where('vendor_id', $vendor->id)->firstOrFail();
+
+        $product->deleted_at = now();
+        $product->save();
+
+        return redirect()->route('vendor.dashboard')->with('success', 'Product deleted successfully!');
+    }
+
+
     
     
 }

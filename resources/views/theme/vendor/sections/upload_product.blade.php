@@ -39,7 +39,7 @@
         <select name="custom_type" class="form-control">
             <option value="" disabled selected>Select customization type</option>
             @foreach ($customizations as $customization)
-            <option value="{{ $customization->id }}">{{ $customization->type }}</option>
+            <option value="{{ $customization->id }}">{{ $customization->custom_type }}</option>
             @endforeach
         </select>
     </div>
