@@ -5,7 +5,7 @@
                 <!-- Logo Area Start -->
                 <div class="col-3 col-lg-1 col-xl-2 m-auto">
                     <a href="{{route('theme.home')}}" class="logo-area">
-                        <img src="{{ asset('assets') }}/img/logo.png" alt="Logo" class="img-fluid" />
+                        <img src="{{ asset('assets') }}/img/HandevaLogo.png" alt="Logo" class="img-fluid" />
                     </a>
                 </div>
                 <!-- Logo Area End -->

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -14,6 +15,7 @@ class UserLoginController extends Controller
      */
     public function checkLogin(Request $request)
     {
+        // dd($request);
         // Validate input
         $request->validate([
             'email' => 'required|email',
@@ -22,9 +24,11 @@ class UserLoginController extends Controller
     
         // Attempt login based on the role
         // Check if user is customer or vendor
-        $user = \App\Models\User::where('email', $request->email)->first(); // أو إذا كان عندك جدول للبائعين استخدمه هنا
-    
+        $user = User::where('email', $request->email)->first(); // أو إذا كان عندك جدول للبائعين استخدمه هنا
+        // dd($user,"test");
+        
         if ($user) {
+            // dd($user->role_id );
             // إذا كان عميل، استخدم guard: web
             if ($user->role_id == 1) { 
                 if (Auth::guard('web')->attempt([
@@ -36,10 +40,15 @@ class UserLoginController extends Controller
             }
             // إذا كان بائع، استخدم guard: vendor
             elseif ($user->role_id == 2) { 
+                // dd(Auth::guard('vendor')->attempt([
+                //     'email' => $request->email,
+                //     'password' => $request->password,
+                // ], $request->remember));
                 if (Auth::guard('vendor')->attempt([
                     'email' => $request->email,
                     'password' => $request->password,
                 ], $request->remember)) {
+                    // dd("testif condition ");
                     return redirect()->route('vendor.dashboard');
                 }
             }

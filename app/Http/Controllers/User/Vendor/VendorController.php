@@ -44,8 +44,22 @@ class VendorController extends Controller
                 )
                 ->get();
         
+            // جلب الطلبات المخصصة (custom_orders) للمنتجات الخاصة بالبائع
+            $custom_orders = DB::table('order_items')
+                ->join('products', 'order_items.product_id', '=', 'products.id')
+                ->join('product_customization', 'order_items.customization_id', '=', 'products.id') // التصحيح هنا
+                ->where('products.vendor_id', $vendor->id)
+                ->select(
+                    'order_items.id as order_item_id',
+                    'order_items.quantity',
+                    'product_customization.custom_type', // تصحيح الاسم هنا
+                    'order_items.order_id',
+                    'products.status as customization_status' // تصحيح الاسم هنا
+                )
+                ->get();
+        
             // تمرير البيانات إلى الـ View
-            return view('theme.vendor.dashboard', compact('vendor', 'categories', 'customizations', 'products', 'reviews'));
+            return view('theme.vendor.dashboard', compact('vendor', 'categories', 'customizations', 'products', 'reviews', 'custom_orders'));
         }
         
         public function updateAccount(Request $request)
@@ -192,6 +206,19 @@ class VendorController extends Controller
             // إرسال البيانات إلى الصفحة
             return view('theme.vendor.sections.view_reviews', compact('reviews'));
         }
+
+        public function showCustomOrders()
+        {
+            $vendor = Auth::guard('vendor')->user();
+            
+            // جلب طلبات التخصيص للبائع
+            $customOrders = ProductCustomization::whereHas('product', function($query) use ($vendor) {
+                $query->where('vendor_id', $vendor->id);
+            })->with('product', 'customizationOptions')->get();
+
+            return view('vendor.custom-orders', compact('customOrders'));
+        }
+
 
 
 

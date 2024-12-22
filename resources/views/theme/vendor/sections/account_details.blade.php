@@ -5,8 +5,8 @@
 
         <!-- Circle with User Initial -->
         <div class="rounded-circle d-flex justify-content-center align-items-center text-white mx-auto mb-3"
-            style="width: 100px; height: 100px; background-color: #007bff; font-size: 36px;">
-            {{ strtoupper(substr($vendor->first_name, 0, 1)) }}
+            style="width: 100px; height: 100px; background-color: #D82E2E; font-size: 36px;">
+            {{ strtoupper(substr($vendor->first_name, 0, 1))}}{{strtoupper(substr($vendor->last_name, 0, 1)) }}
         </div>
     </div>
 

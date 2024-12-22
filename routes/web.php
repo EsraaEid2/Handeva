@@ -21,15 +21,15 @@ use App\Http\Controllers\Admin\UserController;
 //     return view('welcome');
 // });
 
-Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 
-Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::post('login', [LoginController::class, 'login'])->name('login');
 
-Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 

@@ -18,7 +18,7 @@ Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
 Route::post('register', [UserRegisterController::class, 'store'])->name('store');
 
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-
+Route::get('/',[ThemeController::class,'index'])->name('user.home');
 Route::get('/product/{id}', [UserProductController::class, 'show'])->name('product.showProductDetails');
 Route::post('/cart/add', [OrderController::class, 'addToCart'])->name('cart.add');
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
@@ -60,7 +60,3 @@ Route::controller(ThemeController::class)->name('theme.')->group(function(){
     Route::get('/wishlist','wishlist')->name('wishlist');
 
 });
-
-
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

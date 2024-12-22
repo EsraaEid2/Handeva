@@ -8,7 +8,9 @@
     <title>Handéva | @yield('title')</title>
 
     <!--=== Favicon ===-->
-    <link rel="shortcut icon" href="{{ asset('assets') }}/img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon"
+        href="{{ asset('assets') }}/img/Beige_Black_Simple_Elegant_Jewelry_Logo-removebg-preview.png"
+        type="image/x-icon" />
 
     <!--== Google Fonts ==-->
     <link rel="stylesheet" type="text/css"

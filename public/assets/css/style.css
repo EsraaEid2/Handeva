@@ -5135,7 +5135,7 @@ fieldset legend {
 }
 
 #product-upload-form button {
-    background-color: #5e3b76;
+    background-color: #D82E2E;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -5144,7 +5144,7 @@ fieldset legend {
 }
 
 #product-upload-form button:hover {
-    background-color: #472a57;
+    background-color: #D82E2E;
 }
 
 #product-upload-form #customization-section {
@@ -5242,6 +5242,15 @@ fieldset legend {
 }
 
 /*== View products Page Content End ==*/
+/* reviews table */
+.star {
+    color: #ccc; /* اللون الافتراضي (للنجوم الفارغة) */
+    font-size: 20px;
+}
+
+.star.filled {
+    color: gold; /* اللون للنجوم الممتلئة */
+}
 
 /*== Contact Page Content Start ==*/
 .contact-method-wrap {

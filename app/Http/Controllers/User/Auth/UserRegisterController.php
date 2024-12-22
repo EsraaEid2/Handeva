@@ -43,7 +43,7 @@ class UserRegisterController extends Controller
         
     // Redirect based on role
     if ($user->role_id == 1) { // Customer
-        return redirect()->route('theme.home');
+        return redirect()->route('shop.index');
     } elseif ($user->role_id == 2) { // Vendor
         return redirect()->route('vendor.dashboard');
     }

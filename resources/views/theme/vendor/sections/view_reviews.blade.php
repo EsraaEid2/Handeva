@@ -12,7 +12,11 @@
         <tr>
             <td>{{ $review->first_name . ' ' . $review->last_name }}</td> <!-- اسم العميل -->
             <td>{{ $review->product_title }}</td> <!-- اسم المنتج -->
-            <td>{{ $review->rating }}</td> <!-- التقييم -->
+            <td>
+                @for ($i = 1; $i <= 5; $i++) <span class="star {{ $i <= $review->rating ? 'filled' : '' }}">
+                    &#9733;</span>
+                    @endfor
+            </td> <!-- التقييم -->
             <td>{{ $review->comment }}</td> <!-- التعليق -->
         </tr>
         @empty
