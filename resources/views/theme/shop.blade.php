@@ -104,10 +104,12 @@
                                     <div class="single-product-item text-center">
                                         <figure class="product-thumb">
                                             <a href="{{ route('product.showProductDetails', $product->id) }}">
-                                                <img src="{{ asset($product->primaryImage?->image_url) }}"
-                                                    alt="{{ $product->title }}" class="img-fluid">
+                                                <img src="{{ $product->primaryImage?->image_url ?? 'default-image.jpg' }}"
+                                                    alt="{{ $product->title }}">
+
                                             </a>
                                         </figure>
+
 
                                         <div class="product-details">
                                             <h2>
@@ -116,7 +118,8 @@
                                             </h2>
                                             <span class="price">
                                                 @if($product->price_after_discount)
-                                                <del>${{ $product->price }}</del> ${{ $product->price_after_discount }}
+                                                <del>JOD {{ $product->price }}</del>
+                                                JOD {{ $product->price_after_discount }}
                                                 @else
                                                 ${{ $product->price }}
                                                 @endif

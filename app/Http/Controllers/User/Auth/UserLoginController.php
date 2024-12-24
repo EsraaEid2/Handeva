@@ -65,10 +65,16 @@ class UserLoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::guard()->logout();
+        if (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();
+        } elseif (Auth::guard('vendor')->check()) {
+            Auth::guard('vendor')->logout();
+        }
+    
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+    
         return redirect()->route('theme.home');
     }
+    
 }

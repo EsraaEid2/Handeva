@@ -78,102 +78,119 @@
                 </div>
                 <!-- Navigation Area End -->
 
-                <!-- Header Right Meta Start -->
-                <div class="col-6 col-lg-2 m-auto">
-                    <div class="header-right-meta text-right">
-                        <ul>
-                            <li><a href="#" class="modal-active"><i class="fa fa-search"></i></a></li>
-                            <li class="settings"><a href="#"><i class="fa fa-cog"></i></a>
-                                <div class="site-settings d-block d-sm-flex">
-                                    <dl class="currency">
-                                        <dt>Currency</dt>
-                                        <dd class="current"><a href="#">USD</a></dd>
-                                        <dd><a href="#">AUD</a></dd>
-                                        <dd><a href="#">CAD</a></dd>
-                                        <dd><a href="#">BDT</a></dd>
-                                    </dl>
+                <!--== Header Right Meta Start ==-->
+                <div class="header-right-meta text-right">
+                    <ul class="additional-options">
+                        <!--== Custom User Menu Start ==-->
+                        <li class="custom-user-menu text-right">
+                            <ul class="custom-options">
+                                @guest
+                                <!-- Login Button for Guests -->
+                                <li class="custom-login">
+                                    <a href="{{ route('theme.login_register') }}"
+                                        class="custom-btn custom-btn-primary">Login</a>
+                                </li>
+                                @else
+                                <!-- Profile and Dropdown for Authenticated Users -->
+                                <li class="custom-dropdown">
+                                    <a href="#" class="custom-dropdown-toggle">
+                                        <i class="fa fa-user-circle"></i>
+                                    </a>
+                                    <ul class="custom-dropdown-menu">
+                                        @if(Auth::guard('web')->check())
+                                        <!-- Customer Dropdown -->
+                                        <li><a href="{{ route('theme.my_account') }}">Your Profile</a></li>
+                                        @elseif(Auth::guard('vendor')->check())
+                                        <!-- Vendor Dropdown -->
+                                        <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
+                                        @endif
+                                        <li>
+                                            <form action="{{ route('userLogout') }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="custom-btn custom-btn-link">Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @endguest
+                            </ul>
+                        </li>
+                        <!--== Custom User Menu End ==-->
 
-                                    <dl class="my-account">
-                                        <dt>My Account</dt>
-                                        <dd><a href="#">Dashboard</a></dd>
-                                        <dd><a href="#">Profile</a></dd>
-                                        <dd><a href="#">Sign</a></dd>
-                                    </dl>
+                        <!-- Search Icon -->
+                        <li>
+                            <a href="#" class="modal-active">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
 
-                                    <dl class="language">
-                                        <dt>Language</dt>
-                                        <dd class="current"><a href="#">English (US)</a></dd>
-                                        <dd><a href="#">English (UK)</a></dd>
-                                        <dd><a href="#">Chinees</a></dd>
-                                        <dd><a href="#">Bengali</a></dd>
-                                        <dd><a href="#">Hindi</a></dd>
-                                        <dd><a href="#">Japanees</a></dd>
-                                    </dl>
-                                </div>
-                            </li>
-                            <li class="shop-cart"><a href="#"><i class="fa fa-shopping-bag"></i> <span
-                                        class="count">3</span></a>
-                                <div class="mini-cart">
-                                    <div class="mini-cart-body">
-                                        <div class="single-cart-item d-flex">
-                                            <figure class="product-thumb">
-                                                <a href="#"><img class="img-fluid"
-                                                        src="{{ asset('assets') }}/img/product-1.jpg"
-                                                        alt="Products" /></a>
-                                            </figure>
+                        <!-- Settings Dropdown -->
+                        <li class="settings">
+                            <a href="#"><i class="fa fa-cog"></i></a>
+                            <div class="site-settings">
+                                <dl class="currency">
+                                    <dt>Currency</dt>
+                                    <dd class="current"><a href="#">USD</a></dd>
+                                    <dd><a href="#">AUD</a></dd>
+                                    <dd><a href="#">CAD</a></dd>
+                                    <dd><a href="#">BDT</a></dd>
+                                </dl>
 
-                                            <div class="product-details">
-                                                <h2><a href="#">Sprite Yoga Companion</a></h2>
-                                                <div class="cal d-flex align-items-center">
-                                                    <span class="quantity">3</span>
-                                                    <span class="multiplication">X</span>
-                                                    <span class="price">$77.00</span>
-                                                </div>
+                                <dl class="my-account">
+                                    <dt>My Account</dt>
+                                    <dd><a href="#">Dashboard</a></dd>
+                                    <dd><a href="#">Profile</a></dd>
+                                </dl>
+
+                                <dl class="language">
+                                    <dt>Language</dt>
+                                    <dd class="current"><a href="#">English (US)</a></dd>
+                                    <dd><a href="#">English (UK)</a></dd>
+                                    <dd><a href="#">Chinese</a></dd>
+                                </dl>
+                            </div>
+                        </li>
+
+                        <!-- Shopping Cart -->
+                        <li class="shop-cart">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="count">3</span>
+                            </a>
+                            <div class="mini-cart">
+                                <div class="mini-cart-body">
+                                    <!-- Single Cart Item -->
+                                    <div class="single-cart-item">
+                                        <figure class="product-thumb">
+                                            <a href="#">
+                                                <img src="{{ asset('assets') }}/img/product-1.jpg" alt="Products">
+                                            </a>
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2><a href="#">Sprite Yoga Companion</a></h2>
+                                            <div class="cal">
+                                                <span class="quantity">3</span>
+                                                <span class="multiplication">X</span>
+                                                <span class="price">$77.00</span>
                                             </div>
-                                            <a href="#" class="remove-icon"><i class="fa fa-trash-o"></i></a>
                                         </div>
-                                        <div class="single-cart-item d-flex">
-                                            <figure class="product-thumb">
-                                                <a href="#"><img class="img-fluid"
-                                                        src="{{ asset('assets') }}/img/product-2.jpg"
-                                                        alt="Products" /></a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2><a href="#">Yoga Companion Kit</a></h2>
-                                                <div class="cal d-flex align-items-center">
-                                                    <span class="quantity">2</span>
-                                                    <span class="multiplication">X</span>
-                                                    <span class="price">$6.00</span>
-                                                </div>
-                                            </div>
-                                            <a href="#" class="remove-icon"><i class="fa fa-trash-o"></i></a>
-                                        </div>
-                                        <div class="single-cart-item d-flex">
-                                            <figure class="product-thumb">
-                                                <a href="#"><img class="img-fluid"
-                                                        src="{{ asset('assets') }}/img/product-3.jpg"
-                                                        alt="Products" /></a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2><a href="#">Sprite Yoga Companion Kit</a></h2>
-                                                <div class="cal d-flex align-items-center">
-                                                    <span class="quantity">1</span>
-                                                    <span class="multiplication">X</span>
-                                                    <span class="price">$116.00</span>
-                                                </div>
-                                            </div>
-                                            <a href="#" class="remove-icon"><i class="fa fa-trash-o"></i></a>
-                                        </div>
+                                        <a href="#" class="remove-icon">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
                                     </div>
-                                    <div class="mini-cart-footer">
-                                        <a href="checkout.html" class="btn-add-to-cart">Checkout</a>
-                                    </div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                                <!-- Mini Cart Footer -->
+                                <div class="mini-cart-footer">
+                                    <a href="checkout.html" class="btn-add-to-cart">Checkout</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
                 </div>
-                <!-- Header Right Meta End -->
+                <!--== Header Right Meta End ==-->
+
+
             </div>
         </div>
     </header>

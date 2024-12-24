@@ -1,17 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use App\Http\Controllers\Controller;
-
 use App\Models\Product;
+
 use App\Models\Category;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    public function index(Request $request) {
-        $query = Product::whereNull('deleted_at')->where('is_visible', 1);
-    
+    public function index(Request $request)
+    {
+        $query = Product::with('primaryImage') // تحميل العلاقة primaryImage
+      
+            ->whereNull('deleted_at')
+            ->where('is_visible', 1);
+          
         // Filter by category
         if ($request->has('category_id')) {
             $query->where('category_id', $request->category_id);
@@ -53,15 +58,17 @@ class ShopController extends Controller
         // Pagination
         $perPage = $request->input('per_page', 8);
         $products = $query->paginate($perPage);
-    
+   
         // Fetch categories and price ranges
         $categories = Category::all();
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
+    
         $priceRanges = $this->generatePriceRanges($minPrice, $maxPrice);
     
         return view('theme.shop', compact('products', 'categories', 'priceRanges', 'sort', 'perPage'));
     }
+    
     
     // Helper function for price ranges
     private function generatePriceRanges($minPrice, $maxPrice) {

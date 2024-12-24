@@ -111,6 +111,7 @@ class VendorController extends Controller
         
         public function uploadProduct(Request $request)
         {
+            
             $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
@@ -138,18 +139,19 @@ class VendorController extends Controller
                 'price_after_discount' => $priceAfterDiscount,
                 'vendor_id' => $vendorId,
             ]);
-        
+            // dd( $product->id);
             // رفع الصور
             foreach ($request->file('images') as $index => $image) {
                 $path = $image->store('product_images', 'public');
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_url' => $path,
-                    'is_primary' => $index === 0, // الصورة الأولى هي الرئيسية
+                    'is_primary' => $index === 0,
                 ]);
             }
-        
-            // إرجاع رسالة النجاح
+            $images = ProductImage::where('product_id', $product->id)->get();
+        // dd($image);
+          
             return redirect()->back()->with('success', 'Product uploaded successfully!');
         }
         

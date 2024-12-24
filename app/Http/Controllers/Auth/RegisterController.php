@@ -11,17 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |----------------------------------------------------------------------
-    | Register Controller
-    |----------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default, this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -29,7 +18,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin/home';
 
     /**
      * Create a new controller instance.
@@ -66,20 +55,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // Assign the default "customer" role to the new user
         $role = Role::where('role_type', 'customer')->first();
-    
+
         if (!$role) {
             throw new \Exception('Default role "customer" not found in roles table.');
         }
-    
-        // Create and return the new user
+
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => $role->id, // Assign the default role
+            'role_id' => $role->id,
+            'is_pending_vendor' => 0,
         ]);
+    }
+
+    /**
+     * Redirect users after registration.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function registered($request, $user)
+    {
+        return redirect()->route('admin.home');
     }
 }

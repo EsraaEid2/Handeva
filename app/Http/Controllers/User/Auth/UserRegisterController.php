@@ -19,10 +19,9 @@ class UserRegisterController extends Controller
             'password' => 'required|confirmed|min:6',
             'address' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:255',
-            'age' => 'nullable|integer',
-            
+            'age' => 'nullable|integer',  
         ]);
-        // Explicitly determine pending vendor status
+      
         // $isPendingVendor = $request->role_id == 2 ? 1 : 0;
   
         // Create the user
@@ -35,7 +34,7 @@ class UserRegisterController extends Controller
             'address' => $request->address,
             'phone_number' => $request->phone_number,
             'age' => $request->age,
-            'is_pending_vendor' =>$request->is_pending_vendor
+            'is_pending_vendor' =>$request->role_id == 2 ? 1 : 0,
         ]);
 
         // Log the user in

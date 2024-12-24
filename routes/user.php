@@ -13,7 +13,7 @@ use App\Http\Controllers\User\ProductController as UserProductController;
 
 
 Route::post('login', [UserLoginController::class, 'checkLogin'])->name('checkLogin');
-Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
+Route::post('user/logout', [UserLoginController::class, 'logout'])->name('userLogout');
 
 Route::post('register', [UserRegisterController::class, 'store'])->name('store');
 

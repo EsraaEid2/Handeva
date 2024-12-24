@@ -2,6 +2,9 @@
 // Admin routes
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ReviewController;
@@ -12,8 +15,6 @@ use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderItemController;
 use App\Http\Controllers\Admin\ProductImageController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\UserController;
 
 
 // Route::get('/', function () {
@@ -21,9 +22,9 @@ use App\Http\Controllers\Admin\UserController;
 //     return view('welcome');
 // });
 
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
-Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 

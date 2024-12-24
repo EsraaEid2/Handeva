@@ -17,6 +17,7 @@ class LoginController extends Controller
      */
     public function authenticated()
     {
+        dd(Auth::user()->role_id);
         if (Auth::user()->role_id == '3') { // Admin
             return redirect('admin/dashboard')
                 ->with('status', 'Welcome to the Admin Dashboard!');
