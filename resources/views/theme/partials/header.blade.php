@@ -1,6 +1,6 @@
     <!--== Header Area Start ==-->
     <header id="header-area">
-        <div class="ruby-container">
+        <div class="handeva-container">
             <div class="row">
                 <!-- Logo Area Start -->
                 <div class="col-3 col-lg-1 col-xl-2 m-auto">
@@ -15,55 +15,11 @@
                     <div class="main-menu-wrap">
                         <nav id="mainmenu">
                             <ul>
-                                <li class="dropdown-show @yield('home-active')"><a
-                                        href="{{ route('theme.home')}}">Home</a>
-                                    <!-- <ul class="dropdown-nav sub-dropdown">
-                                        <li><a href="index.html">Home Layout 1</a></li>
-                                        <li><a href="index2.html">Home Layout 2</a></li>
-                                        <li><a href="index3.html">Home Layout 3</a></li>
-                                        <li><a href="index4.html">Home Layout 4</a></li>
-                                        <li><a href="index5.html">Home Layout 5</a></li>
-                                        <li><a href="index6.html">Home Layout 6</a></li>
-                                    </ul> -->
+                                <li class="@yield('home-active')">
+                                    <a href="{{ route('theme.home')}}">Home</a>
                                 </li>
-                                <li class="dropdown-show @yield('shop-active')"><a
-                                        href="{{ route('shop.index')}}">Shop</a>
-                                    <ul class="mega-menu-wrap dropdown-nav">
-                                        <li class="mega-menu-item"><a href="shop.html"
-                                                class="mega-item-title">Necklaces</a>
-                                        </li>
-
-                                        <li class="mega-menu-item"><a href="single-product.html"
-                                                class="mega-item-title">Earrings</a>
-                                        </li>
-                                        <li class="mega-menu-item"><a href="single-product.html"
-                                                class="mega-item-title">Bracelets</a>
-                                        </li>
-                                        <li class="mega-menu-item"><a href="single-product.html"
-                                                class="mega-item-title">Rings</a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <!-- <li class="dropdown-show"><a href="#">Pages</a>
-                                    <ul class="dropdown-nav">
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="compare.html">Compare</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="login-register.html">Login & Register</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                        <li><a href="404.html">404 Error</a></li>
-                                    </ul>
-                                </li> -->
-
-                                <li class="dropdown-show"><a href="#">Blog</a>
-                                    <ul class="dropdown-nav">
-                                        <li><a href="blog.html">Blog Right Sidebar</a></li>
-                                        <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                                        <li><a href="blog-grid.html">Blog Grid Layout</a></li>
-                                        <li><a href="single-blog.html">Blog Details</a></li>
-                                    </ul>
+                                <li class="@yield('shop-active')">
+                                    <a href="{{ route('shop.index')}}">Shop</a>
                                 </li>
                                 <li class="@yield('contact-active')">
                                     <a href="{{ route('theme.contact') }}">Contact Us</a>
@@ -71,7 +27,6 @@
                                 <li class="@yield('contact-active')">
                                     <a href="{{ route('theme.about') }}">About Us</a>
                                 </li>
-
                             </ul>
                         </nav>
                     </div>
@@ -79,80 +34,62 @@
                 <!-- Navigation Area End -->
 
                 <!--== Header Right Meta Start ==-->
-                <div class="header-right-meta text-right">
-                    <ul class="additional-options">
-                        <!--== Custom User Menu Start ==-->
-                        <li class="custom-user-menu text-right">
-                            <ul class="custom-options">
-                                @guest
-                                <!-- Login Button for Guests -->
-                                <li class="custom-login">
-                                    <a href="{{ route('theme.login_register') }}"
-                                        class="custom-btn custom-btn-primary">Login</a>
+                <div class=" header-right-meta text-right">
+                    <!--== Custom User Menu Start ==-->
+                    <ul class="custom-options">
+                        @guest
+                        <!-- Login Button for Guests -->
+                        <li class="custom-login">
+                            <a href="{{ route('theme.login_register') }}"
+                                class="custom-btn custom-btn-primary">Login</a>
+                        </li>
+                        @else
+                        <!-- Profile and Dropdown for Authenticated Users -->
+                        <li class="custom-dropdown">
+                            <a href="#" class="custom-dropdown-toggle">
+                                <i class="fa fa-user-circle"></i>
+                            </a>
+                            <ul class="custom-dropdown-menu">
+                                @if(Auth::guard('web')->check())
+                                <!-- Customer Dropdown -->
+                                <li><a href="{{ route('theme.my_account') }}">Your Profile</a></li>
+                                @elseif(Auth::guard('vendor')->check())
+                                <!-- Vendor Dropdown -->
+                                <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
+                                @endif
+                                <li>
+                                    <form action="{{ route('userLogout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="custom-btn custom-btn-link">Logout</button>
+                                    </form>
                                 </li>
-                                @else
-                                <!-- Profile and Dropdown for Authenticated Users -->
-                                <li class="custom-dropdown">
-                                    <a href="#" class="custom-dropdown-toggle">
-                                        <i class="fa fa-user-circle"></i>
-                                    </a>
-                                    <ul class="custom-dropdown-menu">
-                                        @if(Auth::guard('web')->check())
-                                        <!-- Customer Dropdown -->
-                                        <li><a href="{{ route('theme.my_account') }}">Your Profile</a></li>
-                                        @elseif(Auth::guard('vendor')->check())
-                                        <!-- Vendor Dropdown -->
-                                        <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
-                                        @endif
-                                        <li>
-                                            <form action="{{ route('userLogout') }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="custom-btn custom-btn-link">Logout</button>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </li>
-                                @endguest
                             </ul>
                         </li>
-                        <!--== Custom User Menu End ==-->
+                        @endguest
+
+                        <!-- Wishlist -->
+                        <li class="custom-icon" title="Wishlist">
+                            <a href="{{ route('theme.wishlist') }}">
+                                <i class="fa fa-heart"></i>
+                            </a>
+                        </li>
+
+                        <!-- Compare -->
+                        <li class="custom-icon" title="Compare">
+                            <a href="#">
+                                <i class="fa fa-exchange-alt"></i></i>
+                            </a>
+                        </li>
 
                         <!-- Search Icon -->
-                        <li>
+                        <li class="custom-icon" title="Search">
                             <a href="#" class="modal-active">
                                 <i class="fa fa-search"></i>
                             </a>
                         </li>
 
-                        <!-- Settings Dropdown -->
-                        <li class="settings">
-                            <a href="#"><i class="fa fa-cog"></i></a>
-                            <div class="site-settings">
-                                <dl class="currency">
-                                    <dt>Currency</dt>
-                                    <dd class="current"><a href="#">USD</a></dd>
-                                    <dd><a href="#">AUD</a></dd>
-                                    <dd><a href="#">CAD</a></dd>
-                                    <dd><a href="#">BDT</a></dd>
-                                </dl>
-
-                                <dl class="my-account">
-                                    <dt>My Account</dt>
-                                    <dd><a href="#">Dashboard</a></dd>
-                                    <dd><a href="#">Profile</a></dd>
-                                </dl>
-
-                                <dl class="language">
-                                    <dt>Language</dt>
-                                    <dd class="current"><a href="#">English (US)</a></dd>
-                                    <dd><a href="#">English (UK)</a></dd>
-                                    <dd><a href="#">Chinese</a></dd>
-                                </dl>
-                            </div>
-                        </li>
-
                         <!-- Shopping Cart -->
-                        <li class="shop-cart">
+                        <li class="shop-cart custom-icon" title="Cart">
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="count">3</span>
@@ -167,7 +104,9 @@
                                             </a>
                                         </figure>
                                         <div class="product-details">
-                                            <h2><a href="#">Sprite Yoga Companion</a></h2>
+                                            <h2 class="product-name">
+                                                <a href="#">Sprite Yoga Companion</a>
+                                            </h2>
                                             <div class="cal">
                                                 <span class="quantity">3</span>
                                                 <span class="multiplication">X</span>
@@ -189,7 +128,6 @@
 
                 </div>
                 <!--== Header Right Meta End ==-->
-
 
             </div>
         </div>
