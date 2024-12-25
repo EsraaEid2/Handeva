@@ -22,7 +22,7 @@ use App\Http\Controllers\Admin\ProductImageController;
 //     return view('welcome');
 // });
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
 

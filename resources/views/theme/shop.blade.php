@@ -106,7 +106,6 @@
                                             <a href="{{ route('product.showProductDetails', $product->id) }}">
                                                 <img src="{{ $product->primaryImage?->image_url ?? 'default-image.jpg' }}"
                                                     alt="{{ $product->title }}">
-
                                             </a>
                                         </figure>
 
