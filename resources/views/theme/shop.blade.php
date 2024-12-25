@@ -19,7 +19,7 @@
                             @foreach($categories as $category)
                             <li>
                                 <a
-                                    href="{{ route('shop.index', array_merge(request()->all(), ['category_id' => $category->id])) }}">
+                                    href="{{ route('collections', array_merge(request()->all(), ['category_id' => $category->id])) }}">
                                     {{ $category->name }}
                                 </a>
                             </li>
@@ -33,12 +33,12 @@
                         <ul class="sidebar-list">
                             <!-- Product Types -->
                             <li><a
-                                    href="{{ route('shop.index', array_merge(request()->all(), ['type' => 'custom'])) }}">Custom
+                                    href="{{ route('collections', array_merge(request()->all(), ['type' => 'custom'])) }}">Custom
                                     Products</a></li>
                             <li><a
-                                    href="{{ route('shop.index', array_merge(request()->all(), ['type' => 'traditional'])) }}">Traditional</a>
+                                    href="{{ route('collections', array_merge(request()->all(), ['type' => 'traditional'])) }}">Traditional</a>
                             </li>
-                            <li><a href="{{ route('shop.index', array_merge(request()->all(), ['type' => 'sale'])) }}">On
+                            <li><a href="{{ route('collections', array_merge(request()->all(), ['type' => 'sale'])) }}">On
                                     Sale</a></li>
                         </ul>
                     </div>
@@ -51,7 +51,7 @@
                             @foreach($priceRanges as $range)
                             <li>
                                 <a
-                                    href="{{ route('shop.index', array_merge(request()->all(), ['min_price' => $range['min'], 'max_price' => $range['max']])) }}">
+                                    href="{{ route('collections', array_merge(request()->all(), ['min_price' => $range['min'], 'max_price' => $range['max']])) }}">
                                     ${{ number_format($range['min'], 2) }} - ${{ number_format($range['max'], 2) }}
                                 </a>
                             </li>
@@ -61,7 +61,7 @@
 
                     <!-- Reset Button -->
                     <div class="single-sidebar-wrap text-center mt-3">
-                        <a href="{{ route('shop.index') }}" class="btn btn-secondary">Reset Filters</a>
+                        <a href="{{ route('collections') }}" class="btn btn-secondary">Reset Filters</a>
 
                     </div>
                 </div>

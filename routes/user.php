@@ -8,7 +8,7 @@ use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\Vendor\VendorController;
 use App\Http\Controllers\User\Auth\UserLoginController;
 use App\Http\Controllers\User\Auth\UserRegisterController;
-use App\Http\Controllers\User\ProductController as UserProductController;
+use App\Http\Controllers\User\UserProductController;
 
 
 
@@ -16,9 +16,12 @@ Route::post('login', [UserLoginController::class, 'checkLogin'])->name('checkLog
 Route::post('user/logout', [UserLoginController::class, 'logout'])->name('userLogout');
 
 Route::post('register', [UserRegisterController::class, 'store'])->name('store');
-
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/new-products', [UserProductController::class, 'getNewProducts'])->name('new.products');
 Route::get('/',[ThemeController::class,'index'])->name('user.home');
+
+Route::get('/collections/{type?}', [ShopController::class, 'index'])->name('collections');
+
+
 Route::get('/product/{id}', [UserProductController::class, 'show'])->name('product.showProductDetails');
 Route::post('/cart/add', [OrderController::class, 'addToCart'])->name('cart.add');
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');

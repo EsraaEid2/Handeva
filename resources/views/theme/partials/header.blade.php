@@ -19,7 +19,7 @@
                                     <a href="{{ route('theme.home')}}">Home</a>
                                 </li>
                                 <li class="@yield('shop-active')">
-                                    <a href="{{ route('shop.index')}}">Shop</a>
+                                    <a href="{{ route('collections')}}">Shop</a>
                                 </li>
                                 <li class="@yield('contact-active')">
                                     <a href="{{ route('theme.contact') }}">Contact Us</a>

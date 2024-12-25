@@ -10,33 +10,27 @@ use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $type = null)
     {
-        $query = Product::with('primaryImage') // تحميل العلاقة primaryImage
-      
+        $query = Product::with('primaryImage')
             ->whereNull('deleted_at')
             ->where('is_visible', 1);
-          
-        // Filter by category
+    
+        // Filter by product type if provided
+        if ($type === 'traditional') {
+            $query->where('is_traditional', 1);
+        } elseif ($type === 'custom') {
+            $query->where('is_customizable', 1);
+        } elseif ($type === 'sale') {
+            $query->whereNotNull('price_after_discount');
+        }
+    
+        // Apply additional filters if needed
         if ($request->has('category_id')) {
             $query->where('category_id', $request->category_id);
         }
     
-        // Filter by product type
-        if ($request->type == 'custom') {
-            $query->where('is_customizable', 1);
-        } elseif ($request->type == 'traditional') {
-            $query->where('is_traditional', 1);
-        } elseif ($request->type == 'sale') {
-            $query->whereNotNull('price_after_discount');
-        }
-    
-        // Filter by price range
-        if ($request->has('min_price') && $request->has('max_price')) {
-            $query->whereBetween('price', [$request->min_price, $request->max_price]);
-        }
-    
-        // Sorting
+        // Sorting, price filtering, and pagination remain the same
         $sort = $request->input('sort', 'relevance');
         switch ($sort) {
             case 'Name Ascen':
@@ -55,18 +49,15 @@ class ShopController extends Controller
                 $query->orderBy('created_at', 'desc');
         }
     
-        // Pagination
-        $perPage = $request->input('per_page', 8);
-        $products = $query->paginate($perPage);
-   
-        // Fetch categories and price ranges
+        $products = $query->paginate($request->input('per_page', 8));
+    
+        // Fetch categories and price ranges for the view
         $categories = Category::all();
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
-    
         $priceRanges = $this->generatePriceRanges($minPrice, $maxPrice);
     
-        return view('theme.shop', compact('products', 'categories', 'priceRanges', 'sort', 'perPage'));
+        return view('theme.shop', compact('products', 'categories', 'priceRanges', 'sort'));
     }
     
     

@@ -46,7 +46,6 @@ Author: Esra'a Eid
 :root {
     --primary-color: #771011;    /* Deep red for emphasis and elegance */
     --secondary-color: #COBFB2; /* Warm beige for backgrounds and sections */
-    --accent-color: #ECE603;    /* Vibrant yellow for highlights and calls-to-action */
     --dark-color: #221712;      /* Dark brown for headers, footers, and text */
     --neutral-color: #6F635B;   /* Subtle neutral for borders, dividers, or inactive states */
 
@@ -132,7 +131,7 @@ button, button.btn {
 button:focus, button:active, button.btn:focus, button.btn:active {
     outline: none;
     box-shadow: none;
-    background-color: var(--accent-color);
+    background-color: var(--secondary-color);
     color: var(--dark-color);
 }
 
@@ -1810,33 +1809,33 @@ address strong, address b {
 
 #banner-area #banner-carousel .single-carousel-wrap {
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
     position: relative;
-    padding: 160px 0; /* زيادة المسافة لتحسين التنسيق */
+    padding: 200px 0; 
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* لتحديد النص من جهة اليسار */
-    text-align: left; /* لتحديد النص ليبدأ من اليسار */
-    padding-left: 50px; /* إضافة مسافة داخلية من اليسار */
+    justify-content: flex-start; 
+    text-align: left; 
+    padding-left: 50px; 
 }
 
 
 @media only screen and (min-width: 320px) and (max-width: 575px), only screen and (min-width: 576px) and (max-width: 767px) {
     #banner-area #banner-carousel .single-carousel-wrap {
-        padding: 100px 0;
+        padding: 80px 0;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     #banner-area #banner-carousel .single-carousel-wrap {
-        padding: 130px 0;
+        padding: 120px 0;
     }
 }
 
 #banner-area #banner-carousel .single-carousel-wrap:after {
-    background-color: rgba(244, 245, 247, 0.8); /* تحسين الشفافية */
+    background-color: rgba(244, 245, 247, 0.8);
     content: '';
     position: absolute;
     left: 0;
@@ -1848,21 +1847,21 @@ address strong, address b {
 }
 
 #banner-area #banner-carousel .banner-caption {
-    max-width: 850px; /* توسيع العرض */
+    max-width: 850px;
     padding: 25px;
     color: var(--neutral-color);
 }
 
 #banner-area #banner-carousel .banner-caption h4 {
-    font-size: 2rem; /* زيادة الحجم */
+    font-size: 2rem;
     font-family: var(--font-family-secondary);
-    color: var(--secondary-color); /* لون جديد */
+    color: var(--secondary-color);
     margin-bottom: 15px;
     text-transform: uppercase;
 }
 
 #banner-area #banner-carousel .single-carousel-wrap .banner-caption h2 {
-    font-size: 4rem; /* زيادة حجم العنوان الرئيسي */
+    font-size:5.2rem;
     font-family: var(--font-family-primary);
     color: var(--primary-color);
     margin-bottom: 25px;
@@ -2646,33 +2645,27 @@ address strong, address b {
 /*== Products Style End ==*/
 /*== Products by Category Area Start ==*/
 .single-cat-item {
-    -webkit-transition: all 0.4s ease-out;
-    -moz-transition: all 0.4s ease-out;
-    -o-transition: all 0.4s ease-out;
     transition: all 0.4s ease-out;
+    margin-bottom: 30px; /* Increased margin for spacing */
 }
 
 .single-cat-item:hover .category-thumb img {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
     transform: scale(1.1);
 }
 
 .single-cat-item:hover .category-thumb .category-name {
-    top: 70%;
+    top: 75%; /* Adjusted for better positioning */
 }
 
 .single-cat-item .category-thumb {
     position: relative;
     overflow: hidden;
+    border-radius: 8px; /* Rounded corners for better aesthetics */
 }
 
 .single-cat-item .category-thumb img {
-    -webkit-transition: all 0.4s ease-out;
-    -moz-transition: all 0.4s ease-out;
-    -o-transition: all 0.4s ease-out;
     transition: all 0.4s ease-out;
+    border-radius: 8px; /* Rounded corners on images */
 }
 
 .single-cat-item .category-thumb .category-name {
@@ -2680,49 +2673,49 @@ address strong, address b {
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     white-space: nowrap;
-    padding: 4px;
-    -webkit-transition: all 0.4s ease-out;
-    -moz-transition: all 0.4s ease-out;
-    -o-transition: all 0.4s ease-out;
+    padding: 10px 15px;
     transition: all 0.4s ease-out;
-    width: 90%;
+    width: 80%; /* Reduced width for better proportion */
+    font-size: var(--font-size-medium); /* Using the medium font size */
+    font-family: var(--font-family-secondary);
+    text-transform: uppercase;
 }
 
 .single-cat-item .category-thumb .category-name a {
-    background-color: #fff;
-    color: #202020;
+    background-color: var(--primary-color);
+    color: #fff;
     display: block;
     font-size: 1.4rem;
-    line-height: 1.5;
     font-weight: 700;
-    font-family: "Playfair Display";
-    text-transform: uppercase;
-    margin: 0;
-    padding: 18px 25px;
+    font-family: var(--font-family-primary);
     text-align: center;
+    padding: 15px 20px; /* Adjusted padding for better spacing */
+    letter-spacing: 1px; /* Increased spacing between letters */
 }
 
 .large-size-cate .single-cat-item {
-    margin-bottom: 15px;
+    margin-bottom: 30px; /* Increased margin for larger spacing */
 }
 
 @media only screen and (min-width: 992px) {
     .large-size-cate .single-cat-item {
-        margin-bottom: 0;
+        margin-bottom: 40px; /* Further spacing on large screens */
     }
 }
 
-.small-size-cate {
-    margin-top: -15px;
+.small-size-cate .single-cat-item {
+    margin-top: 20px; /* Increased top margin */
 }
 
 .small-size-cate .single-cat-item {
-    margin-top: 15px;
+    margin-top: 20px;
+}
+
+#product-categories-area {
+    padding-top: 40px; /* Added padding to the top for more spacing */
+    padding-bottom: 40px; /* Added padding to the bottom for balance */
 }
 
 /*== Products by Category Area End ==*/
