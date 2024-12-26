@@ -42,5 +42,5 @@
         </div>
     </section>
     <!--== Newsletter Area End ==-->
-    @include('theme.partials.footer')
+
     @endsection

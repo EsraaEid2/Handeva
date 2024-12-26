@@ -1,88 +1,87 @@
-    <!--== Header Area Start ==-->
-    <header id="header-area">
-        <div class="handeva-container">
-            <div class="row">
-                <div class="flexed-contain">
-                    <!-- Logo Area Start -->
-                    <div class="col-3 col-lg-1 col-xl-2 m-auto">
-                        <a href="{{route('user.home')}}" class="logo-area">
-                            <img src="{{ asset('assets') }}/img/HandevaLogo.png" alt="Logo" class="img-fluid" />
-                        </a>
+<!--== Header Area Start ==-->
+<header id="header-area">
+    <div class="handeva-container">
+        <div class="row">
+            <div class="flexed-contain">
+                <!-- Logo Area Start -->
+                <div class="col-3 col-lg-1 col-xl-2 m-auto">
+                    <a href="{{ route('user.home') }}" class="logo-area">
+                        <img src="{{ asset('assets') }}/img/HandevaLogo.png" alt="Logo" class="img-fluid" />
+                    </a>
+                </div>
+                <!-- Logo Area End -->
+
+                <!-- Navigation Area Start -->
+                <div class="col-3 col-lg-9 col-xl-8 m-auto">
+                    <div class="main-menu-wrap">
+                        <nav id="mainmenu">
+                            <ul>
+                                <li class="@yield('home-active')">
+                                    <a href="{{ route('user.home') }}">Home</a>
+                                </li>
+                                <li class="@yield('shop-active')">
+                                    <a href="{{ route('collections') }}">Shop</a>
+                                </li>
+                                <li class="@yield('contact-active')">
+                                    <a href="{{ route('theme.contact') }}">Contact Us</a>
+                                </li>
+                                <li class="@yield('about-active')">
+                                    <a href="{{ route('theme.about') }}">About Us</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                    <!-- Logo Area End -->
+                </div>
+                <!-- Navigation Area End -->
 
-                    <!-- Navigation Area Start -->
-                    <div class="col-3 col-lg-9 col-xl-8 m-auto">
-                        <div class="main-menu-wrap">
-                            <nav id="mainmenu">
-                                <ul>
-                                    <li class="@yield('home-active')">
-                                        <a href="{{ route('user.home')}}">Home</a>
-                                    </li>
-                                    <li class="@yield('shop-active')">
-                                        <a href="{{ route('collections')}}">Shop</a>
-                                    </li>
-                                    <li class="@yield('contact-active')">
-                                        <a href="{{ route('theme.contact') }}">Contact Us</a>
-                                    </li>
-                                    <li class="@yield('contact-active')">
-                                        <a href="{{ route('theme.about') }}">About Us</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <!-- Navigation Area End -->
+                <!--== Header Right Meta Start ==-->
+                <div class="header-right-meta text-right">
+                    <ul class="custom-options">
+                        @guest
+                        <!-- Login Button for Guests -->
+                        <li class="custom-login">
+                            <a href="{{ route('theme.login_register') }}"
+                                class="custom-btn custom-btn-primary">Login</a>
+                        </li>
+                        @else
+                        <!-- Profile and Dropdown for Authenticated Users -->
+                        <li class="custom-dropdown">
+                            <a href="#" class="custom-dropdown-toggle">
+                                <i class="fa fa-user-circle"></i>
+                            </a>
+                            <ul class="custom-dropdown-menu">
+                                @if(Auth::guard('web')->check())
+                                <li><a href="{{ route('theme.my_account') }}">Your Profile</a></li>
+                                @elseif(Auth::guard('vendor')->check())
+                                <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
+                                @endif
+                                <li>
+                                    <form action="{{ route('userLogout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="custom-btn custom-btn-link">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        @endguest
 
-                    <!--== Header Right Meta Start ==-->
-                    <div class=" header-right-meta text-right">
-                        <!--== Custom User Menu Start ==-->
-                        <ul class="custom-options">
-                            @guest
-                            <!-- Login Button for Guests -->
-                            <li class="custom-login">
-                                <a href="{{ route('theme.login_register') }}"
-                                    class="custom-btn custom-btn-primary">Login</a>
-                            </li>
-                            @else
-                            <!-- Profile and Dropdown for Authenticated Users -->
-                            <li class="custom-dropdown">
-                                <a href="#" class="custom-dropdown-toggle">
-                                    <i class="fa fa-user-circle"></i>
-                                </a>
-                                <ul class="custom-dropdown-menu">
-                                    @if(Auth::guard('web')->check())
-                                    <!-- Customer Dropdown -->
-                                    <li><a href="{{ route('theme.my_account') }}">Your Profile</a></li>
-                                    @elseif(Auth::guard('vendor')->check())
-                                    <!-- Vendor Dropdown -->
-                                    <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
-                                    @endif
-                                    <li>
-                                        <form action="{{ route('userLogout') }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="custom-btn custom-btn-link">Logout</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                            @endguest
-
+                        <ul class="icons">
                             <!-- Wishlist -->
                             <li class="custom-icon" title="Wishlist">
                                 <a href="{{ route('theme.wishlist') }}">
                                     <i class="fa fa-heart"></i>
                                 </a>
+                                <span class="count">{{ $wishlistCount }}</span>
                             </li>
 
                             <!-- Compare -->
                             <li class="custom-icon" title="Compare">
                                 <a href="#">
-                                    <i class="fa fa-exchange-alt"></i></i>
+                                    <i class="fa fa-exchange-alt"></i>
                                 </a>
                             </li>
 
-                            <!-- Search Icon -->
+                            <!-- Search -->
                             <li class="custom-icon" title="Search">
                                 <a href="#" class="modal-active">
                                     <i class="fa fa-search"></i>
@@ -91,13 +90,12 @@
 
                             <!-- Shopping Cart -->
                             <li class="shop-cart custom-icon" title="Cart">
-                                <a href="#">
+                                <a href="{{ route('theme.cart') }}">
                                     <i class="fa fa-shopping-bag"></i>
-                                    <span class="count">3</span>
+                                    <span class="count">{{ $cartCount }}</span>
                                 </a>
                                 <div class="mini-cart">
                                     <div class="mini-cart-body">
-                                        <!-- Single Cart Item -->
                                         <div class="single-cart-item">
                                             <figure class="product-thumb">
                                                 <a href="#">
@@ -119,35 +117,33 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <!-- Mini Cart Footer -->
                                     <div class="mini-cart-footer">
                                         <a href="checkout.html" class="btn-add-to-cart">Checkout</a>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-
-                    </div>
-                    <!--== Header Right Meta End ==-->
+                    </ul>
                 </div>
-            </div>
-        </div>
-    </header>
-    <!--== Header Area End ==-->
-
-    <!--== Search Box Area Start ==-->
-    <div class="body-popup-modal-area">
-        <span class="modal-close"><img src="{{ asset('assets') }}/img/cancel.png" alt="Close"
-                class="img-fluid" /></span>
-        <div class="modal-container d-flex">
-            <div class="search-box-area">
-                <div class="search-box-form">
-                    <form action="#" method="post">
-                        <input type="search" placeholder="type keyword and hit enter" />
-                        <button class="btn" type="button"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
+                <!--== Header Right Meta End ==-->
             </div>
         </div>
     </div>
-    <!--== Search Box Area End ==-->
+</header>
+<!--== Header Area End ==-->
+
+<!--== Search Box Area Start ==-->
+<div class="body-popup-modal-area">
+    <span class="modal-close"><img src="{{ asset('assets') }}/img/cancel.png" alt="Close" class="img-fluid" /></span>
+    <div class="modal-container d-flex">
+        <div class="search-box-area">
+            <div class="search-box-form">
+                <form action="#" method="post">
+                    <input type="search" placeholder="type keyword and hit enter" />
+                    <button class="btn" type="button"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Search Box Area End ==-->

@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Order;
+use App\Models\OrderItem;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -57,7 +59,6 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
     
-    
     // Define the relationship with the Wishlist model
     public function wishlists()
     {
@@ -83,6 +84,10 @@ class User extends Authenticatable
     public function contactUsMessages()
     {
         return $this->hasMany(ContactUs::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 
 

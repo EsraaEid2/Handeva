@@ -10,8 +10,8 @@
                                 <img src="{{ asset('assets') }}/img/HandevaLogo.png" alt="logo" class="img-fluid" />
                             </a>
                         </div>
-
-                        <p>Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum</p>
+                        <p>© 2024 Handmade Treasures | Where craftsmanship meets beauty, creating memories that inspire
+                        </p>
                         <div class="footer-social-icons">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
