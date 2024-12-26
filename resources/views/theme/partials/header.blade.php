@@ -19,8 +19,8 @@
                                 <li class="@yield('home-active')">
                                     <a href="{{ route('user.home') }}">Home</a>
                                 </li>
-                                <li class="@yield('shop-active')">
-                                    <a href="{{ route('collections') }}">Shop</a>
+                                <li class="@yield('collections-active')">
+                                    <a href="{{ route('collections') }}">Collections</a>
                                 </li>
                                 <li class="@yield('contact-active')">
                                     <a href="{{ route('theme.contact') }}">Contact Us</a>

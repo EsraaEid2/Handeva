@@ -29,7 +29,7 @@ class ThemeController extends Controller
         return view('theme.my-account');
     }
     public function shop(){
-        return view('theme.shop');
+        return view('theme.Collections');
     }
     public function single_product(){
         return view('theme.single-product');

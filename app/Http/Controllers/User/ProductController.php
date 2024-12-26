@@ -58,7 +58,7 @@ class ProductController extends Controller
         $priceRanges = $this->generatePriceRanges($minPrice, $maxPrice);
     
         // Return filters
-        return view('theme.shop', [
+        return view('theme.collections', [
             'categories' => $categories,
             'priceRanges' => $priceRanges
         ]);
@@ -108,7 +108,7 @@ public function shop(Request $request) {
     $maxPrice = Product::max('price');
     $priceRanges = $this->generatePriceRanges($minPrice, $maxPrice);
 
-    return view('theme.shop', compact('products', 'categories', 'priceRanges'));
+    return view('theme.collections', compact('products', 'categories', 'priceRanges'));
 }
 
 

@@ -35,7 +35,7 @@ class UserLoginController extends Controller
                     'email' => $request->email,
                     'password' => $request->password,
                 ], $request->remember)) {
-                    return redirect()->route('shop.index');
+                    return redirect()->route('collections');
                 }
             }
             // إذا كان بائع، استخدم guard: vendor
