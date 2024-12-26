@@ -7,7 +7,7 @@
 
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
-    <div class="ruby-container">
+    <div class="handeva-container">
         <div class="row">
             <div class="col-lg-12">
                 <!-- Compare Page Content Start -->

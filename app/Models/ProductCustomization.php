@@ -9,10 +9,8 @@ class ProductCustomization extends Model
 {
     use HasFactory;
 
-    // اسم الجدول
     protected $table = 'product_customization';
 
-    // الحقول التي يمكن ملؤها
     protected $fillable = [
         'product_id',
         'custom_type',
@@ -28,5 +26,10 @@ class ProductCustomization extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function customizationOptions()
+    {
+        return $this->hasMany(CustomizationOption::class);
     }
 }

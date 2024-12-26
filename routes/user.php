@@ -23,7 +23,7 @@ Route::get('/',[UserHomeController::class,'index'])->name('user.home');
 Route::get('/collections/{type?}', [ShopController::class, 'index'])->name('collections');
 
 
-Route::get('/product/{id}', [UserProductController::class, 'show'])->name('product.showProductDetails');
+Route::get('collections/product/{id}', [UserProductController::class, 'showProductDetails'])->name('product.showProductDetails');
 Route::post('/cart/add', [OrderController::class, 'addToCart'])->name('cart.add');
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
 Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');

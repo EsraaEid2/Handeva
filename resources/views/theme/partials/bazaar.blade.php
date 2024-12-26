@@ -20,7 +20,7 @@
                             We are excited to announce our first bazaar! Mark your calendar and join us for an amazing
                             experience!
                         </p>
-                        <h3 class="bazaar-date">Date: 30-03-2025</h3>
+                        <h3 class="bazaar-date number">Date: 30-03-2025</h3>
 
                         <!-- Countdown Timer -->
                         <div id="bazaar-countdown" class="countdown-timer">

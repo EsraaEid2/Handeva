@@ -1,3 +1,25 @@
+<style>
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.owl-carousel .owl-nav button.owl-prev {
+    left: 0;
+}
+
+.owl-carousel .owl-nav button.owl-next {
+    right: 0;
+}
+</style>
+
 @extends('theme.master')
 @section('title','Single-product')
 @section('content')
@@ -6,7 +28,7 @@
 
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
-    <div class="ruby-container">
+    <div class="handeva-container">
         <div class="row">
             <!-- Single Product Page Content Start -->
             <div class="col-lg-12">
@@ -16,111 +38,103 @@
                         <div class="col-lg-5">
                             <div class="product-thumbnail-wrap">
                                 <div class="product-thumb-carousel owl-carousel">
+                                    @foreach($product->productImages->take(3) as $image)
                                     <div class="single-thumb-item">
                                         <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb.jpg"
-                                                alt="Product" /></a>
+                                                src="{{ asset($image->image_url) }}" alt="Product Image" /></a>
                                     </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-2.jpg"
-                                                alt="Product" /></a>
-                                    </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-3.jpg"
-                                                alt="Product" /></a>
-                                    </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-4.jpg"
-                                                alt="Product" /></a>
-                                    </div>
-
-                                    <div class="single-thumb-item">
-                                        <a href="single-product.html"><img class="img-fluid"
-                                                src="{{ asset('assets') }}/img/single-pro-thumb-5.jpg"
-                                                alt="Product" /></a>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                         <!-- Product Thumbnail End -->
 
+
                         <!-- Product Details Start -->
                         <div class="col-lg-7 mt-5 mt-lg-0">
                             <div class="product-details">
-                                <h2><a href="single-product.html">Crown Summit Backpack</a></h2>
+                                <!-- Product Title -->
+                                <h2>{{ $product->title }}</h2>
 
+                                <!-- Rating -->
                                 <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half"></i>
-                                    <i class="fa fa-star-o"></i>
+                                    @if($product->avg_rating > 0)
+                                    @for ($i = 1; $i <= 5; $i++) <span
+                                        class="star {{ $i <= ceil($product->avg_rating) ? 'filled' : '' }}">
+                                        &#9733;</span>
+                                        @endfor
+                                        @else
+                                        No ratings yet
+                                        @endif
                                 </div>
 
-                                <span class="price">$52.00</span>
+                                <!-- Price -->
+                                <span class="price">
+                                    @if($product->price_after_discount)
+                                    <del>JOD {{ $product->price }}</del>
+                                    <span class="text-danger">JOD {{ $product->price_after_discount }}</span>
+                                    @else
+                                    JOD {{ $product->price }}
+                                    @endif
+                                </span>
 
+                                <!-- Stock Status -->
                                 <div class="product-info-stock-sku">
-                                    <span class="product-stock-status">In Stock</span>
-                                    <span class="product-sku-status ml-5"><strong>SKU</strong> MH03</span>
+                                    <span
+                                        class="product-stock-status {{ $product->stock_quantity > 0 ? 'text-success' : 'text-danger' }}">
+                                        {{ $product->stock_quantity > 0 ? 'In Stock' : 'Out of Stock' }}
+                                    </span>
                                 </div>
 
-                                <p class="products-desc">Ideal for cold-weathered training worked lorem ipsum
-                                    outdoors,
-                                    the Chaz Hoodie promises superior warmth with every wear. Thick material blocks
-                                    out
-                                    the wind as ribbed cuffs and bottom band seal in body heat Lorem ipsum dolor sit
-                                    amet, consectetur adipisicing elit. Enim, reprehenderit.</p>
-                                <div class="shopping-option-item">
-                                    <h4>Color</h4>
-                                    <ul class="color-option-select d-flex">
-                                        <li class="color-item black">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">Black</span>
-                                            </div>
-                                        </li>
+                                <!-- Description -->
+                                <p class="products-desc">{{ $product->description }}</p>
 
-                                        <li class="color-item green">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">green</span>
-                                            </div>
-                                        </li>
+                                <!-- Traditional Product -->
+                                @if($product->is_traditional)
+                                <p><strong>Type:</strong> Traditional Accessory</p>
+                                @endif
+                                @if($product ->is_customizable)
+                                <h4>Customization</h4>
+                                <p><strong>Type:</strong> {{ $product->productCustomization->custom_type }}</p>
+                                <!-- Customizable Product -->
+                                @if($product->productCustomization->customizationOptions->isNotEmpty())
+                                <label for="custom-options">Choose an option:</label>
+                                <select id="custom-options" class="form-control">
+                                    @foreach($product->productCustomization->customizationOptions as $option)
+                                    <option value="{{ $option->id }}">{{ $option->option_value }}</option>
+                                    @endforeach
+                                </select>
+                                @else
+                                <p>No customization options available.</p>
+                                @endif
+                                @endif
 
-                                        <li class="color-item orange">
-                                            <div class="color-hvr">
-                                                <span class="color-fill"></span>
-                                                <span class="color-name">Orange</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="product-quantity d-flex align-items-center">
-                                    <div class="quantity-field">
-                                        <label for="qty">Qty</label>
-                                        <input type="number" id="qty" min="1" max="100" value="1" />
+                                <!-- Quantity and Buttons -->
+                                <div class="product-quantity d-flex align-items-center mt-4">
+                                    <div class="quantity-field mr-3">
+                                        <label for="qty">Quantity</label>
+                                        <div class="input-group">
+                                            <button class="btn btn-outline-secondary btn-quantity-decrease">-</button>
+                                            <input type="number" id="qty" min="1" max="{{ $product->stock_quantity }}"
+                                                value="1" />
+                                            <button class="btn btn-outline-secondary btn-quantity-increase">+</button>
+                                        </div>
                                     </div>
-
-                                    <a href="single-product.html" class="btn btn-add-to-cart">Add to Cart</a>
+                                    <button class="btn btn-primary btn-add-to-cart">Add to Cart</button>
                                 </div>
 
-                                <div class="product-btn-group">
-                                    <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+ Add to
-                                        Wishlist</a>
-                                    <a href="single-product.html" class="btn btn-add-to-cart btn-whislist">+ Add to
-                                        Compare</a>
+                                <div class="product-btn-group mt-3">
+                                    <button class="btn btn-outline-secondary btn-wishlist"><i class="fa fa-heart"></i>
+                                        Add to Wishlist</button>
+                                    <button class="btn btn-outline-secondary btn-compare"><i class="fa fa-exchange"></i>
+                                        Add to Compare</button>
                                 </div>
                             </div>
                         </div>
                         <!-- Product Details End -->
+
                     </div>
+
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -331,4 +345,25 @@
 </div>
 <!--== Page Content Wrapper End ==-->
 
+<script>
+$(document).ready(function() {
+    $(".product-thumb-carousel").owlCarousel({
+        loop: true, // التكرار التلقائي للسلايدر
+        margin: 10, // المسافة بين العناصر
+        nav: true, // إظهار الأسهم
+        dots: true, // إظهار النقاط
+        responsive: {
+            0: {
+                items: 1
+            }, // شاشة صغيرة: عنصر واحد
+            600: {
+                items: 2
+            }, // شاشة متوسطة: عنصران
+            1000: {
+                items: 3
+            } // شاشة كبيرة: ثلاثة عناصر
+        }
+    });
+});
+</script>
 @endsection

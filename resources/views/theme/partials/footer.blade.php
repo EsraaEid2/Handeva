@@ -1,6 +1,6 @@
 <!-- Footer Follow Up Area Start -->
 <div class="footer-followup-area">
-    <div class="ruby-container">
+    <div class="handeva-container">
         <div class="followup-wrapper">
             <div class="row">
                 <div class="col-lg-12 text-center">

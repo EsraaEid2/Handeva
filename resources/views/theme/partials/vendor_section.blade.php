@@ -35,7 +35,7 @@
                                 <a
                                     href="{{ route('vendor.dashboard', $vendor->vendor_id) }}">{{ $vendor->vendor_name }}</a>
                             </h3>
-                            <p class="vendor-sales" style="font-family: var(--font-family-body);">
+                            <p class="vendor-sales" style="font-family: var(--font-family-secondary);">
                                 Products Uploaded: {{ $vendor->total_uploaded_products }}<br>
                                 Products Sold: {{ $vendor->total_sold_products }}
                             </p>

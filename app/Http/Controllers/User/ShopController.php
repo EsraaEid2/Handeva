@@ -10,69 +10,77 @@ use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    public function index(Request $request, $type = null)
+    public function index(Request $request)
     {
-        $query = Product::with('primaryImage')
+        $query = Product::with(['primaryImage', 'reviews'])
             ->whereNull('deleted_at')
             ->where('is_visible', 1);
     
-        // Filter by product type if provided
-        if ($type === 'traditional') {
-            $query->where('is_traditional', 1);
-        } elseif ($type === 'custom') {
-            $query->where('is_customizable', 1);
-        } elseif ($type === 'sale') {
-            $query->whereNotNull('price_after_discount');
-        }
-    
-        // Apply additional filters if needed
         if ($request->has('category_id')) {
             $query->where('category_id', $request->category_id);
         }
     
-        // Sorting, price filtering, and pagination remain the same
-        $sort = $request->input('sort', 'relevance');
-        switch ($sort) {
-            case 'Name Ascen':
-                $query->orderBy('title', 'asc');
-                break;
-            case 'Name Decen':
-                $query->orderBy('title', 'desc');
-                break;
-            case 'Price Ascen':
-                $query->orderBy('price', 'asc');
-                break;
-            case 'Price Decen':
-                $query->orderBy('price', 'desc');
-                break;
-            default:
-                $query->orderBy('created_at', 'desc');
+        if ($request->has('min_price') && $request->has('max_price')) {
+            $query->whereBetween('price', [$request->min_price, $request->max_price]);
+        }
+    
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'name_asc':
+                    $query->orderBy('title', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('title', 'desc');
+                    break;
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc');
+            }
         }
     
         $products = $query->paginate($request->input('per_page', 8));
     
-        // Fetch categories and price ranges for the view
+        // Calculate the average rating for each product
+        foreach ($products as $product) {
+            $product->avg_rating = $product->reviews->avg('rating');
+        }
+    
         $categories = Category::all();
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
         $priceRanges = $this->generatePriceRanges($minPrice, $maxPrice);
     
-        return view('theme.Collections', compact('products', 'categories', 'priceRanges', 'sort'));
+        if ($request->ajax()) {
+            return response()->json([
+                'products' => $products,
+            ]);
+        }
+    
+        return view('theme.Collections', compact('products', 'categories', 'priceRanges'));
     }
     
-    
-    // Helper function for price ranges
-    private function generatePriceRanges($minPrice, $maxPrice) {
+    private function generatePriceRanges($minPrice, $maxPrice)
+    {
         $ranges = [];
-        $step = 10;
+        $totalRanges = 5; // Number of price ranges you want
+        $rangeStep = ($maxPrice - $minPrice) / $totalRanges; // Calculate step based on range division
     
-        for ($i = $minPrice; $i <= $maxPrice; $i += $step) {
-            $ranges[] = ['min' => $i, 'max' => $i + $step - 0.01];
+        for ($i = 0; $i < $totalRanges; $i++) {
+            $min = $minPrice + ($rangeStep * $i);
+            $max = $i === $totalRanges - 1 ? $maxPrice : $min + $rangeStep; // Ensure the last range goes up to max price
+    
+            $ranges[] = [
+                'min' => round($min, 2),
+                'max' => round($max, 2)
+            ];
         }
     
         return $ranges;
     }
     
-
-    
-}
+}    

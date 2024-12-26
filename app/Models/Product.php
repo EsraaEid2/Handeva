@@ -48,4 +48,14 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function productCustomization()
+    {
+        return $this->hasOne(ProductCustomization::class);
+    }
+
+    public function customizationOptions()
+    {
+        return $this->hasManyThrough(CustomizationOption::class, ProductCustomization::class);
+    }
+
 }

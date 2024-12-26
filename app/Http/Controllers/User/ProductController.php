@@ -10,23 +10,27 @@ use App\Models\Product;
 class ProductController extends Controller
 {
 
-
     public function showProductDetails($id)
     {
-        $product = Product::with('images')->findOrFail($id);
-        return response()->json([
-            'id' => $product->id,
-            'title' => $product->title,
-            'price' => $product->price,
-            'price_after_discount' => $product->price_after_discount,
-            'stock_quantity' => $product->stock_quantity,
-            'sku' => $product->sku,
-            'description' => $product->description,
-            'images' => $product->images->map(fn($img) => ['url' => asset($img->image_url)]),
-            'colors' => $product->colors, // Assuming you have a `colors` field or relationship
-        ]);
+        // Fetch the product with its relationships, including customization
+        $product = Product::with([
+            'category',
+            'vendor',
+            'productImages',
+            'primaryImage',
+            'reviews',
+            'productCustomization',
+            'customizationOptions'
+        ])->findOrFail($id);
+    
+        // Calculate the average rating for the product
+        $product->avg_rating = $product->reviews->avg('rating');
+    
+        // Return the product details view, passing the product data
+        return view('theme.single-product', compact('product'));
     }
-
+    
+    
     public function addToCart(request $request){
         // validate request
         $request->validate([

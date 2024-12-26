@@ -9,7 +9,6 @@ class CustomizationOption extends Model
 {
     use HasFactory;
 
-    // اسم الجدول
     protected $table = 'customization_options';
 
     // الحقول التي يمكن ملؤها
@@ -19,7 +18,7 @@ class CustomizationOption extends Model
     ];
 
     // العلاقة مع جدول product_customization
-    public function customization()
+    public function productCustomization()
     {
         return $this->belongsTo(ProductCustomization::class);
     }

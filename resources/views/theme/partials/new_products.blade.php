@@ -40,8 +40,8 @@
                                         @endif
                                 </div>
 
-                                <span
-                                    class="price">${{ $product->price_after_discount ? number_format($product->price_after_discount, 2) : number_format($product->price, 2) }}</span>
+                                <span class="price">JOD
+                                    {{ $product->price_after_discount ? number_format($product->price_after_discount, 2) : number_format($product->price, 2) }}</span>
                                 <a href="{{ route('cart.add', $product->id) }}" class="btn btn-add-to-cart">+ Add to
                                     Cart</a>
                                 @if (!is_null($product->price_after_discount))
