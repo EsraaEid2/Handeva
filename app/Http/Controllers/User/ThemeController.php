@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Review;
+
 
 class ThemeController extends Controller
 {
-    public function index(){
-        return view('theme.home');
-    }
     public function login_register(){
         return view('theme.login-register');
     }

@@ -10,23 +10,7 @@ use App\Models\Product;
 class ProductController extends Controller
 {
 
-    public function getNewProducts()
-    {
-        dd("test");
-        // Fetch products with visible status and not deleted, including reviews to calculate avg rating
-        $products = Product::select('id', 'title', 'price', 'price_after_discount', 'created_at')
-            ->withCount(['reviews as avg_rating' => function ($query) {
-                $query->selectRaw('avg(rating)');
-            }])
-            ->where('is_visible', 1)
-            ->whereNull('deleted_at')
-            ->orderBy('created_at', 'DESC')
-            ->take(8)
-            ->get();
-    
-        return view('theme.home', ['products' => $products]);
-    }
-    
+
     public function showProductDetails($id)
     {
         $product = Product::with('images')->findOrFail($id);

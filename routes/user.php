@@ -4,11 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ShopController;
 use App\Http\Controllers\User\ThemeController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\User\UserHomeController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\Vendor\VendorController;
 use App\Http\Controllers\User\Auth\UserLoginController;
 use App\Http\Controllers\User\Auth\UserRegisterController;
-use App\Http\Controllers\User\UserProductController;
+use App\Http\Controllers\User\ProductController as UserProductController;
 
 
 
@@ -16,8 +17,8 @@ Route::post('login', [UserLoginController::class, 'checkLogin'])->name('checkLog
 Route::post('user/logout', [UserLoginController::class, 'logout'])->name('userLogout');
 
 Route::post('register', [UserRegisterController::class, 'store'])->name('store');
-Route::get('/new-products', [UserProductController::class, 'getNewProducts'])->name('new.products');
-Route::get('/',[ThemeController::class,'index'])->name('user.home');
+Route::get('/new-products', [UserHomeController::class, 'index'])->name('new.products');
+Route::get('/',[UserHomeController::class,'index'])->name('user.home');
 
 Route::get('/collections/{type?}', [ShopController::class, 'index'])->name('collections');
 
@@ -51,7 +52,7 @@ Route::middleware(['auth:vendor', 'role:2'])->group(function () {
 
 
 Route::controller(ThemeController::class)->name('theme.')->group(function(){
-    Route::get('/', [ThemeController::class, 'index'])->name('home');
+  
     Route::get('/login-register',[ThemeController::class,'login_register'])->name('login_register'); 
     Route::get('/about','about')->name('about');// no view
     Route::get('/cart','cart')->name('cart');

@@ -74,7 +74,7 @@ class UserLoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
     
-        return redirect()->route('theme.home');
+        return redirect()->route('user.home');
     }
     
 }

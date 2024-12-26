@@ -24,6 +24,6 @@ return $next($request);
 }
 
 // Redirect or abort if unauthorized
-return redirect()->route('theme.home')->with('error', 'Unauthorized access.');
+return redirect()->route('user.home')->with('error', 'Unauthorized access.');
 }
 }

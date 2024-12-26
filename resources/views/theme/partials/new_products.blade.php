@@ -19,29 +19,34 @@
                         @foreach ($products as $product)
                         <div class="single-product-item text-center">
                             <figure class="product-thumb">
-                                <a href="{{ route('single.product', $product->id) }}">
+                                <a href="{{ route('product.showProductDetails', $product->id) }}">
                                     <img src="{{ asset('assets/img/new-product-1.jpg') }}" alt="Products"
                                         class="img-fluid">
                                 </a>
                             </figure>
 
                             <div class="product-details">
-                                <h2><a href="{{ route('single.product', $product->id) }}">{{ $product->title }}</a></h2>
+                                <h2><a
+                                        href="{{ route('product.showProductDetails', $product->id) }}">{{ $product->title }}</a>
+                                </h2>
                                 <div class="rating">
-                                    @for ($i = 1; $i <= 5; $i++) @if ($product->avg_rating >= $i)
-                                        <i class="fa fa-star"></i>
-                                        @elseif ($product->avg_rating >= $i - 0.5)
-                                        <i class="fa fa-star-half"></i>
-                                        @else
-                                        <i class="fa fa-star-o"></i>
-                                        @endif
+                                    @if($product->avg_rating > 0)
+                                    @for ($i = 1; $i <= 5; $i++) <span
+                                        class="star {{ $i <= ceil($product->avg_rating) ? 'filled' : '' }}">
+                                        &#9733;</span>
                                         @endfor
+                                        @else
+                                        No ratings yet
+                                        @endif
                                 </div>
+
                                 <span
                                     class="price">${{ $product->price_after_discount ? number_format($product->price_after_discount, 2) : number_format($product->price, 2) }}</span>
-                                <a href="{{ route('add.to.cart', $product->id) }}" class="btn btn-add-to-cart">+ Add to
+                                <a href="{{ route('cart.add', $product->id) }}" class="btn btn-add-to-cart">+ Add to
                                     Cart</a>
-                                <span class="product-bedge">New</span>
+                                @if (!is_null($product->price_after_discount))
+                                <span class="product-bedge sale">Sale</span>
+                                @endif
                             </div>
 
                             <div class="product-meta">
@@ -49,9 +54,9 @@
                                     <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
                                             class="fa fa-compress"></i></span>
                                 </button>
-                                <a href="{{ route('add.to.wishlist', $product->id) }}" data-toggle="tooltip"
+                                <a href="{{ route('wishlist.add', $product->id) }}" data-toggle="tooltip"
                                     data-placement="left" title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                <a href="{{ route('compare.product', $product->id) }}" data-toggle="tooltip"
+                                <a href="{{ route('cart.add', $product->id) }}" data-toggle="tooltip"
                                     data-placement="left" title="Compare"><i class="fa fa-tags"></i></a>
                             </div>
                         </div>
