@@ -4,7 +4,7 @@
             @foreach($products as $product)
             @if($product->is_visible)
             <div class="col-lg-4 col-sm-6">
-                @include('theme.partials.product-card')
+                @include('theme.partials.product_card')
             </div>
             @endif
             @endforeach

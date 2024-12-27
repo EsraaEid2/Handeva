@@ -10,7 +10,6 @@
     @include('theme.partials.bazaar')
     @include('theme.partials.features')
 
-
     <!--== Newsletter Area Start ==-->
     <section id="newsletter-area" class="p-9">
         <div class="container">

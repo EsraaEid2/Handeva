@@ -11,8 +11,7 @@ class UserHomeController extends Controller
     public function index()
     {
         // Fetch products with visible status and not deleted, including reviews
-        $products = Product::select('id', 'title', 'price', 'price_after_discount', 'created_at')
-        ->with('reviews') // Get reviews with the product
+        $products = Product::with('reviews') // Get reviews with the product
         ->where('is_visible', 1)
         ->whereNull('deleted_at')
         ->orderBy('created_at', 'DESC')

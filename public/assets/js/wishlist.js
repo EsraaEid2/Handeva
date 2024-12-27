@@ -1,3 +1,11 @@
+
+document.querySelectorAll('.wishlist-icon').forEach(function(heartIcon) {
+    heartIcon.addEventListener('click', function() {
+        this.classList.toggle('fa-heart');
+        this.classList.toggle('fa-heart-o');
+    });
+});
+
 function addToWishlist(productId) {
     fetch('/wishlist/add', {
         method: 'POST',
