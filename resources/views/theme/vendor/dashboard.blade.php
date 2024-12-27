@@ -23,7 +23,6 @@
                                 <a href="#view-reviews" data-toggle="tab"><i class="fa fa-star"></i> View Reviews</a>
                                 <a href="#customization-orders" data-toggle="tab"><i class="fa fa-paint-brush"></i>
                                     Customization Orders</a>
-                                <a href="login-register.html"><i class="fa fa-sign-out-alt"></i> Logout</a>
                             </div>
                         </div>
 

@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Auth;
 class VendorController extends Controller
     {
 
-        public function index()
+    public function index()
         {
-            // جلب معلومات البائع
+            // Fetch the vendor info
             $vendor = Auth::guard('vendor')->user(); 
         
             if (!$vendor) {
@@ -60,7 +60,7 @@ class VendorController extends Controller
         
             // تمرير البيانات إلى الـ View
             return view('theme.vendor.dashboard', compact('vendor', 'categories', 'customizations', 'products', 'reviews', 'custom_orders'));
-        }
+    }
         
         public function updateAccount(Request $request)
         {
@@ -75,7 +75,7 @@ class VendorController extends Controller
                 'bio' => 'nullable|string',
                 'social_links' => 'nullable|string',
             ]);
-            
+          
             // تحقق إذا كان البريد الإلكتروني قد تم تغييره
             if ($request->email !== $vendor->email) {
                 // إذا تم تغييره، تأكد من أنه فريد في قاعدة البيانات
@@ -105,7 +105,7 @@ class VendorController extends Controller
             
             // حفظ التحديثات في قاعدة البيانات
             $vendor->save();
-            
+            // dd( $vendor->save());
             return back()->with('success', 'Account updated successfully!');
         }
         

@@ -51,6 +51,7 @@
 
 
                         <!-- Product Details Start -->
+                        <!-- Product Details Start -->
                         <div class="col-lg-7 mt-5 mt-lg-0">
                             <div class="product-details">
                                 <!-- Product Title -->
@@ -114,23 +115,27 @@
                                     <div class="quantity-field mr-3">
                                         <label for="qty">Quantity</label>
                                         <div class="input-group">
-                                            <button class="btn btn-outline-secondary btn-quantity-decrease">-</button>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="decrease-qty">-</button>
                                             <input type="number" id="qty" min="1" max="{{ $product->stock_quantity }}"
                                                 value="1" />
-                                            <button class="btn btn-outline-secondary btn-quantity-increase">+</button>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="increase-qty">+</button>
                                         </div>
                                     </div>
                                     <button class="btn btn-primary btn-add-to-cart">Add to Cart</button>
                                 </div>
 
                                 <div class="product-btn-group mt-3">
-                                    <button class="btn btn-outline-secondary btn-wishlist"><i class="fa fa-heart"></i>
+                                    <button class="btn btn-outline-secondary btn-whislist"><i class="fa fa-heart"></i>
                                         Add to Wishlist</button>
                                     <button class="btn btn-outline-secondary btn-compare"><i class="fa fa-exchange"></i>
                                         Add to Compare</button>
                                 </div>
                             </div>
                         </div>
+                        <!-- Product Details End -->
+
                         <!-- Product Details End -->
 
                     </div>
