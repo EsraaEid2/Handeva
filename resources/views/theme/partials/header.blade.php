@@ -68,10 +68,10 @@
                         <ul class="icons">
                             <!-- Wishlist -->
                             <li class="custom-icon" title="Wishlist">
-                                <a href="{{ route('theme.wishlist') }}">
+                                <a href="{{ route('wishlist.show') }}">
                                     <i class="fa fa-heart"></i>
                                 </a>
-                                <span class="count">{{ $wishlistCount }}</span>
+                                <span class="count wishlist-count">{{ $wishlistCount }}</span>
                             </li>
 
                             <!-- Compare -->

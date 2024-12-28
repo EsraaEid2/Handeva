@@ -14,9 +14,11 @@
                     <i class="fa fa-eye"></i>
                 </span>
             </button>
+            <a href="{{ route('wishlist.add', $product->id) }}" class="ep-meta-btn add-to-wishlist"
+                data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                <i class="fa fa-heart"></i>
+            </a>
 
-            <a href="{{ route('wishlist.add', $product->id) }}" class="ep-meta-btn" title="Add to Wishlist"><i
-                    class="fa fa-heart"></i></a>
         </div>
     </div>
 

@@ -26,13 +26,8 @@ Route::get('/collections/{type?}', [ShopController::class, 'index'])->name('coll
 Route::get('collections/product/{id}', [UserProductController::class, 'showProductDetails'])->name('product.showProductDetails');
 Route::post('/cart/add', [OrderController::class, 'addToCart'])->name('cart.add');
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+Route::delete('/wishlist/remove/{productId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-Route::delete('/wishlist/remove/{product_id}', [WishlistController::class, 'removeProduct'])->name('wishlist.remove');
-
-Route::get('/test-session', function () {
-    session()->put('wishlist', [11, 12,13]);
-    return session()->get('wishlist');
-});
 
 
 // Customer routes
@@ -61,6 +56,6 @@ Route::controller(ThemeController::class)->name('theme.')->group(function(){
     Route::get('/contact','contact')->name('contact'); 
     Route::get('/my-account','my_account')->name('my_account');
     Route::get('/single-product','single_product')->name('single_product');
-    Route::get('/wishlist','wishlist')->name('wishlist');
+  
 
 });

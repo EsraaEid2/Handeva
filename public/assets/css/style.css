@@ -5437,3 +5437,104 @@ fieldset legend {
 }
 
 /* Product Card Styles End */
+
+/* Wishlist Page Styles */
+.ep-wishlist-page {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ep-cart-table {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ep-cart-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ep-cart-table th,
+.ep-cart-table td {
+    padding: 15px;
+    text-align: center;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-regular);
+    color: var(--dark-color);
+}
+
+.ep-cart-table th {
+    background: var(--primary-color);
+    color: var(--dark-color);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-medium);
+}
+
+.ep-cart-table td {
+    background: var(--secondary-color);
+    border-bottom: 1px solid var(--neutral-color);
+}
+
+.ep-cart-table .ep-pro-thumbnail img {
+    max-width: 100px;
+    border-radius: 10px;
+}
+
+.ep-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    font-family: var(--font-family-body);
+    font-weight: bold;
+    font-size: var(--font-size-regular);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ep-btn-wishlist,
+.ep-btn-compare,
+.ep-btn-remove-wishlist {
+    background: var(--secondary-color);
+    color: var(--dark-color);
+}
+
+.ep-btn-wishlist:hover,
+.ep-btn-compare:hover,
+.ep-btn-remove-wishlist:hover {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.ep-btn-cart {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.ep-btn-cart:hover {
+    background: var(--dark-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+
+    .ep-cart-table th,
+    .ep-cart-table td {
+        padding: 10px;
+        font-size: var(--font-size-small);
+    }
+
+    .ep-cart-table .ep-pro-thumbnail img {
+        max-width: 80px;
+    }
+}

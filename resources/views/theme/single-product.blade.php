@@ -97,7 +97,8 @@
                                 </div>
                                 <div>
                                     <div class="ep-btn-group">
-                                        <button class="ep-btn ep-btn-wishlist" data-product-id="{{ $product->id }}">
+                                        <button class="ep-btn ep-btn-wishlist add-to-wishlist"
+                                            data-product-id="{{ $product->id }}">
                                             <i class="fa fa-heart"></i> Add to Wishlist
                                         </button>
 
