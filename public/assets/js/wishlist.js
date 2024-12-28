@@ -1,12 +1,5 @@
-
-document.querySelectorAll('.wishlist-icon').forEach(function(heartIcon) {
-    heartIcon.addEventListener('click', function() {
-        this.classList.toggle('fa-heart');
-        this.classList.toggle('fa-heart-o');
-    });
-});
-
 function addToWishlist(productId) {
+    console.log('esraa');
     fetch('/wishlist/add', {
         method: 'POST',
         headers: {
@@ -15,59 +8,60 @@ function addToWishlist(productId) {
         },
         body: JSON.stringify({ product_id: productId })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        if (data.success) {
-            alert(data.message); // Show success message
-        } else {
-            alert(data.message); // Show failure message
-        }
+        Swal.fire({
+            icon: data.success ? 'success' : 'error',
+            title: data.success ? 'Added!' : 'Oops...',
+            text: data.message,
+        });
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while adding to the wishlist.');
+        console.error('Error:', error); // تصحيح الخطأ هنا
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while adding to the wishlist.',
+        });
     });
 }
 
- // Wait for the DOM to be ready
- document.addEventListener('DOMContentLoaded', function() {
-    // Listen for click events on the remove buttons
-    document.querySelectorAll('.btn-remove-wishlist').forEach(function(button) {
-        button.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default action (page reload)
-            
-            let productId = this.getAttribute('data-id'); // Get product id from data attribute
-            
-            // Send AJAX request to remove the product
-            fetch('/wishlist/remove/' + productId, {
-                method: 'DELETE', // Use DELETE method for removing
+document.addEventListener('DOMContentLoaded', function () {
+    // Handle remove from wishlist
+    document.querySelectorAll('.btn-remove-wishlist').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            let productId = this.getAttribute('data-id');
+
+            fetch(`/wishlist/remove/${productId}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF Token
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
-                body: JSON.stringify({
-                    product_id: productId
-                })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // If successful, remove the product row from the table
-                    this.closest('tr').remove();
-                    alert('Product removed from wishlist!');
+                    this.closest('tr').remove(); // Remove the item from the table
+                    Swal.fire('Deleted!', 'Product removed from wishlist.', 'success');
                 } else {
-                    alert('Failed to remove product.');
+                    Swal.fire('Oops...', 'Failed to remove product.', 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while removing the product.');
+                Swal.fire('Error', 'An error occurred while removing the product.', 'error');
             });
+        });
+    });
+
+    // Handle add to wishlist
+    document.querySelectorAll('.ep-btn-wishlist').forEach(function (button) {
+        button.addEventListener('click', function () {
+            let productId = this.getAttribute('data-product-id');
+            addToWishlist(productId); 
         });
     });
 });

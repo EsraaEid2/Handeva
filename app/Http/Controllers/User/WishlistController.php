@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Models\Wishlist;
+use App\Models\Product;
 
 class WishlistController extends Controller
 {
@@ -14,63 +18,82 @@ class WishlistController extends Controller
     public function addToWishlist(Request $request)
     {
         $productId = $request->product_id;
-
-        // if the user logged in
-        if (Auth::check() && Auth::user()->role_id == 1) {
+        // ensure if product id send within request
+        if (!$productId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product ID is required.',
+            ]);
+        }
+    
+        if (Auth::guard('web')->check()) {
             $userId = Auth::id();
-
-          // check if product already exist in table
-            $existingWishlist = \DB::table('wishlists')
-                ->where('user_id', $userId)
-                ->where('product_id', $productId)
-                ->where('is_deleted', 0)
-                ->first();
-
-            if ($existingWishlist) {
+            
+           // if the product already exists in database
+            $product = Product::find($productId);
+            if (!$product) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Product is already in the wishlist.',
+                    'message' => 'Product not found.',
                 ]);
             }
-
-            // add product to wislist table
-            \DB::table('wishlists')->insert([
+    
+           // if the product already exists in wishlist
+            $existingWishlistItem = Wishlist::where('user_id', $userId)
+                                           ->where('product_id', $productId)
+                                           ->first();
+    
+            if ($existingWishlistItem) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Product is already in your wishlist.',
+                ]);
+            }
+    
+          // Store the product in user's wishlist
+            $wishlist = Wishlist::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
-                'is_deleted' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
-
+    
             return response()->json([
                 'success' => true,
-                'message' => 'Product successfully added to the wishlist.',
+                'message' => 'Product added to wishlist.',
             ]);
-        }
-
-        // if user is guest
-        $wishlist = session()->get('wishlist', []);
-
-        if (!in_array($productId, $wishlist)) {
+        } else {
+          // if the user is GUEST
+            $wishlist = Session::get('wishlist', []);
+    
+         // if product already exist in session
+            if (in_array($productId, $wishlist)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Product is already in your wishlist.',
+                ]);
+            }
+    
+        // store product in session
             $wishlist[] = $productId;
-            session()->put('wishlist', $wishlist);
-
+            Session::put('wishlist', $wishlist);
+    
             return response()->json([
                 'success' => true,
-                'message' => 'Product successfully added to the wishlist.',
+                'message' => 'Product added to wishlist.',
             ]);
         }
-
+    
         return response()->json([
             'success' => false,
-            'message' => 'Product is already in the wishlist.',
+            'message' => 'Product not found.',
         ]);
     }
+    
     /**
      * View the wishlist.
      */
     public function showWishlist()
     {
+      
         if (Auth::check() && Auth::user()->role_id == 1) {
             // Fetch wishlist items for logged-in users
             $wishlistItems = \DB::table('wishlists')
@@ -115,36 +138,48 @@ class WishlistController extends Controller
     /**
      * Remove a product from the wishlist.
      */
-    public function removeProduct($product_id)
+    public function removeFromWishlist(Request $request)
     {
-        if (Auth::check() && Auth::user()->role_id == 1) {
-            // If the user is logged in, remove from the database
-            $wishlist = \DB::table('wishlists')
-                ->where('user_id', Auth::id())
-                ->where('product_id', $product_id)
-                ->where('is_deleted', 0)
-                ->first();
+        $productId = $request->product_id;
+    
+        // إذا كان المستخدم مسجل دخول
+        if (Auth::guard('web')->check()) {
+            $userId = Auth::id();
+            
+            // حذف المنتج من قاعدة البيانات
+            $wishlist = Wishlist::where('user_id', $userId)
+                                ->where('product_id', $productId)
+                                ->first();
     
             if ($wishlist) {
-                \DB::table('wishlists')
-                    ->where('id', $wishlist->id)
-                    ->update(['is_deleted' => 1]); // Soft delete by marking as deleted
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['success' => false, 'message' => 'Product not found in wishlist']);
+                $wishlist->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product removed from wishlist.',
+                ]);
             }
         } else {
-            // Handle guest user (if applicable)
-            $wishlist = session()->get('wishlist', []);
-            if (($key = array_search($product_id, $wishlist)) !== false) {
+            // إذا كان المستخدم زائر
+            $wishlist = Session::get('wishlist', []);
+            
+            // حذف المنتج من الـ session
+            if (($key = array_search($productId, $wishlist)) !== false) {
                 unset($wishlist[$key]);
-                session()->put('wishlist', $wishlist); // Update the session after removing the product
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['success' => false, 'message' => 'Product not found in wishlist']);
+                Session::put('wishlist', $wishlist);
+    
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product removed from wishlist.',
+                ]);
             }
         }
+    
+        return response()->json([
+            'success' => false,
+            'message' => 'Product not found in wishlist.',
+        ]);
     }
+    
     
     
 }

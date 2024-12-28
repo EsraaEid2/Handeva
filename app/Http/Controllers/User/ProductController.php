@@ -22,7 +22,7 @@ class ProductController extends Controller
             'productCustomization',
             'customizationOptions'
         ])->findOrFail($id);
-    
+    // dd($product);
         // Calculate the average rating for the product
         $product->avg_rating = $product->reviews->avg('rating');
     
