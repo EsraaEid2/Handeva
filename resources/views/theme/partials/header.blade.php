@@ -92,7 +92,7 @@
                             <li class="shop-cart custom-icon" title="Cart">
                                 <a href="{{ route('theme.cart') }}">
                                     <i class="fa fa-shopping-bag"></i>
-                                    <span class="count">{{ $cartCount }}</span>
+                                    <span class="count cart-count">{{ $cartCount }}</span>
                                 </a>
                                 <div class="mini-cart">
                                     <div class="mini-cart-body">

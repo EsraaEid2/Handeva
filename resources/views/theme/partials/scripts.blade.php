@@ -25,6 +25,7 @@
  <script src="{{ asset('assets') }}/js/active.js"></script>
  <!--=== wishlist ===-->
  <script src="{{ asset('assets') }}/js/wishlist.js"></script>
+ <script src="{{ asset('assets') }}/js/cart.js"></script>
  <script src="{{ asset('assets') }}/js/profile.js"></script>
  <script src="{{ asset('assets') }}/js/quickViewModal.js"></script>
  <!-- Add SweetAlert2 -->

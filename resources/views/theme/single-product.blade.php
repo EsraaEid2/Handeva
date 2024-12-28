@@ -78,23 +78,29 @@
                                     @endif
                                 </div>
                                 <!-- Quantity and Buttons -->
+                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                <meta name="cart-add-route" content="{{ route('cart.add') }}">
+
                                 <div class="ep-product-quantity d-flex align-items-center mt-4">
                                     <div class="ep-quantity-field mr-3">
                                         <label for="qty">Quantity</label>
                                         <div class="input-group">
                                             <button class="btn btn-outline-secondary" type="button"
                                                 id="decrease-qty">-</button>
-                                            <input type="number" id="qty" min="1" max="{{ $product->stock_quantity }}"
-                                                value="1" />
+                                            <input type="number" class="quantity-input" id="qty" min="1"
+                                                max="{{ $product->stock_quantity }}" value="1" />
                                             <button class="btn btn-outline-secondary" type="button"
                                                 id="increase-qty">+</button>
                                         </div>
                                     </div>
                                     <div>
-                                        <a href="{{ route('cart.add', $product->id) }}" class="ep-btn ep-btn-cart"> <i
-                                                class="fa fa-shopping-cart"></i> Add to Cart</a>
+                                        <a href="#" class="ep-add-to-cart" data-product-id="{{ $product->id }}">
+                                            <i class="fa fa-shopping-cart"></i> Add to Cart
+                                        </a>
                                     </div>
                                 </div>
+
+
                                 <div>
                                     <div class="ep-btn-group">
                                         <button class="ep-btn ep-btn-wishlist add-to-wishlist"

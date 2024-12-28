@@ -51,9 +51,9 @@
             JOD {{ number_format($product->price, 2) }}
             @endif
         </span>
-
-        <a href="{{ route('cart.add', $product->id) }}" class="ep-add-to-cart">
+        <a href="#" class="ep-add-to-cart" data-product-id="{{ $product->id }}" data-quantity="1">
             <i class="fa fa-shopping-cart"></i> Add to Cart
         </a>
+
     </div>
 </div>

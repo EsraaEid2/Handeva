@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\ShopController;
 use App\Http\Controllers\User\ThemeController;
 use App\Http\Controllers\Admin\OrderController;
@@ -24,10 +25,13 @@ Route::get('/collections/{type?}', [ShopController::class, 'index'])->name('coll
 
 
 Route::get('collections/product/{id}', [UserProductController::class, 'showProductDetails'])->name('product.showProductDetails');
-Route::post('/cart/add', [OrderController::class, 'addToCart'])->name('cart.add');
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
 Route::delete('/wishlist/remove/{productId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+
+// cart routes
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
 
 
 // Customer routes
