@@ -41,5 +41,18 @@
         </div>
     </section>
     <!--== Newsletter Area End ==-->
+    @if(session('status') === 'pending_vendor')
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Thank you for registering as a vendor!',
+        text: 'Your request is under review. We will contact you soon. Stay tuned and get ready to join our amazing marketplace!',
+        confirmButtonText: 'OK',
+    });
+});
+    </script>
+    @endif
+
 
     @endsection

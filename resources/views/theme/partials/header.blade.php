@@ -16,45 +16,53 @@
                     <div class="main-menu-wrap">
                         <nav id="mainmenu">
                             <ul>
-                                <li class="@yield('home-active')">
+                                <li class="nav-item {{ Request::routeIs('user.home') ? 'active' : '' }}">
                                     <a href="{{ route('user.home') }}">Home</a>
                                 </li>
-                                <li class="@yield('collections-active')">
-                                    <a href="{{ route('collections') }}">Collections</a>
+                                <li class="nav-item {{ Request::routeIs('collections') ? 'active' : '' }}">
+                                    <a href="{{ route('collections') }}">Shop</a>
                                 </li>
-                                <li class="@yield('contact-active')">
-                                    <a href="{{ route('theme.contact') }}">Contact Us</a>
-                                </li>
-                                <li class="@yield('about-active')">
+                                <li class="nav-item {{ Request::routeIs('theme.about') ? 'active' : '' }}">
                                     <a href="{{ route('theme.about') }}">About Us</a>
+                                </li>
+                                <li class="nav-item {{ Request::routeIs('theme.contact') ? 'active' : '' }}">
+                                    <a href="{{ route('theme.contact') }}">Contact Us</a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
+
                 </div>
                 <!-- Navigation Area End -->
 
                 <!--== Header Right Meta Start ==-->
                 <div class="header-right-meta text-right">
                     <ul class="custom-options">
-                        @guest
-                        <!-- Login Button for Guests -->
-                        <li class="custom-login">
-                            <a href="{{ route('theme.login_register') }}"
-                                class="custom-btn custom-btn-primary">Login</a>
+                        <!-- حالة المستخدم مسجل الدخول من الجارد 'web' -->
+                        @if(Auth::guard('web')->check())
+                        <!-- Wishlist Icon -->
+                        <li class="custom-icon" title="Wishlist">
+                            <a href="{{ route('wishlist.show') }}">
+                                <i class="fa fa-heart"></i>
+                                <span class="count wishlist-count">{{ $wishlistCount }}</span>
+                            </a>
                         </li>
-                        @else
-                        <!-- Profile and Dropdown for Authenticated Users -->
+
+                        <!-- Cart Icon -->
+                        <li class="shop-cart custom-icon" title="Cart">
+                            <a href="{{ route('cart.show') }}">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="count cart-count">{{ $cartCount }}</span>
+                            </a>
+                        </li>
+
+                        <!-- User Profile Dropdown -->
                         <li class="custom-dropdown">
                             <a href="#" class="custom-dropdown-toggle">
                                 <i class="fa fa-user-circle"></i>
                             </a>
                             <ul class="custom-dropdown-menu">
-                                @if(Auth::guard('web')->check())
                                 <li><a href="{{ route('theme.my_account') }}">Your Profile</a></li>
-                                @elseif(Auth::guard('vendor')->check())
-                                <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
-                                @endif
                                 <li>
                                     <form action="{{ route('userLogout') }}" method="POST">
                                         @csrf
@@ -63,67 +71,59 @@
                                 </li>
                             </ul>
                         </li>
-                        @endguest
 
-                        <ul class="icons">
-                            <!-- Wishlist -->
-                            <li class="custom-icon" title="Wishlist">
-                                <a href="{{ route('wishlist.show') }}">
-                                    <i class="fa fa-heart"></i>
-                                </a>
+                        <!-- حالة المستخدم مسجل الدخول من الجارد 'vendor' -->
+                        @elseif(Auth::guard('vendor')->check())
+                        <!-- Wishlist Icon -->
+                        <li class="custom-icon" title="Wishlist">
+                            <a href="{{ route('wishlist.show') }}">
+                                <i class="fa fa-heart"></i>
                                 <span class="count wishlist-count">{{ $wishlistCount }}</span>
-                            </li>
+                            </a>
+                        </li>
 
-                            <!-- Compare -->
-                            <li class="custom-icon" title="Compare">
-                                <a href="#">
-                                    <i class="fa fa-exchange-alt"></i>
-                                </a>
-                            </li>
+                        <!-- User Dashboard Dropdown -->
+                        <li class="custom-dropdown">
+                            <a href="#" class="custom-dropdown-toggle">
+                                <i class="fa fa-user-circle"></i>
+                            </a>
+                            <ul class="custom-dropdown-menu">
+                                <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
+                                <li>
+                                    <form action="{{ route('userLogout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="custom-btn custom-btn-link">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <!-- Search -->
-                            <li class="custom-icon" title="Search">
-                                <a href="#" class="modal-active">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </li>
+                        <!-- حالة الضيف (غير مسجل الدخول) -->
+                        @else
+                        <!-- Login Button -->
+                        <li class="custom-login">
+                            <a href="{{ route('theme.login_register') }}" class="custom-btn">Login</a>
+                        </li>
 
-                            <!-- Shopping Cart -->
-                            <li class="shop-cart custom-icon" title="Cart">
-                                <a href="{{ route('theme.cart') }}">
-                                    <i class="fa fa-shopping-bag"></i>
-                                    <span class="count cart-count">{{ $cartCount }}</span>
-                                </a>
-                                <div class="mini-cart">
-                                    <div class="mini-cart-body">
-                                        <div class="single-cart-item">
-                                            <figure class="product-thumb">
-                                                <a href="#">
-                                                    <img src="{{ asset('assets') }}/img/product-1.jpg" alt="Products">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-name">
-                                                    <a href="#">Sprite Yoga Companion</a>
-                                                </h2>
-                                                <div class="cal">
-                                                    <span class="quantity">3</span>
-                                                    <span class="multiplication">X</span>
-                                                    <span class="price">$77.00</span>
-                                                </div>
-                                            </div>
-                                            <a href="#" class="remove-icon">
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mini-cart-footer">
-                                        <a href="checkout.html" class="btn-add-to-cart">Checkout</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        <!-- Wishlist Icon -->
+                        <li class="custom-icon" title="Wishlist">
+                            <a href="{{ route('wishlist.show') }}">
+                                <i class="fa fa-heart"></i>
+                                <span class="count wishlist-count">{{ $wishlistCount }}</span>
+                            </a>
+                        </li>
+
+                        <!-- Cart Icon -->
+                        <li class="shop-cart custom-icon" title="Cart">
+                            <a href="{{ route('cart.show') }}">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="count cart-count">{{ $cartCount }}</span>
+                            </a>
+                        </li>
+                        @endif
                     </ul>
+
+
                 </div>
                 <!--== Header Right Meta End ==-->
             </div>

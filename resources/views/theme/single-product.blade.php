@@ -1,9 +1,7 @@
 @extends('theme.master')
-@section('title','Single-product')
+@section('title','Product Details')
 @section('content')
-
-@include('theme.partials.hero',['title' => 'Product'])
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
     <div class="handeva-container">
@@ -78,7 +76,7 @@
                                     @endif
                                 </div>
                                 <!-- Quantity and Buttons -->
-                                <meta name="csrf-token" content="{{ csrf_token() }}">
+
                                 <meta name="cart-add-route" content="{{ route('cart.add') }}">
 
                                 <div class="ep-product-quantity d-flex align-items-center mt-4">
@@ -94,7 +92,10 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <a href="#" class="ep-add-to-cart" data-product-id="{{ $product->id }}">
+                                        <a href="#" class="ep-add-to-cart" data-product-id="{{ $product->id }}"
+                                            data-product-price="{{ $product->price }}"
+                                            data-product-discounted-price="{{ $product->price_after_discount ?? 0 }}"
+                                            onclick="addToCart(event, {{ $product->id }}, '{{ $product->title }}', {{ $product->price }})">
                                             <i class="fa fa-shopping-cart"></i> Add to Cart
                                         </a>
                                     </div>

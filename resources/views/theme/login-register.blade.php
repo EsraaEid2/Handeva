@@ -2,7 +2,6 @@
 @section('title','Member Area')
 @section('content')
 
-@include('theme.partials.hero',['title' => 'Login'])
 
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
@@ -97,6 +96,10 @@
                                         <label>Register as:</label><br>
                                         <input type="radio" name="is_pending_vendor" value="0" checked> Customer
                                         <input type="radio" name="is_pending_vendor" value="1"> Vendor
+                                    </div>
+
+                                    <div class="single-input-item" id="phone-field" style="display: none;">
+                                        <input type="tel" name="phone_number" placeholder="Enter your Phone Number" />
                                     </div>
 
                                     <div class="single-input-item">

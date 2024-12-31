@@ -19,7 +19,7 @@ class LoginController extends Controller
     {
       
         if (Auth::user()->role_id == '3') { // Admin
-            dd('test');
+            // dd('test');
             return redirect('admin/dashboard')
                 ->with('status', 'Welcome to the Admin Dashboard!');
         } elseif (in_array(Auth::user()->role_id, ['1', '2'])) { // Customer or Vendor

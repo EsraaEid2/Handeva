@@ -8,12 +8,13 @@
         <span class="ep-sale-badge">Sale</span>
         @endif
         <div class="ep-product-meta">
-            <button type="button" class="ep-meta-btn ep-quick-view" data-toggle="modal" data-target="#quickView"
-                data-product="{{ json_encode($product) }}">
+            <a href="{{ route('product.showProductDetails', ['id' => $product->id]) }}"
+                class="ep-meta-btn ep-quick-view">
                 <span data-toggle="tooltip" data-placement="left" title="Quick View">
                     <i class="fa fa-eye"></i>
                 </span>
-            </button>
+            </a>
+
             <a href="{{ route('wishlist.add', $product->id) }}" class="ep-meta-btn add-to-wishlist"
                 data-product-id="{{ $product->id }}" title="Add to Wishlist">
                 <i class="fa fa-heart"></i>
@@ -51,9 +52,8 @@
             JOD {{ number_format($product->price, 2) }}
             @endif
         </span>
-        <a href="#" class="ep-add-to-cart" data-product-id="{{ $product->id }}" data-quantity="1">
-            <i class="fa fa-shopping-cart"></i> Add to Cart
-        </a>
+        <button class="add-to-cart-btn" data-product-id="{{ $product->id }}">Add to Cart</button>
+
 
     </div>
 </div>

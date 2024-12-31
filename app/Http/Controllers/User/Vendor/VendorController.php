@@ -111,7 +111,6 @@ class VendorController extends Controller
         
         public function uploadProduct(Request $request)
         {
-            
             $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
@@ -121,9 +120,9 @@ class VendorController extends Controller
                 'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             ]);
         
-            $vendorId = Auth::id(); // يمكن الحصول على الـ ID مباشرة لأن الميدل وير يضمن أن المستخدم هو Vendor
+            $vendorId = Auth::id(); // الحصول على معرف المستخدم
         
-            // حساب السعر بعد الخصم إذا كان هناك خصم
+            // حساب السعر بعد الخصم إذا وجد
             $priceAfterDiscount = $request->discount ? 
                 $request->price - ($request->price * ($request->discount / 100)) : null;
         
@@ -139,19 +138,18 @@ class VendorController extends Controller
                 'price_after_discount' => $priceAfterDiscount,
                 'vendor_id' => $vendorId,
             ]);
-            // dd( $product->id);
+        
             // رفع الصور
             foreach ($request->file('images') as $index => $image) {
-                $path = $image->store('product_images', 'public');
+                $imagePath = $this->uploadImage($image, 'product_images');
+                
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'image_url' => $path,
+                    'image_url' => $imagePath,
                     'is_primary' => $index === 0,
                 ]);
             }
-            $images = ProductImage::where('product_id', $product->id)->get();
-        // dd($image);
-          
+        
             return redirect()->back()->with('success', 'Product uploaded successfully!');
         }
         
@@ -221,7 +219,14 @@ class VendorController extends Controller
             return view('vendor.custom-orders', compact('customOrders'));
         }
 
-
+        private function uploadImage($file, $folder)
+        {
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path("uploads/{$folder}/");
+            $file->move($destinationPath, $filename);
+            return "uploads/{$folder}/" . $filename;
+        }
+        
 
 
         

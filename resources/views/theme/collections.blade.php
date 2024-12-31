@@ -24,9 +24,6 @@
                     <!-- Products Grid -->
                     @include('theme.partials.product-grid')
                     <!-- Pagination -->
-                    <nav class="page-pagination">
-                        {{ $products->appends(request()->input())->links() }}
-                    </nav>
                 </div>
             </div>
             <!-- Products Area End -->
@@ -40,63 +37,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortSelect = document.getElementById('sort');
     const sidebarLinks = document.querySelectorAll('.filter-link');
 
-    // Function to handle filter updates
     function updateFilters() {
-        let url = '/products?';
+        let url = '/products?' + new URLSearchParams({
+            sort: sortSelect.value,
+            category_id: document.querySelector('.filter-link.active')?.dataset.id || '',
+            min_price: document.getElementById('minPrice')?.value || '',
+            max_price: document.getElementById('maxPrice')?.value || '',
+            per_page: 9
+        }).toString();
 
-        // Add sort parameter
-        const sortValue = sortSelect.value;
-        if (sortValue) {
-            url += `sort=${sortValue}&`;
-        }
-
-        // Add selected category
-        const categoryId = document.querySelector('.filter-link.active')?.getAttribute('data-id');
-        if (categoryId) {
-            url += `category_id=${categoryId}&`;
-        }
-
-        // Add price range (if applicable)
-        const minPrice = document.getElementById('minPrice')?.value;
-        const maxPrice = document.getElementById('maxPrice')?.value;
-        if (minPrice && maxPrice) {
-            url += `min_price=${minPrice}&max_price=${maxPrice}&`;
-        }
-
-        // Fetch new products
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 const productsList = document.getElementById('products-list');
-                productsList.innerHTML = ''; // Clear previous products
-                data.products.forEach(product => {
+                const productsWrapper = document.createElement('div');
+                productsWrapper.className = 'products-wrapper products-gird';
+
+                productsList.innerHTML = '';
+                data.products.data.forEach(product => {
                     const productElement = document.createElement('div');
-                    productElement.classList.add('product-item');
+                    productElement.className = 'single-product-item';
                     productElement.innerHTML = `
+                        <img src="${product.primary_image.url}" alt="${product.title}">
                         <h3>${product.title}</h3>
-                        <p>${product.price}</p>
+                        <p>Price: $${product.price}</p>
+                        <p>Rating: ${Math.round(product.avg_rating * 10) / 10} / 5</p>
+                        <a href="/product/${product.id}" class="btn btn-primary">View Details</a>
                     `;
-                    productsList.appendChild(productElement);
+                    productsWrapper.appendChild(productElement);
                 });
+
+                productsList.appendChild(productsWrapper);
+                const pagination = document.createElement('nav');
+                pagination.className = 'page-pagination';
+                pagination.innerHTML = data.links;
+                productsList.appendChild(pagination);
             })
             .catch(error => console.log(error));
     }
 
-    // Listen for changes on sort select
     sortSelect.addEventListener('change', updateFilters);
-
-    // Listen for category filter clicks
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // Toggle active state
-            sidebarLinks.forEach(link => link.classList.remove('active'));
-            this.classList.add('active');
-
-            updateFilters();
-        });
-    });
+    sidebarLinks.forEach(link => link.addEventListener('click', function(e) {
+        e.preventDefault();
+        sidebarLinks.forEach(link => link.classList.remove('active'));
+        this.classList.add('active');
+        updateFilters();
+    }));
 });
 </script>
 @endsection

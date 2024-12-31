@@ -2,121 +2,68 @@
 @section('title','Cart')
 @section('content')
 
-@include('theme.partials.hero',['title' => 'Shopping Cart'])
+<!-- @include('theme.partials.hero',['title' => 'Shopping Cart']) -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-<!--== Page Content Wrapper Start ==-->
-<div id="page-content-wrapper" class="p-9">
-    <div class="container">
-        <!-- Cart Page Content Start -->
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Cart Table Area -->
-                <div class="cart-table table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="pro-thumbnail">Thumbnail</th>
-                                <th class="pro-title">Product</th>
-                                <th class="pro-price">Price</th>
-                                <th class="pro-quantity">Quantity</th>
-                                <th class="pro-subtotal">Total</th>
-                                <th class="pro-remove">Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-1.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Zeon Zen 4 Pro</a></td>
-                                <td class="pro-price"><span>$295.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="pro-qty"><input type="text" value="1"></div>
-                                </td>
-                                <td class="pro-subtotal"><span>$295.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-2.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Aquet Drone D 420</a></td>
-                                <td class="pro-price"><span>$275.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="pro-qty"><input type="text" value="2"></div>
-                                </td>
-                                <td class="pro-subtotal"><span>$550.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-3.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Game Station X 22</a></td>
-                                <td class="pro-price"><span>$295.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="pro-qty"><input type="text" value="1"></div>
-                                </td>
-                                <td class="pro-subtotal"><span>$295.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                            src="{{ asset('assets') }}/img/product-4.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Roxxe Headphone Z 75 </a></td>
-                                <td class="pro-price"><span>$110.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="pro-qty"><input type="text" value="1"></div>
-                                </td>
-                                <td class="pro-subtotal"><span>$110.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<div class="elegant-cart-wrapper">
+    <div class="container-fluid">
+        <div class="cart-content">
+            <div class="cart-items-section">
+                <h2 class="cart-heading">Your Selected Items</h2>
+                <div class="cart-items">
+                    @foreach($cartItems as $item)
+                    <div class="cart-item" data-product-id="{{ $item['product_id'] }}">
+                        <div class="item-image">
+                            <img src="{{ asset($item['image_url']) }}" alt="{{ $item['title'] }}">
+                        </div>
+                        <div class="item-details">
+                            <h3 class="item-name">{{ $item['title'] }}</h3>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="quantity-btn decrease">−</button>
+                            <input type="number" value="{{ $item['quantity'] }}" min="1"
+                                max="{{ $item['stock_quantity'] }}" class="quantity-input">
+                            <button class="quantity-btn increase">+</button>
+                        </div>
+                        <div class="item-price">
+                            <p class="current-price">JOD
+                                {{ number_format($item['price_after_discount'] ?? $item['price'], 2) }}
+                            </p>
+                            <p class="total-item-price">JOD {{ number_format($item['total_price'], 2) }}</p>
+                        </div>
+                        <td>
+                            <button class="remove-item" data-product-id="{{ $item['product_id'] }}">
+                                <i class="fa fa-trash"></i>
+                            </button>
 
-                <!-- Cart Update Option -->
-                <div class="cart-update-option d-block d-lg-flex">
-                    <div class="apply-coupon-wrapper">
-                        <form action="#" method="post" class=" d-block d-md-flex">
-                            <input type="text" placeholder="Enter Your Coupon Code" />
-                            <button class="btn-add-to-cart">Apply Coupon</button>
-                        </form>
+                        </td>
                     </div>
-                    <div class="cart-update">
-                        <a href="#" class="btn-add-to-cart">Update Cart</a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-6 ml-auto">
-                <!-- Cart Calculation Area -->
-                <div class="cart-calculator-wrapper">
-                    <h3>Cart Totals</h3>
-                    <div class="cart-calculate-items">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td>Sub Total</td>
-                                    <td>$230</td>
-                                </tr>
-                                <tr>
-                                    <td>Shipping</td>
-                                    <td>$70</td>
-                                </tr>
-                                <tr>
-                                    <td>Total</td>
-                                    <td class="total-amount">$300</td>
-                                </tr>
-                            </table>
+            <div class="cart-summary">
+                <div class="summary-content">
+                    <h2 class="summary-heading">Order Summary</h2>
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal" class="amount">JOD {{ number_format($totalPrice, 2) }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="shipping" class="amount">JOD {{ number_format($shipping, 2) }}</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="total" class="amount">JOD {{ number_format($total, 2) }}</span>
                         </div>
                     </div>
-                    <a href="checkout.html" class="btn-add-to-cart">Proceed To Checkout</a>
+                    <button class="checkout-button">Proceed to Checkout</button>
                 </div>
             </div>
         </div>
-        <!-- Cart Page Content End -->
     </div>
 </div>
-<!--== Page Content Wrapper End ==-->
 
 @endsection

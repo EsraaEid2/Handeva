@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use App\Models\Product;
 
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -43,9 +43,9 @@ class ShopController extends Controller
             }
         }
     
-        $products = $query->paginate($request->input('per_page', 8));
+        $products = $query->paginate($request->input('per_page', 9));
     
-        // Calculate the average rating for each product
+        // حساب متوسط التقييم
         foreach ($products as $product) {
             $product->avg_rating = $product->reviews->avg('rating');
         }
@@ -63,6 +63,7 @@ class ShopController extends Controller
     
         return view('theme.Collections', compact('products', 'categories', 'priceRanges'));
     }
+    
     
     private function generatePriceRanges($minPrice, $maxPrice)
     {

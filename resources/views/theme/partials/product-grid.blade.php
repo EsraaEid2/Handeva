@@ -1,16 +1,18 @@
-<div class="shop-page-products-wrap">
-    <div class="products-wrapper">
-        <div class="row">
-            @foreach($products as $product)
-            @if($product->is_visible)
-            <div class="col-lg-4 col-sm-6">
-                @include('theme.partials.product_card')
-            </div>
-            @endif
-            @endforeach
+<div id="products-list" class="shop-page-products-wrap">
+    <div class="products-wrapper products-gird">
+        @foreach($products as $product)
+        @if($product->is_visible)
+        <div class="single-product-item">
+            @include('theme.partials.product_card')
         </div>
+        @endif
+        @endforeach
+    </div>
+    <div class="page-pagination">
+        {{ $products->links() }}
     </div>
 </div>
+
 <script>
 document.getElementById('decrease-qty').addEventListener('click', function() {
     var qtyInput = document.getElementById('qty');

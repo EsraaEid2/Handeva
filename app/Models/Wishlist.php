@@ -20,7 +20,10 @@ class Wishlist extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
     // Define the relationship with the Product model
     public function product()
     {

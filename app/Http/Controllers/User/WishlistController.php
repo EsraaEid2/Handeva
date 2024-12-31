@@ -107,7 +107,7 @@ class WishlistController extends Controller
      * View the wishlist.
      */
     
-     public function showWishlist()
+    public function showWishlist()
      {
          $wishlistItems = [];
      

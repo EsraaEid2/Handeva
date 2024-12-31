@@ -37,7 +37,7 @@
             <li>
                 <a
                     href="{{ route('collections', array_merge(request()->all(), ['min_price' => $range['min'], 'max_price' => $range['max']])) }}">
-                    JOD {{ number_format($range['min'], 2) }} - ${{ number_format($range['max'], 2) }}
+                    JOD {{ number_format($range['min'], 2) }} - JOD {{ number_format($range['max'], 2) }}
                 </a>
             </li>
             @endforeach

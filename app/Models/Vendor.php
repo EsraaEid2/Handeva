@@ -45,6 +45,9 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(ProductImage::class);
     }
+public function wishlists()
+{
+    return $this->hasMany(Wishlist::class);
 
-
+}
 }

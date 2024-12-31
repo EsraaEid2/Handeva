@@ -1,15 +1,13 @@
 <div class="product-cong-left d-flex align-items-center">
-    <ul class="product-view d-flex align-items-center">
-        <li class="current column-gird">
-            <i class="fa fa-bars fa-rotate-90"></i>
-        </li>
-        <li class="box-gird">
-            <i class="fa fa-th"></i>
-        </li>
-        <li class="list">
-            <i class="fa fa-list-ul"></i>
-        </li>
-    </ul>
+    <!-- Search Bar -->
+    <form id="searchForm" class="search-bar d-flex align-items-center" method="GET" action="/search">
+        <input type="text" name="query" id="searchInput" class="form-control search-input"
+            placeholder="Search for products..." value="{{ request('query') }}">
+        <button type="submit" class="btn search-btn">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+
     <span class="show-items">Items 1 - 9 of 17</span>
 </div>
 

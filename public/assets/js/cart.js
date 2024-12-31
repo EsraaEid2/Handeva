@@ -1,57 +1,143 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // الاستماع للضغط على زر "إضافة إلى السلة"
-    const addToCartButtons = document.querySelectorAll('.ep-add-to-cart');
+document.addEventListener('DOMContentLoaded', () => {
+    // Add to Cart Function
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+if (!csrfToken) {
+    console.error("CSRF token is missing.");
+    return;
+}
+    function addToCart(productId) {
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({ product_id: productId, quantity: 1 }),
+        })
+        .then(response => {
+            // تأكد من أن الاستجابة هي JSON
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const contentType = response.headers.get('Content-Type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Expected JSON response, but got ' + contentType);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            alert(data.message); // Show message after adding to cart
+        })
+        .catch(error => {
+            console.error('Error adding to cart:', error);
+            alert("Error: " + error.message); // Show more detailed error message
+        });
+        
+    }
+
+    // Update Cart Function
+    function updateCart(productId, newQuantity, totalItemPriceEl) {
+        fetch('/cart/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: newQuantity,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update Order Summary
+            document.getElementById('subtotal').textContent = `JOD ${data.subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `JOD ${data.total.toFixed(2)}`;
+            totalItemPriceEl.textContent = `JOD ${data.itemTotal.toFixed(2)}`;
+        })
+        .catch(error => console.error('Error updating cart:', error));
+    }
+
+    // Handle Quantity Updates
+    const cartItems = document.querySelectorAll('.cart-item');
+    cartItems.forEach(item => {
+        const decreaseBtn = item.querySelector('.quantity-btn.decrease');
+        const increaseBtn = item.querySelector('.quantity-btn.increase');
+        const quantityInput = item.querySelector('.quantity-input');
+        const totalItemPriceEl = item.querySelector('.total-item-price');
+        const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+        const productId = item.dataset.productId;
+
+        decreaseBtn.addEventListener('click', () => {
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantity--;
+                quantityInput.value = quantity;
+                updateCart(productId, quantity, totalItemPriceEl);
+            }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            let quantity = parseInt(quantityInput.value);
+            if (quantity < maxQuantity) {
+                quantity++;
+                quantityInput.value = quantity;
+                updateCart(productId, quantity, totalItemPriceEl);
+            }
+        });
+
+        quantityInput.addEventListener('change', () => {
+            let quantity = parseInt(quantityInput.value);
+            if (quantity < 1) quantity = 1;
+            if (quantity > maxQuantity) quantity = maxQuantity;
+            quantityInput.value = quantity;
+            updateCart(productId, quantity, totalItemPriceEl);
+        });
+    });
+
+    // Remove Item from Cart Function
+    function removeItem(productId, button, totalItemPriceEl) {
+        fetch(`/cart/remove/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove item from the cart UI
+                button.closest('.cart-item').remove();
+                // Update the order summary
+                document.getElementById('subtotal').textContent = `JOD ${data.subtotal.toFixed(2)}`;
+                document.getElementById('total').textContent = `JOD ${data.total.toFixed(2)}`;
+            } else {
+                alert("Failed to remove item. Please try again.");
+            }
+        })
+        .catch(error => console.error('Error removing item:', error));
+    }
+
+    // Handle Item Removal
+    const removeButtons = document.querySelectorAll('.remove-item');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.dataset.productId;
+            if (confirm("Are you sure you want to remove this item from the cart?")) {
+                const totalItemPriceEl = button.closest('.cart-item').querySelector('.total-item-price');
+                removeItem(productId, button, totalItemPriceEl);
+            }
+        });
+    });
+
+    // Add to Cart Event Listeners
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // منع التصرف الافتراضي (الانتقال للرابط)
-
-            const productId = this.getAttribute('data-product-id'); // الحصول على معرف المنتج
-            const quantityInput = this.closest('.ep-product-quantity')?.querySelector('#qty'); // العثور على حقل الكمية داخل العنصر نفسه
-            let quantity = quantityInput ? quantityInput.value : 1; // إذا كانت الكمية موجودة نأخذها، وإلا نضع القيمة الافتراضية 1
-
-            // التأكد من أن الكمية هي عدد صحيح أكبر من 0
-            quantity = Math.max(1, parseInt(quantity) || 1);
-
-            addToCart(productId, quantity); // استدعاء دالة إضافة المنتج إلى الكارت
+        button.addEventListener('click', () => {
+            const productId = button.dataset.productId; // Get product ID from data attribute
+            addToCart(productId); // Call addToCart function
         });
     });
 });
-
-// دالة إضافة المنتج إلى الكارت
-function addToCart(productId, quantity) {
-    const url = document.querySelector('meta[name="cart-add-route"]').content; // استخدام الميتا تاج للحصول على الرابط
-console.log(url);
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({ product_id: productId, quantity: quantity })
-    })
-    .then(response => response.json())
-    .then(data => {
-        Swal.fire({
-            icon: data.success ? 'success' : 'error',
-            title: data.success ? 'Added to Cart!' : 'Oops...',
-            text: data.message,
-        });
-
-        // تحديث العدد في الـ UI إذا تمت الإضافة بنجاح
-        if (data.success) {
-            const cartCountElement = document.querySelector('.cart-count');
-            if (cartCountElement) {
-                cartCountElement.textContent = data.cartCount;
-            }
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while adding to the cart.',
-        });
-    });
-}
