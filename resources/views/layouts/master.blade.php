@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Admin Dashboard') | Your Website</title>
+    <title>@yield('title', 'Admin Dashboard') | Handeva</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -20,15 +20,19 @@
 
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 
     <!-- SweetAlert2 JS -->
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.min.js"></script>
     <!-- Scripts -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous" defer></script>
     <!-- Bootstrap 5 JS and Popper.js (required for Bootstrap 5 components) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="{{ asset ('assets/js/admin/deleteCategory.js')}}"></script>
 </head>
 
 <body>
@@ -47,6 +51,18 @@
     @yield('scripts')
     <script src="{{ asset ('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset ('assets/js/scripts.js')}}"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize all tables with DataTables if they have the class 'dataTable'
+        $('.dataTable').DataTable({
+            paging: true,
+            searching: true,
+            ordering: false,
+            info: true,
+        });
+    });
+    </script>
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Fetch the unread messages count

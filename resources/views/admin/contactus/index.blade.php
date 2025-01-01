@@ -5,25 +5,13 @@
 @section('content')
 
 <div class="container-fluid px-4">
-    <div class="card mt-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4>User Messages</h4>
+    <div class="admin-card mt-4">
+        <div class="admin-card-header d-flex justify-content-between align-items-center">
+            <h4 class="admin-card-title">User Messages</h4>
         </div>
-
-        <!-- Search Form -->
-        <form method="GET" action="{{ url('admin/contactus') }}"
-            class="mb-4 mt-4 d-flex justify-content-between align-items-center">
-            <div class="input-group w-50">
-                <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
-                    placeholder="Search Messages" value="{{ request('search') }}">
-                <button class="btn btn-primary rounded-pill px-4" type="submit">
-                    Search
-                </button>
-            </div>
-        </form>
-
-        <div class="card-body">
-            <table class="table table-bordered table-hover text-center align-middle">
+        <div class="admin-card-body">
+            <table id="messagesTable"
+                class="admin-table dataTable table table-bordered table-hover text-center align-middle">
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
@@ -95,6 +83,7 @@
 
 @section('scripts')
 <script>
+// Mark as Read Function
 function markAsRead(messageId) {
     fetch(`/admin/contactus/${messageId}/mark-read`, {
             method: 'POST',

@@ -25,7 +25,7 @@ class CheckoutController extends Controller
     
         $totalPrice = array_sum(array_column($cart, 'total_price'));
         $user = auth()->user();
-        return view('theme.checkout', compact('cart','order','totalPrice','user'));
+        return view('theme.checkout', compact('cart','totalPrice','user'));
     }
     
     public function processCheckout(Request $request)

@@ -1,5 +1,5 @@
 <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <nav class="sb-sidenav accordion sb-sidenav-dark glassy-sidenav" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
 
@@ -7,58 +7,51 @@
                 <div class="sb-sidenav-menu-heading">Core</div>
                 <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" href="{{ url('admin/dashboard') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Handéva
+                    Dashboard
                 </a>
 
-                <!-- Users Section -->
+                <!-- Management Section -->
                 <div class="sb-sidenav-menu-heading">Management</div>
                 <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}"
                     href="{{ route('admin.users.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Users
                 </a>
-
-                <!-- Vendors Section -->
                 <a class="nav-link {{ request()->is('admin/vendors*') ? 'active' : '' }}"
                     href="{{ url('admin/vendors') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
                     Vendors
                 </a>
-
-                <!-- Categories Section -->
                 <a class="nav-link {{ request()->is('admin/category*') ? 'active' : '' }}"
                     href="{{ url('admin/category') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></div>
                     Categories
                 </a>
-
-                <!-- Products Section -->
                 <a class="nav-link {{ request()->is('admin/products*') ? 'active' : '' }}"
                     href="{{ route('admin.products.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                     Products
                 </a>
-
-                <!-- Reviews Section -->
+                <a class="nav-link {{ request()->is('admin/product-customizations*') ? 'active' : '' }}"
+                    href="{{ route('admin.reviews.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                    Product Customizations
+                </a>
                 <a class="nav-link {{ request()->is('admin/reviews*') ? 'active' : '' }}"
                     href="{{ route('admin.reviews.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
                     Reviews
                 </a>
-
-                <!-- Orders Section -->
                 <a class="nav-link {{ request()->is('admin/orders*') ? 'active' : '' }}"
                     href="{{ route('admin.orders.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                     Orders
                 </a>
-
-                <!-- Roles Section -->
-                <!-- <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}"
+                <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}"
                     href="{{ route('roles.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-user-tag"></i></div>
                     Roles
-                </a> -->
+                </a>
 
             </div>
         </div>

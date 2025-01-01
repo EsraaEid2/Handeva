@@ -1,26 +1,25 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="sb-topnav navbar navbar-expand navbar-dark glassy-navbar">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ url('admin') }}">Handeva</a>
+    <a class="navbar-brand ps-3" href="{{ url('admin') }}">
+        <img src="{{ asset('assets/img/HandevaLogo.png') }}" alt="Logo" class="navbar-logo" />
+    </a>
 
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
         <i class="fas fa-bars"></i>
     </button>
-    <!-- Messages Icon -->
-    <ul class="navbar-nav">
+
+    <!-- User Dropdown and Messages Icon-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown position-relative">
             <a class="nav-link" href="{{ route('contactus.index') }}" data-bs-toggle="tooltip" title="View Messages">
-                <i class="fas fa-envelope" style="color: white; font-size: 1.5rem; position: relative;"></i>
+                <i class="fas fa-envelope"></i>
                 <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle"
-                    id="unreadMessagesCount" style="font-size: 0.75rem; padding: 0.25rem 0.35rem;">
+                    id="unreadMessagesCount">
                     {{ App\Models\ContactUs::where('is_read', false)->count() }}
                 </span>
             </a>
         </li>
-    </ul>
-
-    <!-- User Dropdown-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -40,9 +39,9 @@
             </ul>
         </li>
     </ul>
-
-
 </nav>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));

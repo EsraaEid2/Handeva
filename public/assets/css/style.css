@@ -2344,7 +2344,14 @@ display: flex;
     padding-bottom: 40px; /* Added padding to the bottom for balance */
 }
 
+.category-image {
+    width: 100%;
+    height: 300px; /* Set a fixed height for all images */
+    object-fit: cover; /* Ensure images cover the area without distortion */
+}
+
 /*== Products by Category Area End ==*/
+
 /*== Bazaar Section Start ==*/
 .bazaar-section-wrapper {
     /* background: linear-gradient(135deg, 

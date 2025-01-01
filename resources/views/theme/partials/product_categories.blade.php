@@ -1,91 +1,54 @@
-    <!--== Products by Category Area Start ==-->
-    <div id="product-categories-area">
-        <div class="handeva-container">
-            <div class="row">
-                <!-- Large Category Section -->
-                <div class="col-lg-6">
-                    <div class="large-size-cate">
-                        <div class="single-cat-item">
-                            <figure class="category-thumb">
-                                <a href="/collections/traditional">
-                                    <img src="{{ asset('assets') }}/img/clothing.jpg" alt="Traditional Accessories"
-                                        class="img-fluid" />
-                                </a>
-                                <figcaption class="category-name">
-                                    <a href="/collections/traditional">Traditional Accessories</a>
-                                </figcaption>
-                            </figure>
-                        </div>
+<!--== Products by Category Area Start ==-->
+<div id="product-categories-area">
+    <div class="handeva-container">
+        <div class="row">
+            <!-- Large Category Section -->
+            <div class="col-lg-6">
+                <div class="large-size-cate">
+                    @php
+                    $traditionalCategory = $categories->firstWhere('id', 9);
+                    @endphp
+                    @if ($traditionalCategory)
+                    <div class="single-cat-item">
+                        <figure class="category-thumb">
+                            <a href="/collections/{{ strtolower($traditionalCategory->name) }}">
+                                <img src="{{ asset('uploads/category/' . $traditionalCategory->image) }}"
+                                    alt="{{ $traditionalCategory->name }}" class="img-fluid category-image" />
+                            </a>
+                            <figcaption class="category-name">
+                                <a
+                                    href="/collections/{{ strtolower($traditionalCategory->name) }}">{{ $traditionalCategory->name }}</a>
+                            </figcaption>
+                        </figure>
                     </div>
+                    @endif
                 </div>
+            </div>
 
-                <!-- Small Categories Section -->
-                <div class="col-lg-6">
-                    <div class="small-size-cate">
-                        <div class="row">
-                            <!-- Necklaces -->
-                            <div class="col-sm-6">
-                                <div class="single-cat-item">
-                                    <figure class="category-thumb">
-                                        <a href="/collections/necklaces">
-                                            <img src="{{ asset('assets') }}/img/gallery-img-1.jpg" alt="Necklaces"
-                                                class="img-fluid" />
-                                        </a>
-                                        <figcaption class="category-name">
-                                            <a href="/collections/necklaces">Necklaces</a>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-
-                            <!-- Rings -->
-                            <div class="col-sm-6">
-                                <div class="single-cat-item">
-                                    <figure class="category-thumb">
-                                        <a href="/collections/rings">
-                                            <img src="{{ asset('assets') }}/img/blog-thumb.jpg" alt="Rings"
-                                                class="img-fluid" />
-                                        </a>
-                                        <figcaption class="category-name">
-                                            <a href="/collections/rings">Rings</a>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-
-                            <!-- Bracelets -->
-                            <div class="col-sm-6">
-                                <div class="single-cat-item">
-                                    <figure class="category-thumb">
-                                        <a href="/collections/bracelets">
-                                            <img src="{{ asset('assets') }}/img/gallery-img-1.jpg" alt="Bracelets"
-                                                class="img-fluid" />
-                                        </a>
-                                        <figcaption class="category-name">
-                                            <a href="/collections/bracelets">Bracelets</a>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-
-                            <!-- Earrings -->
-                            <div class="col-sm-6">
-                                <div class="single-cat-item">
-                                    <figure class="category-thumb">
-                                        <a href="/collections/earrings">
-                                            <img src="{{ asset('assets') }}/img/gallery-img-1.jpg" alt="Earrings"
-                                                class="img-fluid" />
-                                        </a>
-                                        <figcaption class="category-name">
-                                            <a href="/collections/earrings">Earrings</a>
-                                        </figcaption>
-                                    </figure>
-                                </div>
+            <!-- Small Categories Section -->
+            <div class="col-lg-6">
+                <div class="small-size-cate">
+                    <div class="row">
+                        @foreach ($categories->where('id', '!=', 9) as $category)
+                        <div class="col-sm-6">
+                            <div class="single-cat-item">
+                                <figure class="category-thumb">
+                                    <a href="/collections/{{ strtolower($category->name) }}">
+                                        <img src="{{ asset('uploads/category/' . $category->image) }}"
+                                            alt="{{ $category->name }}" class="img-fluid category-image" />
+                                    </a>
+                                    <figcaption class="category-name">
+                                        <a
+                                            href="/collections/{{ strtolower($category->name) }}">{{ $category->name }}</a>
+                                    </figcaption>
+                                </figure>
                             </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--== Products by Category Area End ==-->
+</div>
+<!--== Products by Category Area End ==-->

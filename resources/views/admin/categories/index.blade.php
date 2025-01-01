@@ -3,40 +3,19 @@
 @section('title', 'Categories')
 
 @section('content')
-
 <div class="container-fluid px-4 py-3">
-    <div class="card shadow-sm rounded border-0 mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center bg-light flex-wrap p-3">
-            <!-- Title -->
-            <h4 class="text-primary fw-bold mb-0">View Categories</h4>
-
-            <!-- Search Form & Button -->
+    <div class="admin-card mt-4">
+        <div class="admin-card-header d-flex justify-content-between align-items-center">
+            <h4 class="admin-card-title">View Categories</h4>
             <div class="d-flex align-items-center flex-grow-1 justify-content-end gap-3">
-                <!-- Search Form -->
-                <form method="GET" action="{{ url('admin/categories') }}" class="d-flex align-items-center flex-grow-1">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-primary rounded-start" name="search"
-                            placeholder="Search Categories" value="{{ request('search') }}">
-                        <button class="btn btn-primary rounded-end" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Add Category Button -->
                 <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal"
                     data-bs-target="#addCategoryModal">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Add Category</span>
+                    <i class="fas fa-plus-circle"></i> <span>Add Category</span>
                 </button>
             </div>
         </div>
-    </div>
-
-    <!-- Table Section -->
-    <div class="card shadow-sm rounded border-0">
-        <div class="card-body">
-            <table class="table table-bordered table-hover text-center align-middle">
+        <div class="admin-card-body">
+            <table class="admin-table dataTable table table-bordered table-hover text-center align-middle">
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
@@ -103,49 +82,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Add Category Button (Trigger for Modal) -->
-                    <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2"
-                        data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Add Category</span>
-                    </button>
-
-                    <!-- Add Category Modal -->
-                    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{ url('admin/add-category') }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="name">Category Name</label>
-                                            <input type="text" name="name" class="form-control" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="description">Category Description</label>
-                                            <textarea name="description" class="form-control" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="image">Category Image</label>
-                                            <input type="file" name="image" class="form-control" required>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Add Category</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
                     @empty
                     <tr>
                         <td colspan="4" class="text-muted">No categories found</td>
@@ -153,8 +89,6 @@
                     @endforelse
                 </tbody>
             </table>
-
-            <!-- Pagination -->
             <div class="d-flex justify-content-center mt-3">
                 {{ $categories->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
             </div>
@@ -162,33 +96,35 @@
     </div>
 </div>
 
-<script>
-function deleteCategory(categoryId) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Create a form for deletion request
-            let form = document.createElement('form');
-            form.action = '/admin/delete-category/' + categoryId;
-            form.method = 'POST';
-            form.innerHTML = `
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            `;
-            document.body.appendChild(form);
-            form.submit(); // Submit the form
-        }
-    });
-}
-</script>
-
-
-
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url('admin/add-category') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name">Category Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Category Description</label>
+                        <textarea name="description" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image">Category Image</label>
+                        <input type="file" name="image" class="form-control" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

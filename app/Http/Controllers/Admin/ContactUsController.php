@@ -80,7 +80,7 @@ class ContactUsController extends Controller
         $message->update(['is_read' => 1]);
     
         // Return a JSON response
-        return response()->json(['success' => 1]);
+        return response()->json(['successUpdate' => 1]);
     }
     
 
