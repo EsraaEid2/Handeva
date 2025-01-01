@@ -26,13 +26,14 @@ class UserController extends Controller
                         $roleQuery->where('role_type', 'like', "%{$search}%");
                     });
             })
-            ->paginate(10);  // Add pagination
-        
+            ->get();  // Use get() instead of paginate to fetch all users
+    
         // Fetch all available roles for the add user modal
         $roles = Role::all();
     
         return view('admin.users.index', compact('users', 'roles'));
     }
+    
     
     public function store(Request $request)
     {

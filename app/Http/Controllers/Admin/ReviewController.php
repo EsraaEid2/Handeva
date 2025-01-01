@@ -12,16 +12,15 @@ class ReviewController extends Controller
     // Display reviews
     public function index(Request $request)
     {
-        $status = $request->get('status'); // Get the selected status filter
-    
-        // Build the query
+        $status = $request->get('status'); // الحصول على قيمة الفلتر للحالة
+        
+        // بناء الاستعلام
         $reviews = Review::query()
             ->when($status, function ($query) use ($status) {
-                // Filter reviews by status if a status is selected
+                // فلترة المراجعات حسب الحالة إذا كانت محددة
                 return $query->where('status', $status);
             })
-            ->paginate(10); // Paginate the results
-    
+            ->get();
         return view('admin.reviews.index', compact('reviews'));
     }
     

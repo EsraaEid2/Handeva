@@ -5,25 +5,32 @@
 @section('content')
 
 <div class="container-fluid px-4">
-    <div class="card mt-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4>View Orders</h4>
+    <div class="admin-card mt-4">
+        <div class="admin-card-header d-flex justify-content-between align-items-center">
+            <h4 class="admin-card-title">View Orders</h4>
         </div>
 
-        <!-- Search Form -->
-        <form method="GET" action="{{ url('admin/categories') }}"
-            class="mb-4 mt-4 d-flex justify-content-between align-items-center">
-            <div class="input-group w-50">
-                <input type="text" class="form-control border-primary rounded-pill py-2" name="search"
-                    placeholder="Search Orders" value="{{ request('search') }}">
-                <button class="btn btn-primary rounded-pill px-4" type="submit">
-                    Search
-                </button>
-            </div>
-        </form>
+        <div class="admin-card-body">
+            <form method="GET" action="{{ route('admin.orders.index') }}" class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <div class="form-group w-50">
+                        <label for="status" class="form-label">Filter by Status</label>
+                        <select class="form-select" id="status" name="status" onchange="this.form.submit()">
+                            <option value="">All</option>
+                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                            </option>
+                            <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>
+                                Processing</option>
+                            <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Delivered
+                            </option>
+                            <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
 
-        <div class="card-body">
-            <table class="table table-bordered table-hover text-center align-middle">
+            <table class="admin-table dataTable table table-bordered table-hover text-center align-middle">
                 <thead class="table-primary">
                     <tr>
                         <th>Order ID</th>
@@ -156,8 +163,6 @@
                         </div>
                     </div>
 
-
-
                     @empty
                     <tr>
                         <td colspan="6">No orders found</td>
@@ -165,10 +170,6 @@
                     @endforelse
                 </tbody>
             </table>
-
-            <div class="d-flex justify-content-center mt-3">
-                {{ $orders->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
-            </div>
         </div>
     </div>
 </div>

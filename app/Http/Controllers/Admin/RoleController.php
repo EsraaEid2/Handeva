@@ -17,14 +17,14 @@ class RoleController extends Controller
     {
         // Retrieve the search query from the request
         $search = $request->input('search');
-    
+        
         // Query the roles with optional search filtering
         $roles = Role::query()
             ->when($search, function ($query) use ($search) {
                 $query->where('role_type', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('created_at', 'desc') // Default sorting by newest roles
-            ->paginate(10); // Paginate with 10 items per page
+            ->get(); 
     
         // Pass the roles and search term to the view
         return view('admin.roles.index', [

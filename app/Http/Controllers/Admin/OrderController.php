@@ -15,19 +15,18 @@ class OrderController extends Controller
      // Display list of orders
      public function index(Request $request)
      {
-         $search = $request->input('search');
-         $orders = Order::with('user')
-             ->when($search, function ($query) use ($search) {
-                 $query->where('id', 'like', "%$search%")
-                       ->orWhereHas('user', function ($query) use ($search) {
-                           $query->where('name', 'like', "%$search%");
-                       });
-             })
-             ->latest()
-             ->paginate(10); // Use pagination
+         $status = $request->input('status'); // الحصول على قيمة الحالة من الـ request
      
-        return view('admin.orders.index', compact('orders'));
+         $orders = Order::with('user', 'orderItems.product')
+                        ->when($status, function ($query) use ($status) {
+                            $query->where('status', $status); // فلترة الطلبات بناءً على الحالة المختارة
+                        })
+                        ->latest()
+                        ->get(); // استخدم get() بدلاً من paginate()
+         
+         return view('admin.orders.index', compact('orders'));
      }
+     
      
  
      // Display order details
@@ -51,54 +50,6 @@ class OrderController extends Controller
 
         // Redirect back with success message
         return redirect()->back()->with('successUpdate', 'Order status updated successfully.');
-    }
-     
-    public function placeOrder(Request $request)
-    {
-        $user = Auth::user();
-        $cartItems = $request->input('cart_items'); // Cart items from the request (array)
-
-        $totalPrice = 0;
-        $orderItems = [];
-
-        foreach ($cartItems as $item) {
-            $product = Product::findOrFail($item['product_id']); // Ensure product exists
-            $quantity = $item['quantity'];
-
-            if ($quantity > $product->stock_quantity) {
-                return back()->withErrors(['message' => "Not enough stock for {$product->title}."]);
-            }
-
-            // Reduce stock quantity
-            $product->decrement('stock_quantity', $quantity);
-
-            // Calculate total price for this item
-            $priceAtTime = $product->price_after_discount ?? $product->price;
-            $totalPrice += $priceAtTime * $quantity;
-
-            $orderItems[] = [
-                'product_id' => $product->id,
-                'quantity' => $quantity,
-                'price_at_time' => $priceAtTime,
-                'total_price' => $priceAtTime * $quantity,
-            ];
-        }
-
-        // Create the order
-        $order = Order::create([
-            'user_id' => $user->id,
-            'total_price' => $totalPrice,
-            'status' => 'pending',
-            'notes' => $request->input('notes'),
-        ]);
-
-        // Add items to the order
-        foreach ($orderItems as $item) {
-            $order->orderItems()->create($item);
-        }
-
-        return redirect()->route('orders.show', $order->id)
-                         ->with('success', 'Order placed successfully!');
     }
 
 

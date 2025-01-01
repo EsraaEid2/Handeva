@@ -19,10 +19,11 @@ class ProductController extends Controller
             ->when($search, function ($query, $search) {
                 $query->where('title', 'LIKE', "%$search%");
             })
-            ->paginate(10);
+            ->get(); // استخدم get() بدلاً من paginate()
     
         return view('admin.products.index', compact('products'));
     }
+    
     
     // Show the form for creating a new product
     public function create()

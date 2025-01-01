@@ -36,7 +36,7 @@ class VendorController extends Controller
                     ->orWhere('email', 'like', "%$search%");
             });
         })
-        ->paginate(10);
+        ->get();  // Use get() instead of paginate to fetch all vendors
     
         // Fetch all roles to display in the view
         $roles = Role::all();
@@ -44,9 +44,6 @@ class VendorController extends Controller
         return view('admin.vendors.index', compact('vendors', 'roles'));
     }
     
-    
-
-
     // Show form to create a new vendor
     public function create()
     {

@@ -13,17 +13,19 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $query = Category::query();
-    
+        
         // Check if there's a search query
         if ($request->has('search') && !empty($request->search)) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-    
-        // Paginate the categories
-        $categories = $query->paginate(10); // Adjust the number of categories per page as needed
-    
+        
+        // Instead of paginate, use get() to retrieve all categories
+        $categories = $query->get();  // No pagination, retrieve all categories
+        
+        // Return the categories to the view
         return view('admin.categories.index', compact('categories'));
     }
+    
     
     public function store(CategoryFormRequest $request)
     {

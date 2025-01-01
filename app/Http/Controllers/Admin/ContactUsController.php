@@ -11,18 +11,19 @@ class ContactUsController extends Controller
 
     public function index(Request $request)
     {
-        // Paginate the results
+        // Get the messages
         $messages = ContactUs::with('user')
                              ->latest()
                              ->when($request->search, function ($query) use ($request) {
                                  $query->where('subject', 'like', '%' . $request->search . '%')
                                        ->orWhere('message', 'like', '%' . $request->search . '%');
                              })
-                             ->paginate(10);  // You can change 10 to any number you prefer
+                             ->get();  // Use get() instead of paginate()
     
-        // Pass the paginated results to the view
+        // Pass the messages to the view
         return view('admin.contactus.index', compact('messages'));
     }
+    
     
     public function show($id)
     {

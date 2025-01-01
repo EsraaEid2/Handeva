@@ -1478,6 +1478,7 @@ display: flex;
     justify-content: space-between;
     align-items: center; /* لضمان أن جميع العناصر تكون متوازية عموديًا */
     width: 100%; /* تأكد من أن العرض يشمل كامل المساحة المتاحة */
+    gap: 2rem;
 }
 /* 
 .custom-options > li {
