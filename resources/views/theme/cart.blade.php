@@ -59,7 +59,8 @@
                             <span id="total" class="amount">JOD {{ number_format($total, 2) }}</span>
                         </div>
                     </div>
-                    <button class="checkout-button">Proceed to Checkout</button>
+                    <a href="{{ route('checkout.index') }}" class="checkout-button">Proceed to Checkout</a>
+
                 </div>
             </div>
         </div>

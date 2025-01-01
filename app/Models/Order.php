@@ -11,7 +11,8 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'total_price', 'status', 'notes'];
+    protected $fillable = ['user_id', 'total_price', 'status', 'notes' ,'payment_method',
+    'transaction_id', 'payment_status', ];
 
     /**
      * Get the user that owns the order.

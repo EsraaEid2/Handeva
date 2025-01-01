@@ -5,6 +5,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\ShopController;
 use App\Http\Controllers\User\ThemeController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserHomeController;
 use App\Http\Controllers\User\WishlistController;
@@ -14,10 +15,17 @@ use App\Http\Controllers\User\Auth\UserRegisterController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 
 
-
 // Customer routes
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/my-account', [CustomerController::class, 'showAccount'])->name('theme.my_account');
+
+    Route::put('/profile/update', [CustomerController::class, 'updateProfile'])->name('user.update.profile');
+    Route::put('/profile/password',[CustomerController::class, 'updatePassword'])->name('user.update.password');
+    
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+    Route::post('/checkout/stripe/payment/{orderId}', [CheckoutController::class, 'processStripePayment'])->name('checkout.stripe.payment');
+    Route::post('/checkout/update-user', [CheckoutController::class, 'updateUser'])->name('checkout.updateUser');
 });
 
 Route::get('/',[UserHomeController::class,'index'])->name('user.home');
@@ -55,7 +63,6 @@ Route::controller(ThemeController::class)->name('theme.')->group(function(){
   
     Route::get('/login-register',[ThemeController::class,'login_register'])->name('login_register'); 
     Route::get('/about','about')->name('about');// no view
-    Route::get('/checkout','checkout')->name('checkout');
     Route::get('/compare','compare')->name('compare');
     Route::get('/contact','contact')->name('contact'); 
     Route::get('/single-product','single_product')->name('single_product');

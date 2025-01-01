@@ -16,6 +16,7 @@
 
     @include('theme.partials.scripts')
 
+
 </body>
 
 </html>

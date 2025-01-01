@@ -13,9 +13,6 @@ class ThemeController extends Controller
     public function login_register(){
         return view('theme.login-register');
     }
-    public function checkout(){
-        return view('theme.checkout');
-    }
     public function compare(){
         return view('theme.compare');
     }
