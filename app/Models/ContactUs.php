@@ -13,6 +13,7 @@ class ContactUs extends Model
         'user_id',
         'subject',
         'message',
+        'is_read',
     ];
 
     // Define relationship with User

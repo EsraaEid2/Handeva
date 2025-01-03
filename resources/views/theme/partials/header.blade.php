@@ -22,12 +22,18 @@
                                 <li class="nav-item {{ Request::routeIs('collections') ? 'active' : '' }}">
                                     <a href="{{ route('collections') }}">Shop</a>
                                 </li>
+                                @if(Auth::guard('vendor')->check())
+                                <li class="nav-item {{ Request::routeIs('vendor.dashboard') ? 'active' : '' }}">
+                                    <a href="{{ route('vendor.dashboard') }}">Dashboard</a>
+                                </li>
+                                @endif
                                 <li class="nav-item {{ Request::routeIs('theme.about') ? 'active' : '' }}">
                                     <a href="{{ route('theme.about') }}">About Us</a>
                                 </li>
                                 <li class="nav-item {{ Request::routeIs('theme.contact') ? 'active' : '' }}">
                                     <a href="{{ route('theme.contact') }}">Contact Us</a>
                                 </li>
+
                             </ul>
                         </nav>
                     </div>
@@ -38,13 +44,14 @@
                 <!--== Header Right Meta Start ==-->
                 <div class="header-right-meta text-right">
                     <ul class="custom-options">
-                        <!-- حالة المستخدم مسجل الدخول من الجارد 'web' -->
                         @if(Auth::guard('web')->check())
                         <!-- Wishlist Icon -->
                         <li class="custom-icon" title="Wishlist">
                             <a href="{{ route('wishlist.show') }}">
                                 <i class="fa fa-heart"></i>
+                                @if($wishlistCount > 0)
                                 <span class="count wishlist-count">{{ $wishlistCount }}</span>
+                                @endif
                             </a>
                         </li>
 
@@ -52,7 +59,9 @@
                         <li class="shop-cart custom-icon" title="Cart">
                             <a href="{{ route('cart.show') }}">
                                 <i class="fa fa-shopping-bag"></i>
+                                @if($cartCount > 0)
                                 <span class="count cart-count">{{ $cartCount }}</span>
+                                @endif
                             </a>
                         </li>
 
@@ -71,24 +80,23 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <!-- حالة المستخدم مسجل الدخول من الجارد 'vendor' -->
                         @elseif(Auth::guard('vendor')->check())
                         <!-- Wishlist Icon -->
                         <li class="custom-icon" title="Wishlist">
                             <a href="{{ route('wishlist.show') }}">
                                 <i class="fa fa-heart"></i>
+                                @if($wishlistCount > 0)
                                 <span class="count wishlist-count">{{ $wishlistCount }}</span>
+                                @endif
                             </a>
                         </li>
-
                         <!-- User Dashboard Dropdown -->
                         <li class="custom-dropdown">
                             <a href="#" class="custom-dropdown-toggle">
                                 <i class="fa fa-user-circle"></i>
                             </a>
                             <ul class="custom-dropdown-menu">
-                                <li><a href="{{ route('vendor.dashboard') }}">Your Dashboard</a></li>
+                                <li><a href="{{ route('vendor.profile') }}">Your profile</a></li>
                                 <li>
                                     <form action="{{ route('userLogout') }}" method="POST">
                                         @csrf
@@ -97,10 +105,8 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <!-- حالة الضيف (غير مسجل الدخول) -->
                         @else
-                        <!-- Login Button -->
+                        <!-- Guest -->
                         <li class="custom-login">
                             <a href="{{ route('theme.login_register') }}" class="custom-btn">Login</a>
                         </li>
@@ -109,22 +115,24 @@
                         <li class="custom-icon" title="Wishlist">
                             <a href="{{ route('wishlist.show') }}">
                                 <i class="fa fa-heart"></i>
+                                @if($wishlistCount > 0)
                                 <span class="count wishlist-count">{{ $wishlistCount }}</span>
+                                @endif
                             </a>
                         </li>
-
                         <!-- Cart Icon -->
                         <li class="shop-cart custom-icon" title="Cart">
                             <a href="{{ route('cart.show') }}">
                                 <i class="fa fa-shopping-bag"></i>
+                                @if($cartCount > 0)
                                 <span class="count cart-count">{{ $cartCount }}</span>
+                                @endif
                             </a>
                         </li>
                         @endif
                     </ul>
-
-
                 </div>
+
                 <!--== Header Right Meta End ==-->
             </div>
         </div>

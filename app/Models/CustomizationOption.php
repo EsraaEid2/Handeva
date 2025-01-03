@@ -9,17 +9,10 @@ class CustomizationOption extends Model
 {
     use HasFactory;
 
-    protected $table = 'customization_options';
+    protected $fillable = ['customization_id', 'option_value'];
 
-    // الحقول التي يمكن ملؤها
-    protected $fillable = [
-        'product_customization_id',
-        'option_value',
-    ];
-
-    // العلاقة مع جدول product_customization
-    public function productCustomization()
+    public function customization()
     {
-        return $this->belongsTo(ProductCustomization::class);
+        return $this->belongsTo(Customization::class);
     }
 }

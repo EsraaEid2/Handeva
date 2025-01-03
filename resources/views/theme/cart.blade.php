@@ -2,7 +2,7 @@
 @section('title','Cart')
 @section('content')
 
-<!-- @include('theme.partials.hero',['title' => 'Shopping Cart']) -->
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="elegant-cart-wrapper">

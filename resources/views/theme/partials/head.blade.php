@@ -8,9 +8,7 @@
     <title>Handéva | @yield('title')</title>
 
     <!--=== Favicon ===-->
-    <link rel="shortcut icon"
-        href="{{ asset('assets') }}/img/Beige_Black_Simple_Elegant_Jewelry_Logo-removebg-preview.png"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets') }}/img/favicon.png" type="image/x-icon" />
 
     <!--== Google Fonts ==-->
     <link rel="stylesheet" type="text/css"
@@ -38,14 +36,20 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Owl Carousel JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+    <!-- Initialize Owl Carousel 
+    -->
+    <script>
 
-
+    </script>
+    </script>
     <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    < script src = "//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js" > < /script> <
+        script src = "//oss.maxcdn.com/respond/1.4.2/respond.min.js" > < /script> <
+        ![endif]
+    -->
 </head>

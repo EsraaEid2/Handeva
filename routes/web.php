@@ -15,12 +15,7 @@ use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderItemController;
 use App\Http\Controllers\Admin\ProductImageController;
-
-
-// Route::get('/', function () {
-
-//     return view('welcome');
-// });
+use App\Http\Controllers\Admin\CustomizationController;
 
 Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('login');
 
@@ -110,6 +105,11 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('profile', [DashboardController::class, 'editProfile'])->name('admin.profile');
     Route::put('profile', [DashboardController::class, 'updateProfile'])->name('admin.updateProfile');
 
+    // Category Management Routes
+    Route::get('/customizations', [CustomizationController::class, 'index'])->name('admin.customizations.index');
+    Route::post('/customizations', [CustomizationController::class, 'store'])->name('admin.customizations.store');
+    Route::put('/customizations/{customization}', [CustomizationController::class, 'update'])->name('admin.customizations.update');
+    Route::delete('/customizations/{customization}', [CustomizationController::class, 'destroy'])->name('admin.customizations.destroy');
     // Admin logout route
     // Route::post('logout', [DashboardController::class, 'logout'])->name('admin.logout');
 

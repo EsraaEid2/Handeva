@@ -94,9 +94,12 @@ class UserController extends Controller
             // Role is being updated
             if ($validated['role_id'] == 2) { // Role 2 is vendor
                 // Check if the user is already a vendor
-                $vendorExists = Vendor::where('role_id', $user->id)->exists();
+                $vendorExists = Vendor::where('id', $user->id)->exists();
     
                 if (!$vendorExists) {
+                    // Use phone_number from users table if not provided in the request
+                    $phoneNumber = $validated['phone_number'] ?? $user->phone_number;
+    
                     // Create a new vendor record
                     Vendor::create([
                         'user_id' => $user->id,
@@ -104,6 +107,7 @@ class UserController extends Controller
                         'first_name' => $validated['first_name'],
                         'last_name' => $validated['last_name'],
                         'email' => $validated['email'],
+                        'phone_number' => $phoneNumber,
                         'password' => $user->password, // Pass the password as it is from the User table
                     ]);
                 }
@@ -119,6 +123,7 @@ class UserController extends Controller
     
         return redirect()->route('admin.users.index')->with('successUpdate', 'User updated successfully!');
     }
+    
     
 
 //     public function updateUserRole(Request $request, $id)

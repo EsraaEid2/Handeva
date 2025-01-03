@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\User\Vendor;
-use Illuminate\Support\Facades\DB;
 use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use App\Models\Customization;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCustomization;
 use Illuminate\Support\Facades\Auth;
@@ -14,98 +15,106 @@ use Illuminate\Support\Facades\Auth;
 class VendorController extends Controller
     {
 
-    public function index()
+        public function index()
         {
             // Fetch the vendor info
-            $vendor = Auth::guard('vendor')->user(); 
+            $vendor = Auth::guard('vendor')->user();
         
             if (!$vendor) {
                 return redirect()->route('vendor.dashboard')->with('error', 'Vendor not found');
             }
         
-            // جلب الفئات من قاعدة البيانات
-            $categories = Category::all();
-            $customizations = ProductCustomization::all();
+            // Fetch categories where deleted_at is null
+            $categories = Category::whereNull('deleted_at')->get();
         
-            // جلب المنتجات الخاصة بالبائع
+            // Fetch customizations with options visible to this vendor
+            $customizations = Customization::with(['options'])->get();
+        
+            // Fetch products of the vendor
             $products = Product::where('vendor_id', $vendor->id)->with('category')->get();
         
-            // جلب المراجعات الخاصة بمنتجات البائع
+            // Fetch reviews for the vendor's products
             $reviews = DB::table('reviews')
-                ->join('products', 'reviews.product_id', '=', 'products.id') // الربط مع جدول المنتجات
-                ->join('users', 'reviews.user_id', '=', 'users.id') // الربط مع جدول المستخدمين لجلب اسم العميل
-                ->where('products.vendor_id', $vendor->id) // التحقق من أن المنتج يخص البائع
+                ->join('products', 'reviews.product_id', '=', 'products.id')
+                ->where('products.vendor_id', $vendor->id)
                 ->select(
                     'reviews.rating',
                     'reviews.comment',
-                    'products.title as product_title',
-                    'users.first_name',
-                    'users.last_name'
+                    'products.title as product_title'
                 )
                 ->get();
         
-            // جلب الطلبات المخصصة (custom_orders) للمنتجات الخاصة بالبائع
+            // Fetch custom orders for the vendor's products with customizations
             $custom_orders = DB::table('order_items')
                 ->join('products', 'order_items.product_id', '=', 'products.id')
-                ->join('product_customization', 'order_items.customization_id', '=', 'products.id') // التصحيح هنا
+                ->join('product_customizations', 'product_customizations.product_id', '=', 'products.id')
+                ->join('customizations', 'product_customizations.customization_id', '=', 'customizations.id')
                 ->where('products.vendor_id', $vendor->id)
                 ->select(
                     'order_items.id as order_item_id',
                     'order_items.quantity',
-                    'product_customization.custom_type', // تصحيح الاسم هنا
+                    'customizations.custom_type',
                     'order_items.order_id',
-                    'products.status as customization_status' // تصحيح الاسم هنا
+                    'products.status as product_status'
                 )
                 ->get();
         
-            // تمرير البيانات إلى الـ View
-            return view('theme.vendor.dashboard', compact('vendor', 'categories', 'customizations', 'products', 'reviews', 'custom_orders'));
-    }
+            // Pass data to the view
+            return view('theme.vendor.dashboard', compact(
+                'vendor',
+                'categories',
+                'customizations',
+                'products',
+                'reviews',
+                'custom_orders'
+            ));
+        }
+        
+        public function showProfile()
+        {
+            $vendor = Auth::guard('vendor')->user();
+            return view('theme.vendor.profile', compact('vendor'));
+        }
         
         public function updateAccount(Request $request)
         {
-            // جلب بيانات البائع من الـ guard المخصص للبائعين
             $vendor = Auth::guard('vendor')->user();
-            // التحقق من صحة البيانات
+        
             $request->validate([
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
-                'email' => 'required|email|unique:vendors,email,' . $vendor->id, // تحقق من البريد الإلكتروني مع استثناء الحالي
+                'email' => 'required|email|unique:vendors,email,' . $vendor->id,
+                'phone_number' => 'nullable|string|max:15',
                 'profile_pic' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
                 'bio' => 'nullable|string',
-                'social_links' => 'nullable|string',
+                'current_password' => 'nullable|string',
+                'new_password' => 'nullable|string|min:8|confirmed',
             ]);
-          
-            // تحقق إذا كان البريد الإلكتروني قد تم تغييره
-            if ($request->email !== $vendor->email) {
-                // إذا تم تغييره، تأكد من أنه فريد في قاعدة البيانات
-                $request->validate([
-                    'email' => 'unique:vendors,email',
-                ]);
-            }
-            
-            // تحديث البيانات
+        
             $vendor->first_name = $request->first_name;
             $vendor->last_name = $request->last_name;
             $vendor->email = $request->email;
+            $vendor->phone_number = $request->phone_number;
             $vendor->bio = $request->bio;
-            $vendor->social_links = $request->social_links;
-            
-            // رفع الصورة إذا كانت موجودة
-            if ($request->hasFile('profile_pic')) {
-                // حذف الصورة القديمة إذا كانت موجودة
-                if ($vendor->profile_pic) {
-                    Storage::delete($vendor->profile_pic);
+        
+            if ($request->filled('current_password') && $request->filled('new_password')) {
+                if (Hash::check($request->current_password, $vendor->password)) {
+                    $vendor->password = Hash::make($request->new_password);
+                } else {
+                    return back()->withErrors(['current_password' => 'The current password is incorrect.']);
                 }
-            
-                // رفع الصورة الجديدة
-                $path = $request->file('profile_pic')->store('vendor/profile_pictures', 'public');
-                $vendor->profile_pic = $path;
             }
-            
-            // حفظ التحديثات في قاعدة البيانات
+        
+            if ($request->hasFile('profile_pic')) {
+                if ($vendor->profile_pic) {
+                    Storage::disk('public')->delete($vendor->profile_pic);
+                }
+                $vendor->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+            }
+        
             $vendor->save();
-            // dd( $vendor->save());
+        
+            // Return success message for SweetAlert
             return back()->with('success', 'Account updated successfully!');
         }
         
@@ -118,15 +127,16 @@ class VendorController extends Controller
                 'category_id' => 'required|exists:categories,id',
                 'stock_quantity' => 'required|integer|min:0',
                 'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+                'customization_id' => 'required_if:is_customizable,on|exists:customizations,id', // Validate customization_id
             ]);
         
-            $vendorId = Auth::id(); // الحصول على معرف المستخدم
+            $vendorId = Auth::id(); // Get the vendor's user ID
         
-            // حساب السعر بعد الخصم إذا وجد
+            // Calculate the price after discount if provided
             $priceAfterDiscount = $request->discount ? 
                 $request->price - ($request->price * ($request->discount / 100)) : null;
         
-            // إنشاء المنتج
+            // Create the product
             $product = Product::create([
                 'title' => $request->title,
                 'description' => $request->description,
@@ -139,10 +149,10 @@ class VendorController extends Controller
                 'vendor_id' => $vendorId,
             ]);
         
-            // رفع الصور
+            // Upload product images
             foreach ($request->file('images') as $index => $image) {
                 $imagePath = $this->uploadImage($image, 'product_images');
-                
+        
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_url' => $imagePath,
@@ -150,12 +160,22 @@ class VendorController extends Controller
                 ]);
             }
         
+            // If the product is customizable, add the customization data
+            if ($request->has('is_customizable') && $request->customization_id) {
+                ProductCustomization::create([
+                    'product_id' => $product->id,
+                    'customization_id' => $request->customization_id,
+                ]);
+            }
+        
+            // Return success message for SweetAlert
             return redirect()->back()->with('success', 'Product uploaded successfully!');
         }
         
+        
         public function updateProduct(Request $request, $id)
         {
-            // التحقق من صلاحية الـVendor
+            // Fetch the vendor and product
             $vendor = Auth::guard('vendor')->user();
             $product = Product::where('id', $id)->where('vendor_id', $vendor->id)->first();
         
@@ -163,37 +183,39 @@ class VendorController extends Controller
                 return redirect()->back()->with('error', 'Product not found or unauthorized access.');
             }
         
-            // التحقق من البيانات المدخلة
+            // Validate the input data
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
                 'category_id' => 'required|exists:categories,id',
                 'price' => 'required|numeric|min:0',
                 'description' => 'nullable|string|max:1000',
-                'stock_quantity' => 'required|numeric|min:0', // إضافة التحقق لحقل stock_quantity
+                'stock_quantity' => 'required|numeric|min:0',
             ]);
         
-            // تحويل قيم الحقول is_visible و is_customizable
+            // Convert is_visible and is_customizable fields
             $validatedData['is_visible'] = $request->has('is_visible') ? 1 : 0;
             $validatedData['is_customizable'] = $request->has('is_customizable') ? 1 : 0;
         
-            // تحديث بيانات المنتج
+            // Update the product
             $product->update($validatedData);
         
-            // إعادة توجيه مع رسالة نجاح
+            // Redirect with success message for SweetAlert
             return redirect()->back()->with('success', 'Product updated successfully!');
         }
+        
         
         public function destroyProduct($id)
         {
             $vendor = Auth::guard('vendor')->user();
             $product = Product::where('id', $id)->where('vendor_id', $vendor->id)->firstOrFail();
-
+        
             $product->deleted_at = now();
             $product->save();
-
+        
+            // Return success message after deletion
             return redirect()->route('vendor.dashboard')->with('success', 'Product deleted successfully!');
         }
-
+        
         public function showReviews($productId)
         {
             // جلب المراجعات مع أسماء العملاء

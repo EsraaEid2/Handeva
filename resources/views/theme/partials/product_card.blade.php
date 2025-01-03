@@ -17,7 +17,7 @@
 
             <a href="{{ route('wishlist.add', $product->id) }}" class="ep-meta-btn add-to-wishlist"
                 data-product-id="{{ $product->id }}" title="Add to Wishlist">
-                <i class="fa fa-heart"></i>
+                <i class="fa fa-heart empty-heart" id="wishlist-icon-{{ $product->id }}"></i>
             </a>
 
         </div>
@@ -52,8 +52,21 @@
             JOD {{ number_format($product->price, 2) }}
             @endif
         </span>
-        <button class="add-to-cart-btn" data-product-id="{{ $product->id }}">Add to Cart</button>
-
-
+        <button class="ep-add-to-cart" data-product-id="{{ $product->id }}">
+            <i class="fa fa-shopping-bag"></i> Add to Cart
+        </button>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.add-to-wishlist').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const icon = this.querySelector('i');
+            icon.classList.toggle('empty-heart');
+            icon.classList.toggle('filled-heart');
+        });
+    });
+});
+</script>

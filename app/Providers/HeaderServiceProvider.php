@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Order;
-use App\Models\OrderItem;
+use Illuminate\Support\Facades\Session;
+use App\Models\Wishlist;
 
 class HeaderServiceProvider extends ServiceProvider
 {
@@ -22,39 +22,45 @@ class HeaderServiceProvider extends ServiceProvider
      * Bootstrap services.
      */
     public function boot()
-{
-    // Share data with all views
-    View::composer('*', function ($view) {
-        $wishlistCount = 0;
-        $cartCount = 0;
+    {
+        View::composer('*', function ($view) {
+            $wishlistCount = 0;
+            $cartCount = 0;
 
-        if (Auth::check()) {
-            // Check if authenticated user is a vendor or a regular user
-            $user = Auth::guard('web')->user(); 
-            $vendor = Auth::guard('vendor')->user();
+            if (Auth::guard('web')->check()) {
+                // الحالة: المستخدم مسجل الدخول كـ "web"
+                $user = Auth::guard('web')->user();
+                
+                // عداد الويش ليست للمستخدم من الداتابيس
+                $wishlistCount = Wishlist::where('user_id', $user->id)->count();
+                
+                // عداد الكارت من السيشن
+                $cartItems = Session::get('cart', []); // الافتراضي يكون array فارغ
+                $cartCount = is_array($cartItems) ? count($cartItems) : 0;
 
-            if ($user) {
-                // Fetch the user's wishlist count
-                $wishlistCount = $user->wishlists()->count();
+            } elseif (Auth::guard('vendor')->check()) {
+                // الحالة: المستخدم مسجل الدخول كـ "vendor"
+                $vendor = Auth::guard('vendor')->user();
 
-                // Fetch the current user's cart and count the order items
-                $cartCount = OrderItem::whereHas('order', function ($query) use ($user) {
-                    $query->where('user_id', $user->id)
-                          ->where('status', 'pending')
-                          ->whereNull('deleted_at');
-                })->count();
+                // عداد الويش ليست للبائع من الداتابيس
+                $wishlistCount = Wishlist::where('vendor_id', $vendor->id)->count();
+            } else {
+                // الحالة: المستخدم ضيف (غير مسجل الدخول)
+                
+                // عداد الويش ليست من السيشن
+                $wishlistItems = Session::get('wishlist', []); // الافتراضي يكون array فارغ
+                $wishlistCount = is_array($wishlistItems) ? count($wishlistItems) : 0;
+
+                // عداد الكارت من السيشن
+                $cartItems = Session::get('cart', []); // الافتراضي يكون array فارغ
+                $cartCount = is_array($cartItems) ? count($cartItems) : 0;
             }
 
-            // Vendors won't have wishlist or cart counts
-            if ($vendor) {
-                $wishlistCount = 0; // Vendors don't have a wishlist
-                $cartCount = 0; // Vendors don't have a cart
-            }
-        }
-
-        $view->with('wishlistCount', $wishlistCount);
-        $view->with('cartCount', $cartCount);
-    });
-}
-
+            // إذا كان العداد لأي منهما صفر، نخفيه في الهيدر
+            $view->with([
+                'wishlistCount' => $wishlistCount > 0 ? $wishlistCount : null,
+                'cartCount' => $cartCount > 0 ? $cartCount : null,
+            ]);
+        });
+    }
 }

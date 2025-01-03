@@ -2,8 +2,6 @@
 @section('title','Collections')
 @section('content')
 
-@include('theme.partials.hero',['title' => 'Collections'])
-
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
     <div class="container">
@@ -36,11 +34,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sortSelect = document.getElementById('sort');
     const sidebarLinks = document.querySelectorAll('.filter-link');
+    const productsList = document.getElementById('products-list');
 
     function updateFilters() {
+        const activeCategory = document.querySelector('.filter-link.active');
+        const categoryId = activeCategory ? activeCategory.dataset.id : '';
+
         let url = '/products?' + new URLSearchParams({
             sort: sortSelect.value,
-            category_id: document.querySelector('.filter-link.active')?.dataset.id || '',
+            category_id: categoryId,
             min_price: document.getElementById('minPrice')?.value || '',
             max_price: document.getElementById('maxPrice')?.value || '',
             per_page: 9
@@ -49,11 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                const productsList = document.getElementById('products-list');
                 const productsWrapper = document.createElement('div');
-                productsWrapper.className = 'products-wrapper products-gird';
+                productsWrapper.className = 'products-wrapper products-grid';
 
-                productsList.innerHTML = '';
+                productsList.innerHTML = ''; // Clear previous products
+
                 data.products.data.forEach(product => {
                     const productElement = document.createElement('div');
                     productElement.className = 'single-product-item';
@@ -68,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 productsList.appendChild(productsWrapper);
+
+                // Add pagination
                 const pagination = document.createElement('nav');
                 pagination.className = 'page-pagination';
                 pagination.innerHTML = data.links;
@@ -76,13 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.log(error));
     }
 
+    // When sorting changes, update the filters
     sortSelect.addEventListener('change', updateFilters);
-    sidebarLinks.forEach(link => link.addEventListener('click', function(e) {
-        e.preventDefault();
-        sidebarLinks.forEach(link => link.classList.remove('active'));
-        this.classList.add('active');
-        updateFilters();
-    }));
+
+    // Handle category filter link clicks
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            sidebarLinks.forEach(link => link.classList.remove('active'));
+            this.classList.add('active');
+            updateFilters();
+        });
+    });
 });
 </script>
 @endsection

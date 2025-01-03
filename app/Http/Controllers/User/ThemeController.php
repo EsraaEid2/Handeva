@@ -31,5 +31,8 @@ class ThemeController extends Controller
     public function wishlist(){
         return view('theme.wishlist');
     }
+    public function about(){
+        return view('theme.about');
+    }
     
 }

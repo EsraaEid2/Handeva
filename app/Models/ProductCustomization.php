@@ -8,28 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class ProductCustomization extends Model
 {
     use HasFactory;
+    protected $fillable = ['product_id', 'customization_id'];
 
-    protected $table = 'product_customization';
-
-    protected $fillable = [
-        'product_id',
-        'custom_type',
-    ];
-
-    // العلاقة مع جدول customization_options
-    public function options()
+    public function customization()
     {
-        return $this->hasMany(CustomizationOption::class);
+        return $this->belongsTo(Customization::class);
     }
 
-    // العلاقة مع جدول products
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function customizationOptions()
-    {
-        return $this->hasMany(CustomizationOption::class);
     }
 }

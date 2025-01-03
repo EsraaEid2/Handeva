@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\User;
+use App\Http\Controllers\Controller;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
@@ -12,29 +12,32 @@ class CartController extends Controller
     {
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
-    
+
         $cart = session()->get('cart', []);
-        
+
         if (isset($cart[$productId])) {
             $cart[$productId]['quantity'] += $quantity;
         } else {
             $product = Product::findOrFail($productId);
             $cart[$productId] = [
-                'product_id' => $product->id, // إضافة الـ product_id هنا
+                'product_id' => $product->id,
                 'title' => $product->title,
                 'price' => $product->price,
                 'quantity' => $quantity,
                 'image_url' => $product->primaryImage ? $product->primaryImage->image_url : 'img/default.jpg',
             ];
         }
-    
+
         session()->put('cart', $cart);
-        
-        return response()->json(['message' => 'Product added to cart!', 'cart' => $cart]);
+
+        $cartCount = array_sum(array_column($cart, 'quantity')); // حساب العدد الإجمالي للعناصر
+
+        return response()->json([
+            'message' => 'Product added to cart!',
+            'cart' => $cart,
+            'cart_count' => $cartCount, // إرجاع عدد العناصر
+        ]);
     }
-    
-    
-    
     public function viewCart()
     {
         $cart = session()->get('cart', []);
@@ -61,70 +64,63 @@ class CartController extends Controller
         return view('theme.cart', compact('cartItems', 'totalPrice', 'shipping', 'total'));
     }
     
-
     public function updateCart(Request $request)
     {
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity');
-        
-        // تحقق من وجود المنتج في الجلسة
+
         $cart = session()->get('cart', []);
         if (isset($cart[$productId])) {
             $cart[$productId]['quantity'] = $quantity;
             session()->put('cart', $cart);
-        
+
             $itemTotal = $cart[$productId]['price'] * $quantity;
-        
-            // إعادة حساب الإجماليات
+
             $subtotal = array_reduce($cart, function ($sum, $item) {
                 return $sum + ($item['price'] * $item['quantity']);
             }, 0);
-        
-            $shipping = 5; // الشحن الثابت
+
+            $shipping = 5; // قيمة الشحن الثابتة
             $total = $subtotal + $shipping;
-        
+
+            $cartCount = array_sum(array_column($cart, 'quantity')); // حساب العدد الإجمالي للعناصر
+
             return response()->json([
                 'subtotal' => $subtotal,
                 'total' => $total,
                 'itemTotal' => $itemTotal,
+                'cart_count' => $cartCount, // إرجاع عدد العناصر
             ]);
         }
-        
+
         return response()->json(['error' => 'Product not found in cart'], 404);
     }
-    
-    
+
     public function remove($productId)
     {
-        // تحقق من وجود المنتج في العربة
         $cart = session()->get('cart', []);
-        
+
         if (isset($cart[$productId])) {
-            // حذف المنتج من العربة
             unset($cart[$productId]);
-    
-            // تحديث العربة في الجلسة
             session()->put('cart', $cart);
-    
-            // حساب الإجمالي الجديد
-            $subtotal = 0;
-            foreach ($cart as $item) {
-                $subtotal += $item['price'] * $item['quantity'];
-            }
-    
-            $total = $subtotal + session()->get('shipping', 0); // إضافة تكاليف الشحن
-    
+
+            $subtotal = array_reduce($cart, function ($sum, $item) {
+                return $sum + ($item['price'] * $item['quantity']);
+            }, 0);
+
+            $shipping = 5; // قيمة الشحن
+            $total = $subtotal + $shipping;
+
+            $cartCount = array_sum(array_column($cart, 'quantity')); // حساب العدد الإجمالي للعناصر
+
             return response()->json([
                 'success' => true,
                 'subtotal' => $subtotal,
                 'total' => $total,
+                'cart_count' => $cartCount, // إرجاع عدد العناصر
             ]);
         }
-    
+
         return response()->json(['success' => false]);
     }
-    
-
-
-
 }

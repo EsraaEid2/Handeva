@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\User\Auth;
 
 use App\Models\User;
@@ -11,17 +12,17 @@ class UserRegisterController extends Controller
 {
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dd($request->all());    
         // Validate incoming request
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            'phone_number' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:255|required_if:is_pending_vendor,1',
             'is_pending_vendor' => 'required|boolean', // Ensure the vendor flag is present
         ]);
-    
+
         // Create the user
         $user = User::create([
             'first_name' => $request->first_name,
@@ -32,19 +33,18 @@ class UserRegisterController extends Controller
             'phone_number' => $request->is_pending_vendor ? $request->phone_number : null,
             'is_pending_vendor' => $request->is_pending_vendor,
         ]);
-    
+
         // Log the user in
         Auth::guard('web')->login($user);
-    // dd($user->is_pending_vendor); 
-        // Redirect based on vendor status
-        if ($user->is_pending_vendor) { // Vendor (Pending Approval)
-            return redirect()->to('/')->with('status', 'pending_vendor');
-        } else { // Customer
+
+        // Set success message and redirect based on vendor status
+        if ($user->is_pending_vendor) {
+            session()->flash('vendorSuccessAdd', 'Your vendor account has been created and is pending approval.');
+            return redirect()->to('/');
+        } else {
+            session()->flash('successAdd', 'Your account has been successfully created.');
             return redirect()->to('/collections');
         }
         
     }
-    
-    
-    
 }

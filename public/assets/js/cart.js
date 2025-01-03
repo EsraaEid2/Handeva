@@ -28,6 +28,7 @@ if (!csrfToken) {
         .then(data => {
             console.log(data);
             alert(data.message); // Show message after adding to cart
+            updateCartCount(data.cartCount);
         })
         .catch(error => {
             console.error('Error adding to cart:', error);
@@ -55,6 +56,7 @@ if (!csrfToken) {
             document.getElementById('subtotal').textContent = `JOD ${data.subtotal.toFixed(2)}`;
             document.getElementById('total').textContent = `JOD ${data.total.toFixed(2)}`;
             totalItemPriceEl.textContent = `JOD ${data.itemTotal.toFixed(2)}`;
+            updateCartCount(data.cartCount); // تحديث عدد الكارت
         })
         .catch(error => console.error('Error updating cart:', error));
     }
@@ -113,6 +115,7 @@ if (!csrfToken) {
                 // Update the order summary
                 document.getElementById('subtotal').textContent = `JOD ${data.subtotal.toFixed(2)}`;
                 document.getElementById('total').textContent = `JOD ${data.total.toFixed(2)}`;
+                updateCartCount(data.cartCount); // تحديث عدد الكارت
             } else {
                 alert("Failed to remove item. Please try again.");
             }
@@ -133,11 +136,19 @@ if (!csrfToken) {
     });
 
     // Add to Cart Event Listeners
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    const addToCartButtons = document.querySelectorAll('.ep-add-to-cart');
     addToCartButtons.forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.dataset.productId; // Get product ID from data attribute
             addToCart(productId); // Call addToCart function
         });
     });
+
+    function updateCartCount(newCount) {
+        const cartCountEl = document.querySelector('.cart-count');
+        if (cartCountEl) {
+            cartCountEl.textContent = newCount; // تحديث النص بالعدد الجديد
+        }
+    }
+    
 });

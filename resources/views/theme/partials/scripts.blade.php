@@ -26,10 +26,11 @@
  <!--=== wishlist ===-->
  <script src="{{ asset('assets') }}/js/wishlist.js"></script>
  <script src="{{ asset('assets') }}/js/cart.js"></script>
- <script src="{{ asset('assets') }}/js/profile.js"></script>
+ <script src="{{ asset('assets') }}/js/aboutUsVideo.js"></script>
  <script src="{{ asset('assets') }}/js/registerVendor.js"></script>
  <script src="{{ asset('assets') }}/js/quickViewModal.js"></script>
  <script src="{{ asset('assets') }}/js/customerProflie.js"></script>
+ <script src="{{ asset('assets') }}/js/uploadProduct.js"></script>
  <!-- Add SweetAlert2 
 -->
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

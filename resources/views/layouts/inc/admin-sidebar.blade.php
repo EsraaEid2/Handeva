@@ -32,11 +32,12 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                     Products
                 </a>
-                <a class="nav-link {{ request()->is('admin/product-customizations*') ? 'active' : '' }}"
-                    href="{{ route('admin.reviews.index') }}">
+                <a class="nav-link {{ request()->is('admin/customizations*') ? 'active' : '' }}"
+                    href="{{ route('admin.customizations.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
                     Product Customizations
                 </a>
+
                 <a class="nav-link {{ request()->is('admin/reviews*') ? 'active' : '' }}"
                     href="{{ route('admin.reviews.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>

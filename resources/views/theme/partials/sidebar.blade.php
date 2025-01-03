@@ -4,18 +4,17 @@
     <!-- Sidebar Categories -->
     <div class="single-sidebar-wrap">
         <h2 class="sidebar-title">Categories</h2>
+
         <ul class="sidebar-list">
-            @foreach($categories as $category)
-            <li>
-                <a href="#" class="filter-link" data-filter="category" data-id="{{ $category->id }}">
+            @foreach ($categories as $category)
+            <li class="{{ $currentCategory && $currentCategory->id === $category->id ? 'active' : '' }}">
+                <a href="{{ route('collections', array_merge(request()->all(), ['category_id' => $category->id])) }}">
                     {{ $category->name }}
                 </a>
             </li>
             @endforeach
         </ul>
     </div>
-
-
     <!-- Product Types -->
     <div class="single-sidebar-wrap">
         <h2 class="sidebar-title">Product Type</h2>

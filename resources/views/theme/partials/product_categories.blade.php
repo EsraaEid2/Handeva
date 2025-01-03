@@ -11,13 +11,14 @@
                     @if ($traditionalCategory)
                     <div class="single-cat-item">
                         <figure class="category-thumb">
-                            <a href="/collections/{{ strtolower($traditionalCategory->name) }}">
+                            <a href="{{ route('products.byCategory', ['id' => $traditionalCategory->id]) }}">
                                 <img src="{{ asset('uploads/category/' . $traditionalCategory->image) }}"
                                     alt="{{ $traditionalCategory->name }}" class="img-fluid category-image" />
                             </a>
                             <figcaption class="category-name">
-                                <a
-                                    href="/collections/{{ strtolower($traditionalCategory->name) }}">{{ $traditionalCategory->name }}</a>
+                                <a href="{{ route('products.byCategory', ['id' => $traditionalCategory->id]) }}">
+                                    {{ $traditionalCategory->name }}
+                                </a>
                             </figcaption>
                         </figure>
                     </div>
@@ -33,13 +34,14 @@
                         <div class="col-sm-6">
                             <div class="single-cat-item">
                                 <figure class="category-thumb">
-                                    <a href="/collections/{{ strtolower($category->name) }}">
+                                    <a href="{{ route('products.byCategory', ['id' => $category->id]) }}">
                                         <img src="{{ asset('uploads/category/' . $category->image) }}"
                                             alt="{{ $category->name }}" class="img-fluid category-image" />
                                     </a>
                                     <figcaption class="category-name">
-                                        <a
-                                            href="/collections/{{ strtolower($category->name) }}">{{ $category->name }}</a>
+                                        <a href="{{ route('products.byCategory', ['id' => $category->id]) }}">
+                                            {{ $category->name }}
+                                        </a>
                                     </figcaption>
                                 </figure>
                             </div>
@@ -48,6 +50,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

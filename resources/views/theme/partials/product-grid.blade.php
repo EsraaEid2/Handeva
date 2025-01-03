@@ -1,14 +1,14 @@
-<div id="products-list" class="shop-page-products-wrap">
-    <div class="products-wrapper products-gird">
+<div id="custom-products-list" class="custom-shop-page-products-wrap">
+    <div class="custom-products-wrapper custom-products-grid">
         @foreach($products as $product)
         @if($product->is_visible)
-        <div class="single-product-item">
+        <div class="custom-single-product-item">
             @include('theme.partials.product_card')
         </div>
         @endif
         @endforeach
     </div>
-    <div class="page-pagination">
+    <div class="custom-page-pagination">
         {{ $products->links() }}
     </div>
 </div>
