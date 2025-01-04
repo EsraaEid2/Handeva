@@ -31,25 +31,33 @@ class UserHomeController extends Controller
             ->select(
                 'vendors.id as vendor_id',
                 DB::raw("CONCAT(vendors.first_name, ' ', vendors.last_name) as vendor_name"),
-                'vendors.bio',
+                'vendors.email as vendor_email',
                 DB::raw('COUNT(products.id) as total_uploaded_products'),
                 DB::raw('SUM(order_items.quantity) as total_sold_products')
             )
-            ->groupBy('vendors.id', 'vendors.first_name', 'vendors.last_name', 'vendors.bio')
+            ->groupBy('vendors.id', 'vendors.first_name', 'vendors.last_name', 'vendors.email')
             ->orderByDesc(DB::raw('SUM(order_items.quantity)'))
             ->limit(3)
             ->get();
-  
-        // Fetch categories
+    
+        // Fetch the specific category
+        $category = Category::where('name', 'Traditional Accessories')->first();
+    
+        // Fetch all categories
         $categories = Category::whereNull('deleted_at')->get();
-
-    // dd($categories);
-        // Pass products, topVendors, and categories to the view
+    
+        // Check if the category exists and handle accordingly
+        if (!$category) {
+            abort(404, 'Category "Traditional Accessories" not found');
+        }
+    
         return view('theme.home', [
             'products' => $products,
             'topVendors' => $topVendors,
-            'categories' => $categories
+            'categories' => $categories,
+            'category' => $category,
         ]);
     }
+    
     
 }

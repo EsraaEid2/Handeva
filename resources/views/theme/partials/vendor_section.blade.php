@@ -40,7 +40,7 @@
                                 Products Sold: {{ $vendor->total_sold_products }}
                             </p>
                             <p style="font-family: var(--font-family-body); color: var(--neutral-color);">
-                                {{ $vendor->bio }}
+                                {{ $vendor->vendor_email }}
                             </p>
                             <a href="{{ route('vendor.dashboard', $vendor->vendor_id) }}" class="btn-long-arrow">
                                 View Profile

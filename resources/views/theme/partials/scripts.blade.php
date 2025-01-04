@@ -30,6 +30,7 @@
  <script src="{{ asset('assets') }}/js/registerVendor.js"></script>
  <script src="{{ asset('assets') }}/js/quickViewModal.js"></script>
  <script src="{{ asset('assets') }}/js/customerProflie.js"></script>
+ <script src="{{ asset('assets') }}/js/fillReview.js"></script>
  <script src="{{ asset('assets') }}/js/uploadProduct.js"></script>
  <!-- Add SweetAlert2 
 -->

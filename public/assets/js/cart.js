@@ -123,17 +123,38 @@ if (!csrfToken) {
         .catch(error => console.error('Error removing item:', error));
     }
 
-    // Handle Item Removal
-    const removeButtons = document.querySelectorAll('.remove-item');
-    removeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const productId = button.dataset.productId;
-            if (confirm("Are you sure you want to remove this item from the cart?")) {
+// Handle Item Removal
+const removeButtons = document.querySelectorAll('.remove-item');
+removeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const productId = button.dataset.productId;
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This item will be removed from your cart.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
                 const totalItemPriceEl = button.closest('.cart-item').querySelector('.total-item-price');
                 removeItem(productId, button, totalItemPriceEl);
+                
+                Swal.fire({
+                    title: 'Removed!',
+                    text: 'The item has been removed from your cart.',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
             }
         });
     });
+});
+
 
     // Add to Cart Event Listeners
     const addToCartButtons = document.querySelectorAll('.ep-add-to-cart');

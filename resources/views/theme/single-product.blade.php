@@ -143,36 +143,53 @@
                                                             <input type="hidden" name="product_id"
                                                                 value="{{ $product->id }}">
                                                             <div class="custom-review-form row">
+                                                                <!-- Star Rating Section -->
                                                                 <div class="col-12 mb-4">
                                                                     <h5>Rating:</h5>
-                                                                    <select name="rating" required>
-                                                                        <option value="">Select Rating</option>
-                                                                        @for ($i = 1; $i <= 5; $i++) <option
-                                                                            value="{{ $i }}">{{ $i }} Star(s)</option>
-                                                                            @endfor
-                                                                    </select>
+                                                                    <div id="stars" class="star-rating">
+                                                                        <i class="fa fa-star bi-star"
+                                                                            data-index="1"></i>
+                                                                        <i class="fa fa-star bi-star"
+                                                                            data-index="2"></i>
+                                                                        <i class="fa fa-star bi-star"
+                                                                            data-index="3"></i>
+                                                                        <i class="fa fa-star bi-star"
+                                                                            data-index="4"></i>
+                                                                        <i class="fa fa-star bi-star"
+                                                                            data-index="5"></i>
+                                                                    </div>
+                                                                    <input type="hidden" name="rating" id="stars-input"
+                                                                        required>
                                                                 </div>
+
+                                                                <!-- Name Input -->
                                                                 <div class="col-md-6 col-12 mb-4">
                                                                     <label for="name">Name:</label>
                                                                     <input id="name" name="name" placeholder="Name"
-                                                                        type="text">
+                                                                        type="text" required>
                                                                 </div>
+
+                                                                <!-- Email Input -->
                                                                 <div class="col-md-6 col-12 mb-4">
                                                                     <label for="email">Email:</label>
                                                                     <input id="email" name="email" placeholder="Email"
-                                                                        type="email">
+                                                                        type="email" required>
                                                                 </div>
+
+                                                                <!-- Review Comment -->
                                                                 <div class="col-12 mb-4">
                                                                     <label for="comment">Your Review:</label>
                                                                     <textarea name="comment" id="comment"
-                                                                        placeholder="Write a review"></textarea>
+                                                                        placeholder="Write a review"
+                                                                        required></textarea>
                                                                 </div>
+
+                                                                <!-- Submit Button -->
                                                                 <div class="col-12">
                                                                     <input value="Add Review" type="submit">
                                                                 </div>
                                                             </div>
                                                         </form>
-
                                                     </div>
                                                 </div>
                                                 <!-- Review Form End -->

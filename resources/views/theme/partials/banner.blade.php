@@ -35,7 +35,8 @@
                             <h2>Stunning Traditional Accessories</h2>
                             <p>Explore our exclusive collection of traditional Jordanian and Palestinian accessories.
                             </p>
-                            <a href="{{ route('collections', ['type' => 'traditional']) }}" class="btn-long-arrow">Shop
+                            <a href="{{ route('products.byCategory', ['id' => $category->id]) }}"
+                                class="btn-long-arrow">Shop
                                 Traditional</a>
                         </div>
                     </div>

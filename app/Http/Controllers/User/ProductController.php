@@ -85,28 +85,38 @@ class ProductController extends Controller
     
         return $ranges;
     }
-    
-    public function addToCart(request $request){
-        // validate request
+    public function addToCart(Request $request)
+    {
+        // Validate the request
         $request->validate([
-        'product_id' =>'required|integer|exists:product,id',
-        'quantity' =>'required|integer|min:1'
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity' => 'required|integer|min:1',
         ]);
-
-        //Example logic to add product to cart
+    
+        // Fetch the product
         $product = Product::findOrFail($request->input('product_id'));
-
+    
+        // Retrieve the cart from session
         $cart = Session::get('cart', []);
-        $cart[$product->id] = [
-            'title' => $product->title,
-            'price' => $product->price,
-            'quantity' => $request->input('quantity')
-        ];
+    
+        // Add or update the product in the cart
+        if (isset($cart[$product->id])) {
+            $cart[$product->id]['quantity'] += $request->input('quantity');
+        } else {
+            $cart[$product->id] = [
+                'title' => $product->title,
+                'price' => $product->price,
+                'quantity' => $request->input('quantity'),
+            ];
+        }
+    
+        // Save the updated cart back to the session
         Session::put('cart', $cart);
-
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+    
+        // Set the success message for SweetAlert
+        return redirect()->back()->with('successAdd', "{$product->title} has been added to your cart.");
     }
-
-
+    
+    
 
 }

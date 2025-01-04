@@ -2,8 +2,6 @@
 @section('title','Wishlist')
 @section('content')
 
-@include('theme.partials.hero',['title' => 'Wishlist'])
-
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="ep-wishlist-page p-9">
     <div class="container">

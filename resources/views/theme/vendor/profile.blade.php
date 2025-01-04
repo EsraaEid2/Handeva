@@ -24,29 +24,32 @@
                 <h3 class="handeva-profile-form-title">Edit Profile Information</h3>
                 <form action="{{ route('vendor.updateAccount') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <div class="flexed-container">
+                        <div class="handeva-form-group">
+                            <label class="handeva-form-label" for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" class="handeva-form-input"
+                                value="{{ $vendor->first_name }}" required>
+                        </div>
 
-                    <div class="handeva-form-group">
-                        <label class="handeva-form-label" for="first_name">First Name</label>
-                        <input type="text" id="first_name" name="first_name" class="handeva-form-input"
-                            value="{{ $vendor->first_name }}" required>
+                        <div class="handeva-form-group">
+                            <label class="handeva-form-label" for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" class="handeva-form-input"
+                                value="{{ $vendor->last_name }}" required>
+                        </div>
                     </div>
+                    <div class="flexed-container">
+                        <div class="handeva-form-group">
+                            <label class="handeva-form-label" for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="handeva-form-input"
+                                value="{{ $vendor->email }}" required>
+                        </div>
 
-                    <div class="handeva-form-group">
-                        <label class="handeva-form-label" for="last_name">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" class="handeva-form-input"
-                            value="{{ $vendor->last_name }}" required>
-                    </div>
+                        <div class="handeva-form-group">
+                            <label class="handeva-form-label" for="phone_number">Phone Number</label>
+                            <input type="text" id="phone_number" name="phone_number" class="handeva-form-input"
+                                value="{{ $vendor->phone_number }}" required>
+                        </div>
 
-                    <div class="handeva-form-group">
-                        <label class="handeva-form-label" for="email">Email Address</label>
-                        <input type="email" id="email" name="email" class="handeva-form-input"
-                            value="{{ $vendor->email }}" required>
-                    </div>
-
-                    <div class="handeva-form-group">
-                        <label class="handeva-form-label" for="phone_number">Phone Number</label>
-                        <input type="text" id="phone_number" name="phone_number" class="handeva-form-input"
-                            value="{{ $vendor->phone_number }}" required>
                     </div>
 
 

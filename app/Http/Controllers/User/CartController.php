@@ -12,13 +12,18 @@ class CartController extends Controller
     {
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
-
+    
+        // Retrieve cart from session or initialize it
         $cart = session()->get('cart', []);
-
+    
         if (isset($cart[$productId])) {
+            // If the product is already in the cart, increase the quantity
             $cart[$productId]['quantity'] += $quantity;
         } else {
+            // Fetch the product details
             $product = Product::findOrFail($productId);
+    
+            // Add new product to the cart
             $cart[$productId] = [
                 'product_id' => $product->id,
                 'title' => $product->title,
@@ -27,17 +32,25 @@ class CartController extends Controller
                 'image_url' => $product->primaryImage ? $product->primaryImage->image_url : 'img/default.jpg',
             ];
         }
-
+    
+        // Save the updated cart to session
         session()->put('cart', $cart);
-
-        $cartCount = array_sum(array_column($cart, 'quantity')); // حساب العدد الإجمالي للعناصر
-
+    
+        // Calculate the total cart count
+        $cartCount = array_sum(array_column($cart, 'quantity'));
+    
+        // Prepare the success message
+        session()->flash('successAdd', "{$cart[$productId]['title']} has been added to your cart!");
+    
         return response()->json([
-            'message' => 'Product added to cart!',
-            'cart' => $cart,
-            'cart_count' => $cartCount, // إرجاع عدد العناصر
+            'message' => session('successAdd'), // Retrieve the message from the session
+            'cart' => $cart,                   // Updated cart
+            'cart_count' => $cartCount,        // Total cart count
         ]);
     }
+    
+
+    
     public function viewCart()
     {
         $cart = session()->get('cart', []);
