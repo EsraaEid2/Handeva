@@ -30,7 +30,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     // Admin Dashboard Route
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('admin.dashboard');
     
     // Users Dashboard Route
     Route::get('users', [UserController::class, 'index'])->name('admin.users.index');

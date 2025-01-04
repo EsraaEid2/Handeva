@@ -44,6 +44,7 @@ Author: Esra'a Eid
 -------------------------------------------------------------------*/
 /*== Theme Typography Style Start ==*/
 :root {
+   
     --primary-color: #771011;    /* Deep red for emphasis and elegance */
     --secondary-color: #fff; /* Warm beige for backgrounds and sections */
     --dark-color: #221712;      /* Dark brown for headers, footers, and text */
@@ -64,6 +65,9 @@ html {
     font-size: 62.5%;
 }
 
+.custom-footer-contact{
+    color:var(--secondary-color);
+}
 a {
     text-decoration: none;
     transition: all 0.4s ease-out;
@@ -73,7 +77,7 @@ p {
     margin-bottom: 15px;
     font-family: var(--font-family-body);
     font-size: var(--font-size-regular);
-    color: var(--secondary-color);
+    color: var(--dark-color);
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
@@ -151,7 +155,7 @@ button, button.btn {
     border-bottom: 3px solid var(--primary-color);
 }
 
-.handeva-auth .login-reg-form-wrap {
+.handeva-auth .login-g-form-wrap {
     padding: 1rem 0;
 }
 
@@ -260,6 +264,10 @@ button:hover {
 
 .handeva-container {
     padding: 0 4%;
+    
+}
+.her{
+    height: 100vh;
 }
 
 .p-9 {
@@ -323,6 +331,7 @@ button:hover {
     background-image: url(../img/title-line.png);
     background-repeat: no-repeat;
     background-position: center bottom;
+
     content: '';
     position: absolute;
     width: 100%;
@@ -360,7 +369,7 @@ button:hover {
     width: 50px;
     height: 50px;
     display: inline-block;
-    color: var(--secondary-color);
+    color: var(--dark-color);
     font-size: var(--font-size-medium);
     border: none;
     position: absolute;
@@ -380,7 +389,7 @@ button:hover {
 
 .owl-carousel .owl-nav button:hover {
     background-color: var(--primary-color);
-    color: #fff;
+    color:var(--dark-color);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -1863,10 +1872,33 @@ display: flex;
     height: 70px;
     width: 70px;
 }
+#vendorbanner{
+    background-image: url("../img/output.jpg");
+    width: 100%;
+    height: auto;
+}
+#tradtionalbanner{
+    background-image: url("../img/trad.jpg");
+    width: 100%;
+    height: auto;
+}
+
+#accessoriesBanner{
+    background-image: url("../img/neck.jpg");
+    width: 100%;
+    height: auto;
+   
+}
+
+#accessoriesBanner:after, #tradtionalbanner:after, #vendorbanner:after{
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
 /*== Page Title Area Start ==*/
 #page-title-area {
-    background-image: url("../img/page-title-bg.jpg");
+    background-image: url("../img/bannerjj.jpg");
+    width: 100%;
+    height: auto;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -1876,7 +1908,7 @@ display: flex;
 }
 
 #page-title-area:after {
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the transparency level as needed */
     content: "";
     position: absolute;
     left: 0;
@@ -1885,6 +1917,7 @@ display: flex;
     width: 100%;
     z-index: -1;
 }
+
 
 #page-title-area .page-title-content h1 {
     color: #fff;
@@ -1908,7 +1941,7 @@ display: flex;
 }
 
 #banner-area:after {
-    background-color: var(--dark-color);
+    /* background-color: var(--dark-color); */
     content: '';
     position: absolute;
     height: 100%;
@@ -1930,7 +1963,7 @@ display: flex;
     align-items: center;
     justify-content: flex-start; 
     text-align: left; 
-    padding-left: 50px; 
+    /* padding-left: 50px;  */
 }
 
 
@@ -1947,7 +1980,7 @@ display: flex;
 }
 
 #banner-area #banner-carousel .single-carousel-wrap:after {
-    background-color: rgba(244, 245, 247, 0.8);
+    /* background-color: rgba(244, 245, 247, 0.3); */
     content: '';
     position: absolute;
     left: 0;
@@ -1961,11 +1994,12 @@ display: flex;
 #banner-area #banner-carousel .banner-caption {
     max-width: 850px;
     padding: 25px;
-    color: var(--neutral-color);
+    color: var(--secondary-color);
 }
 
 #banner-area #banner-carousel .banner-caption h4 {
     font-size: 2rem;
+    font-weight: bold;
     font-family: var(--font-family-secondary);
     color: var(--secondary-color);
     margin-bottom: 15px;
@@ -1975,7 +2009,7 @@ display: flex;
 #banner-area #banner-carousel .single-carousel-wrap .banner-caption h2 {
     font-size:5.2rem;
     font-family: var(--font-family-primary);
-    color: var(--primary-color);
+    color: var(--secondary-color);
     margin-bottom: 25px;
 }
 
@@ -1995,7 +2029,7 @@ display: flex;
 #banner-area #banner-carousel .single-carousel-wrap .banner-caption p {
     font-size: 1.25rem; /* زيادة حجم النص */
     font-family: var(--font-family-body);
-    color: var(--neutral-color);
+    color: var(--bg-light);
     margin-bottom: 35px;
     line-height: 1.9;
 }
@@ -2144,6 +2178,7 @@ display: flex;
     font-size: 6rem;
     line-height: 1.2;
     text-transform: capitalize;
+   
 }
 
 @media only screen and (max-width: 991px) {
@@ -6873,6 +6908,7 @@ fieldset legend {
     background-color: var(--secondary-color);
     color: var(--dark-color);
     padding: 15px;
+    height: 100vh;
 }
 
 .profile-tab-menu {
@@ -7356,7 +7392,7 @@ fieldset legend {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    /* padding: 2rem; */
 }
 
 .custom-products-wrapper {
@@ -7383,6 +7419,46 @@ fieldset legend {
 .custom-page-pagination {
     margin-top: 2rem;
 }
+
+.custom-page-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-family: var(--font-family-body);
+}
+
+.custom-page-pagination .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.custom-page-pagination .pagination li {
+    margin: 0 5px;
+}
+
+.custom-page-pagination .pagination li a {
+    font-size: var(--font-size-regular);
+    color: var(--primary-color);
+    padding: 10px 15px;
+    text-decoration: none;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-page-pagination .pagination li a:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.custom-page-pagination .pagination li.active a {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+}
+
 
 /* Responsive Enhancements */
 @media (max-width: 1024px) {
@@ -7600,4 +7676,103 @@ fieldset legend {
 
 .custom-btn-back-home:hover {
     background-color: darken(var(--primary-color), 10%);
+}
+.vd-toggle-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.vd-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+.vd-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.vd-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.vd-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.vd-toggle input:checked + .vd-toggle-slider {
+    background-color: var(--primary-color);
+}
+
+.vd-toggle input:checked + .vd-toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.single-vendor-wrap {
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.vendor-name {
+    font-family: var(--font-family-secondary);
+    color: var(--dark-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-seller-icon {
+    color: gold;
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.vendor-sales {
+    font-family: var(--font-family-secondary);
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.icon-upload, .icon-sold {
+    margin-right: 5px;
+}
+
+.vendor-email {
+    font-family: var(--font-family-body);
+    color: var(--neutral-color);
+    margin-bottom: 10px;
+}
+
+.vendor-quote {
+    font-family: var(--font-family-body);
+    color: var(--primary-color);
+    font-style: italic;
+    margin-top: 15px;
 }

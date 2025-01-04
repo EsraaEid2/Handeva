@@ -4,7 +4,7 @@
 
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="ep-wishlist-page p-9">
-    <div class="container">
+    <div class="container" style="height: 100vh;">
         <!-- Wishlist Page Content Start -->
         <div class="row">
             <div class="col-lg-12">
@@ -79,10 +79,8 @@
                                             Looks like you haven't added any products to your wishlist yet. Start
                                             exploring our shop and find your favorites!
                                         </p>
-                                        <a href="{{ route('collections') }}" class="btn-explore-shop"
-                                            style="font-family: var(--font-family-body); font-size: var(--font-size-regular); color: var(--secondary-color); background-color: var(--primary-color); padding: 0.75rem 1.5rem; border: none; border-radius: 5px; text-decoration: none;">
-                                            Explore Products
-                                        </a>
+                                        <a href="{{ route('collections') }}" class="btn-long-arrow">Explore All
+                                            Products</a>
                                     </div>
                                 </td>
                             </tr>

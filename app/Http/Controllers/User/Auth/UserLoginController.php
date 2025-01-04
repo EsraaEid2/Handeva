@@ -14,6 +14,14 @@ class UserLoginController extends Controller
      */
     public function checkLogin(Request $request)
     {
+
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('collections')->with('info', 'You are already logged in.');
+        }
+        if (Auth::guard('vendor')->check()) {
+            return redirect()->route('vendor.dashboard')->with('info', 'You are already logged in.');
+        }
+        
         // Validate input
         $request->validate([
             'email' => 'required|email',

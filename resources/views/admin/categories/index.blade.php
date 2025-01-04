@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="admin-card-body">
-            <table class="admin-table dataTable table table-bordered table-hover text-center align-middle">
+            <table class=" dataTable table table-bordered admin-table table-hover text-center align-middle">
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
@@ -27,13 +27,13 @@
                 <tbody>
                     @forelse($categories as $item)
                     <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>
+                        <td data-label="ID">{{ $item->id }}</td>
+                        <td data-label="Name">{{ $item->name }}</td>
+                        <td data-label="Image">
                             <img src="{{ asset('uploads/category/'.$item->image) }}" alt="Category Image" width="50"
                                 height="50" class="rounded shadow-sm">
                         </td>
-                        <td>
+                        <td data-label="Actions">
                             <a href="#" class="text-success mx-2" title="Edit" data-bs-toggle="modal"
                                 data-bs-target="#editCategoryModal{{ $item->id }}">
                                 <i class="fas fa-edit fa-lg"></i>

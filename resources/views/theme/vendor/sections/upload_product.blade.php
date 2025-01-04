@@ -64,27 +64,33 @@
 
     <!-- Step 3: Options -->
     <div class="vd-step-content" data-step="3">
-        <div class="vd-toggle-container">
-            <label class="vd-toggle">
-                <input type="checkbox" name="is_traditional" id="is_traditional">
-                <span class="vd-toggle-slider"></span>
-            </label>
-            <span>Traditional Product</span>
+        <div class="flexed-container">
+            <div class="vd-toggle-container">
+                <label class="vd-toggle">
+                    <input type="checkbox" name="is_traditional" id="is_traditional">
+                    <span class="vd-toggle-slider"></span>
+                </label>
+                <span>Traditional Product</span>
+            </div>
+            <div class="vd-toggle-container">
+                <label class="vd-toggle">
+                    <input type="checkbox" name="is_customizable" id="is_customizable">
+                    <span class="vd-toggle-slider"></span>
+                </label>
+                <span>Customizable Product</span>
+            </div>
         </div>
-        <div class="vd-toggle-container">
-            <label class="vd-toggle">
-                <input type="checkbox" name="is_customizable" id="is_customizable">
-                <span class="vd-toggle-slider"></span>
-            </label>
-            <span>Customizable Product</span>
-        </div>
+
+
         <div class="vd-form-group" id="customization-section" style="display: none;">
-            <label class="vd-label" for="custom_type">Customization Type</label>
-            <select name="custom_type" class="vd-select">
+            <label class="vd-label" for="customization_id">Customization Type</label>
+            <select name="customization_id" id="customization_id" class="vd-select">
+                <option value="">Select a customization type</option>
                 @foreach ($customizations as $customization)
                 <option value="{{ $customization->id }}">{{ $customization->custom_type }}</option>
                 @endforeach
             </select>
+
         </div>
     </div>
 

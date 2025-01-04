@@ -1,75 +1,43 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark glassy-navbar">
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ url('admin') }}">
-        <img src="{{ asset('assets/img/HandevaLogo.png') }}" alt="Logo" class="navbar-logo" />
-    </a>
+<nav class="admin-top-nav">
+    <!-- Brand -->
+    <a class="admin-brand" href="{{ url('admin') }}">Handi</a>
 
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+    <!-- Sidebar Toggle -->
+    <button class="admin-sidebar-toggle" id="sidebarToggle">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- User Dropdown and Messages Icon-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li class="nav-item dropdown position-relative">
-            <a class="nav-link" href="{{ route('contactus.index') }}" data-bs-toggle="tooltip" title="View Messages">
-                <i class="fas fa-envelope"></i>
-                <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle"
-                    id="unreadMessagesCount">
-                    {{ App\Models\ContactUs::where('is_read', false)->count() }}
-                </span>
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+    <!-- Messages -->
+    <div class="admin-messages">
+        <a class="admin-message-link" href="{{ route('contactus.index') }}" data-bs-toggle="tooltip"
+            title="View Messages">
+            <i class="fas fa-envelope admin-message-icon"></i>
+            <span class="admin-message-badge">
+                {{ App\Models\ContactUs::where('is_read', false)->count() }}
+            </span>
+        </a>
+    </div>
+
+    <!-- User -->
+    <div class="admin-user-nav">
+        <div class="admin-user-dropdown">
+            <a class="admin-user-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <i class="fas fa-user fa-fw"></i> {{ Auth::user()->name }}
+                <i class="fas fa-user fa-fw"></i>
+                <span class="admin-user-name">{{ Auth::user()->name }}</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ route('admin.profile')}}">Your Profile</a></li>
+            <ul class="admin-user-menu" aria-labelledby="navbarDropdown">
+                <li><a class="admin-menu-item" href="{{ route('admin.profile')}}">Your Profile</a></li>
                 <li>
-                    <hr class="dropdown-divider" />
+                    <div class="admin-menu-divider"></div>
                 </li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="dropdown-item">Logout</button>
+                        <button type="submit" class="admin-logout-btn">Logout</button>
                     </form>
                 </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+    </div>
 </nav>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(function(tooltipTriggerEl) {
-        new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-});
-</script>
-<script>
-// This function sends an AJAX request to update the unread count
-function markAsRead(messageId) {
-    // Send AJAX request to the server to mark the message as read
-    fetch(`/admin/contactus/${messageId}/mark-read`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Update the unread message count on success
-            if (data.success) {
-                document.getElementById("unreadMessagesCount").innerText = data.newUnreadCount;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-</script>

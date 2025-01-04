@@ -5,7 +5,7 @@
 
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
-    <div class="container">
+    <div class="container " style="height: 100vh;">
         <div class="row">
             <div class="col-lg-7 m-auto">
                 <!-- Login & Register Content Start -->

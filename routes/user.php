@@ -17,6 +17,12 @@ use App\Http\Controllers\User\Auth\UserRegisterController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 
 
+Route::middleware('guest:web')->group(function () {
+    Route::post('login', [UserLoginController::class, 'checkLogin'])->name('checkLogin');
+    Route::get('/login-register',[ThemeController::class,'login_register'])->name('login_register'); 
+    Route::post('register', [UserRegisterController::class, 'store'])->name('store');
+});
+
 // Customer routes
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/my-account', [CustomerController::class, 'showAccount'])->name('theme.my_account');
@@ -32,8 +38,6 @@ Route::middleware(['auth:web'])->group(function () {
 
 Route::get('/',[UserHomeController::class,'index'])->name('user.home');
 Route::get('/new-products', [UserHomeController::class, 'index'])->name('new.products');
-Route::post('register', [UserRegisterController::class, 'store'])->name('store');
-Route::post('login', [UserLoginController::class, 'checkLogin'])->name('checkLogin');
 Route::post('user/logout', [UserLoginController::class, 'logout'])->name('userLogout');
 
 Route::get('/collections/category/{id}', [UserProductController::class, 'getProductsByCategory'])->name('products.byCategory');
@@ -70,11 +74,10 @@ Route::post('user/contact', [ContactUsController::class, 'store'])->name('contac
 
 Route::controller(ThemeController::class)->name('theme.')->group(function(){
   
-    Route::get('/login-register',[ThemeController::class,'login_register'])->name('login_register'); 
     Route::get('/about','about')->name('about');
     Route::get('/compare','compare')->name('compare');
     Route::get('/contact','contact')->name('contact'); 
     Route::get('/single-product','single_product')->name('single_product');
   
 
-});
+});     

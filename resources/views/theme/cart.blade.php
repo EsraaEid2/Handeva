@@ -67,7 +67,7 @@
                 <h2 class="empty-cart-heading">Your cart is empty!</h2>
                 <p class="empty-cart-text">Looks like you haven't added any items to your cart yet. Start exploring our
                     shop and find your favorites!</p>
-                <a href="{{ route('collections') }}" class="btn-explore-shop">Explore Products</a>
+                <a href="{{ route('collections') }}" class="btn-long-arrow">Explore All Products</a>
             </div>
             @endif
         </div>

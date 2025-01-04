@@ -1,59 +1,63 @@
-<div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-dark glassy-sidenav" id="sidenavAccordion">
-        <div class="sb-sidenav-menu">
-            <div class="nav">
-
+<div class="admin-sidebar-container">
+    <nav class="admin-sidebar admin-sidebar-dark" id="adminSidebarMenu">
+        <div class="admin-sidebar-content">
+            <div class="admin-nav-list">
                 <!-- Dashboard Section -->
-                <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" href="{{ url('admin/dashboard') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Dashboard
+                <a class="admin-nav-item {{ request()->is('admin') ? 'active' : '' }}"
+                    href="{{ url('admin/dashboard') }}">
+                    <div class="admin-nav-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <span class="admin-nav-text">Dashboard</span>
                 </a>
 
                 <!-- Management Section -->
-                <div class="sb-sidenav-menu-heading">Management</div>
-                <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}"
+                <a class="admin-nav-item {{ request()->is('admin/users*') ? 'active' : '' }}"
                     href="{{ route('admin.users.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                    Users
+                    <div class="admin-nav-icon"><i class="fas fa-users"></i></div>
+                    <span class="admin-nav-text">Users</span>
                 </a>
-                <a class="nav-link {{ request()->is('admin/vendors*') ? 'active' : '' }}"
+
+                <a class="admin-nav-item {{ request()->is('admin/vendors*') ? 'active' : '' }}"
                     href="{{ url('admin/vendors') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
-                    Vendors
+                    <div class="admin-nav-icon"><i class="fas fa-store"></i></div>
+                    <span class="admin-nav-text">Vendors</span>
                 </a>
-                <a class="nav-link {{ request()->is('admin/category*') ? 'active' : '' }}"
+
+                <a class="admin-nav-item {{ request()->is('admin/category*') ? 'active' : '' }}"
                     href="{{ url('admin/category') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-th-list"></i></div>
-                    Categories
+                    <div class="admin-nav-icon"><i class="fas fa-th-list"></i></div>
+                    <span class="admin-nav-text">Categories</span>
                 </a>
-                <a class="nav-link {{ request()->is('admin/products*') ? 'active' : '' }}"
+
+                <a class="admin-nav-item {{ request()->is('admin/products*') ? 'active' : '' }}"
                     href="{{ route('admin.products.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
-                    Products
+                    <div class="admin-nav-icon"><i class="fas fa-box"></i></div>
+                    <span class="admin-nav-text">Products</span>
                 </a>
-                <a class="nav-link {{ request()->is('admin/customizations*') ? 'active' : '' }}"
+
+                <a class="admin-nav-item {{ request()->is('admin/customizations*') ? 'active' : '' }}"
                     href="{{ route('admin.customizations.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
-                    Product Customizations
+                    <div class="admin-nav-icon"><i class="fas fa-cogs"></i></div>
+                    <span class="admin-nav-text">Product Customizations</span>
                 </a>
 
-                <a class="nav-link {{ request()->is('admin/reviews*') ? 'active' : '' }}"
+                <a class="admin-nav-item {{ request()->is('admin/reviews*') ? 'active' : '' }}"
                     href="{{ route('admin.reviews.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
-                    Reviews
-                </a>
-                <a class="nav-link {{ request()->is('admin/orders*') ? 'active' : '' }}"
-                    href="{{ route('admin.orders.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                    Orders
-                </a>
-                <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}"
-                    href="{{ route('roles.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-user-tag"></i></div>
-                    Roles
+                    <div class="admin-nav-icon"><i class="fas fa-star"></i></div>
+                    <span class="admin-nav-text">Reviews</span>
                 </a>
 
+                <a class="admin-nav-item {{ request()->is('admin/orders*') ? 'active' : '' }}"
+                    href="{{ route('admin.orders.index') }}">
+                    <div class="admin-nav-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <span class="admin-nav-text">Orders</span>
+                </a>
+
+                <a class="admin-nav-item {{ request()->is('admin/roles*') ? 'active' : '' }}"
+                    href="{{ route('roles.index') }}">
+                    <div class="admin-nav-icon"><i class="fas fa-user-tag"></i></div>
+                    <span class="admin-nav-text">Roles</span>
+                </a>
             </div>
+        </div>
     </nav>
 </div>

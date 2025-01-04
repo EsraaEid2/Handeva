@@ -11,46 +11,41 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $productId = $request->input('product_id');
-        $quantity = $request->input('quantity', 1);
+        $quantity = (int) $request->input('quantity', 1); // Ensure quantity is an integer and default to 1
     
-        // Retrieve cart from session or initialize it
+        if (!$productId || $quantity < 1) {
+            return response()->json(['message' => 'Invalid product or quantity.'], 400);
+        }
+    
         $cart = session()->get('cart', []);
     
+        // Check if product already exists in the cart
         if (isset($cart[$productId])) {
-            // If the product is already in the cart, increase the quantity
-            $cart[$productId]['quantity'] += $quantity;
+            $cart[$productId]['quantity'] += $quantity; // Update quantity
         } else {
-            // Fetch the product details
             $product = Product::findOrFail($productId);
-    
-            // Add new product to the cart
             $cart[$productId] = [
                 'product_id' => $product->id,
                 'title' => $product->title,
                 'price' => $product->price,
-                'quantity' => $quantity,
+                'quantity' => $quantity, // Initialize quantity
                 'image_url' => $product->primaryImage ? $product->primaryImage->image_url : 'img/default.jpg',
             ];
         }
     
-        // Save the updated cart to session
         session()->put('cart', $cart);
     
-        // Calculate the total cart count
-        $cartCount = array_sum(array_column($cart, 'quantity'));
-    
-        // Prepare the success message
+        $cartCount = array_sum(array_column($cart, 'quantity')); // Total cart items
         session()->flash('successAdd', "{$cart[$productId]['title']} has been added to your cart!");
     
         return response()->json([
-            'message' => session('successAdd'), // Retrieve the message from the session
-            'cart' => $cart,                   // Updated cart
-            'cart_count' => $cartCount,        // Total cart count
+            'message' => session('successAdd'),
+            'cart' => $cart,
+            'cart_count' => $cartCount,
         ]);
     }
     
 
-    
     public function viewCart()
     {
         $cart = session()->get('cart', []);

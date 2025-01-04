@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Review;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 
 class ThemeController extends Controller
 {
     public function login_register(){
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('collections')->with('info', 'You are already logged in.');
+        }
+        if (Auth::guard('vendor')->check()) {
+            return redirect()->route('vendor.dashboard')->with('info', 'You are already logged in.');
+        }
         return view('theme.login-register');
     }
     public function compare(){

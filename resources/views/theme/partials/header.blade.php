@@ -108,7 +108,7 @@
                         @else
                         <!-- Guest -->
                         <li class="custom-login">
-                            <a href="{{ route('theme.login_register') }}" class="custom-btn">Login</a>
+                            <a href="{{ route('login_register') }}" class="custom-btn">Login</a>
                         </li>
 
                         <!-- Wishlist Icon -->

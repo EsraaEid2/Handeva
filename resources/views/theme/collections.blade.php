@@ -15,10 +15,19 @@
             <!-- Products Area Start -->
             <div class="col-lg-9">
                 <div class="shop-page-content-wrap">
-                    <!-- Product Sort Options -->
-                    <div class="products-settings-option d-flex justify-content-between">
-                        @include('theme.partials.sort-form')
+                    <div class="product-cong-left d-flex align-items-center justify-content-center">
+                        <!-- Custom Search Bar -->
+                        <form id="customSearchForm" class="custom-search-bar d-flex align-items-center" method="GET"
+                            action="{{ route('collections') }}">
+                            <input type="text" name="query" id="customSearchInput"
+                                class="form-control custom-search-input" placeholder="Search for products..."
+                                value="{{ request('query') }}">
+                            <button type="submit" class="btn custom-search-btn">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
                     </div>
+
                     <!-- Products Grid -->
                     @include('theme.partials.product-grid')
                     <!-- Pagination -->
@@ -29,6 +38,13 @@
     </div>
 </div>
 <!--== Page Content Wrapper End ==-->
+
+@if (session('orderSuccess'))
+<div class="alert alert-success">
+    {{ session('orderSuccess') }}
+</div>
+@endif
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

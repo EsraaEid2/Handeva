@@ -117,7 +117,6 @@ class VendorController extends Controller
             // Return success message for SweetAlert
             return back()->with('success', 'Account updated successfully!');
         }
-        
         public function uploadProduct(Request $request)
         {
             $request->validate([
@@ -127,16 +126,14 @@ class VendorController extends Controller
                 'category_id' => 'required|exists:categories,id',
                 'stock_quantity' => 'required|integer|min:0',
                 'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-                'customization_id' => 'required_if:is_customizable,on|exists:customizations,id', // Validate customization_id
+                'customization_id' => 'nullable|required_if:is_customizable,1|exists:customizations,id',
             ]);
         
-            $vendorId = Auth::id(); // Get the vendor's user ID
+            $vendorId = Auth::id();
         
-            // Calculate the price after discount if provided
             $priceAfterDiscount = $request->discount ? 
                 $request->price - ($request->price * ($request->discount / 100)) : null;
         
-            // Create the product
             $product = Product::create([
                 'title' => $request->title,
                 'description' => $request->description,
@@ -149,7 +146,6 @@ class VendorController extends Controller
                 'vendor_id' => $vendorId,
             ]);
         
-            // Upload product images
             foreach ($request->file('images') as $index => $image) {
                 $imagePath = $this->uploadImage($image, 'product_images');
         
@@ -160,18 +156,15 @@ class VendorController extends Controller
                 ]);
             }
         
-            // If the product is customizable, add the customization data
             if ($request->has('is_customizable') && $request->customization_id) {
                 ProductCustomization::create([
                     'product_id' => $product->id,
                     'customization_id' => $request->customization_id,
                 ]);
             }
-        
             // Return success message for SweetAlert
             return redirect()->back()->with('success', 'Product uploaded successfully!');
         }
-        
         
         public function updateProduct(Request $request, $id)
         {

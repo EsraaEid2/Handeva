@@ -2,7 +2,6 @@
 @section('title', 'Checkout')
 @section('content')
 
-@include('theme.partials.hero', ['title' => 'Checkout'])
 
 <!--== Page Content Wrapper Start ==-->
 <div id="page-content-wrapper" class="p-9">
@@ -39,20 +38,15 @@
                                     placeholder="Email Address" required />
                             </div>
                             <div class="single-input-item">
-                                <label for="street-address" class="required">Street Address</label>
+                                <label for="street-address" class="required">Address</label>
                                 <input type="text" id="street-address" name="address" value="{{ $user->address }}"
-                                    placeholder="Street Address Line 1" required />
+                                    placeholder="Enter Address" required />
                             </div>
                             <div class="single-input-item">
                                 <label for="phone">Phone Number</label>
                                 <input type="text" id="phone" name="phone_number" value="{{ $user->phone_number }}"
                                     placeholder="Phone" />
                             </div>
-                            <div class="single-input-item">
-                                <label for="age">Age</label>
-                                <input type="number" id="age" name="age" value="{{ $user->age }}" placeholder="Age" />
-                            </div>
-
                             <!-- Payment Methods -->
                             <div class="single-payment-method">
                                 <div class="payment-method-name">
@@ -80,7 +74,7 @@
                                 <div id="card-errors" class="text-danger my-2"></div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+                            <button type="submit" class="ep-add-to-cart">Place Order</button>
                         </form>
 
                     </div>
@@ -110,13 +104,18 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <td>Shipping</td>
+                                        <td><strong>${{ number_format($shippingCost, 2) }}</strong></td>
+                                    </tr>
+                                    <tr>
                                         <td>Total Amount</td>
-                                        <td><strong>${{ number_format($totalPrice, 2) }}</strong></td>
+                                        <td><strong>${{ number_format($totalPrice + $shippingCost, 2) }}</strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
 

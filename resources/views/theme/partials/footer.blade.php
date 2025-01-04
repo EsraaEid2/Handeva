@@ -18,20 +18,20 @@
                         <li><a href="{{ route('collections') }}">Shop</a></li>
                         <li><a href="{{ route('theme.about') }}">About Us</a></li>
                         <li><a href="{{ route('theme.contact') }}">Contact Us</a></li>
-                        <li><a href="{{ route('theme.login_register') }}">Join as Vendor</a></li>
+                        <li><a href="{{ route('login_register') }}">Join as Vendor</a></li>
                     </ul>
                 </div>
             </div>
             <!-- Contact Info Section -->
             <div class="col-lg-4">
                 <div class="custom-footer-contact">
-                    <p>Email: Handéva@gmail.com</p>
-                    <p>Address: 7th circle, Amman</p>
+                    <p style="color:var(--secondary-color);">Email: Handéva@gmail.com</p>
+                    <p style="color:var(--secondary-color);">Address: 7th circle, Amman</p>
                 </div>
             </div>
         </div>
         <div class="custom-footer-bottom text-center">
-            <p>© {{ date('Y') }} Handmade Treasures. All rights reserved.</p>
+            <p style="color:var(--secondary-color);">© {{ date('Y') }} Handmade Treasures. All rights reserved.</p>
         </div>
     </div>
 </div>

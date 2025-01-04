@@ -5,7 +5,7 @@
 <!--== About Us Area Start ==-->
 <section id="aboutUs-area" class="pt-9">
     <div class="handeva-container">
-        <div class="row">
+        <div class="row her">
             <div class="col-lg-4 col-md-12">
                 <!-- About Video Area Start -->
                 <video muted autoplay class="video-fluid w-75"

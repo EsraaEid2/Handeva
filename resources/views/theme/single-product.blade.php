@@ -16,7 +16,7 @@
                                 <div class="product-thumb-carousel owl-carousel">
                                     @foreach($product->productImages->take(3) as $image)
                                     <div class="single-thumb-item">
-                                        <a href="single-product.html">
+                                        <a href="{{ route('product.showProductDetails', ['id' => $product->id]) }}">
                                             <img class="img-fluid" src="{{ asset($image->image_url) }}"
                                                 alt="Product Image" />
                                         </a>
@@ -105,7 +105,7 @@
                                         <label for="qty">Quantity</label>
                                         <div class="item-quantity">
                                             <button class="quantity-btn decrease">−</button>
-                                            <input type="number" value="{{ $product['quantity'] }}" min="1"
+                                            <input type="number" value="1" min="1"
                                                 max="{{ $product['stock_quantity'] }}" class="quantity-input">
                                             <button class="quantity-btn increase">+</button>
                                         </div>
@@ -116,6 +116,7 @@
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                             <!-- Product Details End -->
                         </div>
@@ -197,53 +198,54 @@
                                                 <!-- Reviews Display Start -->
                                                 <div class="col-lg-6">
                                                     <div class="custom-reviews-display-wrapper">
+                                                        <!-- Average Rating and Overall Comments -->
                                                         <div class="custom-pro-avg-rating">
                                                             <h4>
-                                                                @if ($product->reviews->count() > 0)
-                                                                {{ number_format($product->reviews->avg('rating'), 1) }}
+                                                                @if ($reviews->total() > 0)
+                                                                {{ number_format($reviews->avg('rating'), 1) }}
                                                                 <span>(Overall)</span>
                                                                 @else
                                                                 No ratings yet
                                                                 @endif
                                                             </h4>
                                                             <span>
-                                                                Based on {{ $product->reviews->count() }}
-                                                                {{ $product->reviews->count() == 1 ? 'Comment' : 'Comments' }}
+                                                                Based on {{ $reviews->total() }}
+                                                                {{ $reviews->total() == 1 ? 'Comment' : 'Comments' }}
                                                             </span>
                                                         </div>
 
-
+                                                        <!-- Reviews List -->
                                                         <div class="custom-reviews-list">
-
                                                             @foreach ($reviews as $review)
                                                             <div class="custom-single-review">
+                                                                <!-- Review Author -->
                                                                 <div class="custom-review-author">
                                                                     <h3>{{ $review->user->name ?? 'Guest' }}</h3>
                                                                     <div class="custom-rating-stars">
+                                                                        <!-- Filled Stars -->
                                                                         @for ($i = 1; $i <= $review->rating; $i++)
                                                                             <i class="fa fa-star"></i>
                                                                             @endfor
+                                                                            <!-- Empty Stars -->
                                                                             @for ($i = $review->rating + 1; $i <= 5;
                                                                                 $i++) <i class="fa fa-star-o"></i>
                                                                                 @endfor
                                                                                 <span>({{ $review->rating }})</span>
                                                                     </div>
                                                                 </div>
+                                                                <!-- Review Comment -->
                                                                 <p>{{ $review->comment }}</p>
                                                             </div>
                                                             @endforeach
-
-                                                            <!-- Add more reviews here -->
                                                         </div>
-                                                        <!-- Pagination or Scroll for Reviews -->
-                                                    </div> <!-- Pagination for Reviews -->
-                                                    <div class="custom-reviews-pagination"> <a href="#"
-                                                            class="custom-page">1</a> <a href="#"
-                                                            class="custom-page">2</a> <a href="#"
-                                                            class="custom-page">3</a>
-                                                        <!-- Add more page numbers as needed -->
+
+                                                        <!-- Pagination for Reviews -->
+                                                        <div class="custom-page-pagination">
+                                                            {{ $reviews->links('pagination::bootstrap-4') }}
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <!-- Reviews Display End -->
                                         </div>
@@ -264,24 +266,78 @@
     <!--== Page Content Wrapper End ==-->
 
     <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add to Cart functionality
+        document.querySelector('.ep-add-to-cart').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const productId = this.getAttribute('data-product-id');
+            const quantityInput = document.querySelector('.quantity-input');
+            const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+
+            const route = document.querySelector('meta[name="cart-add-route"]').getAttribute('content');
+
+            fetch(route, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                            .getAttribute('content'),
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        quantity: quantity
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message); // Replace with SweetAlert if needed
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        // Quantity increment/decrement functionality
+        document.querySelectorAll('.item-quantity').forEach((quantityContainer) => {
+            const decreaseButton = quantityContainer.querySelector('.decrease');
+            const increaseButton = quantityContainer.querySelector('.increase');
+            const inputField = quantityContainer.querySelector('.quantity-input');
+
+            decreaseButton.addEventListener('click', () => {
+                const currentValue = parseInt(inputField.value, 10);
+                if (currentValue > parseInt(inputField.min, 10)) {
+                    inputField.value = currentValue - 1;
+                }
+            });
+
+            increaseButton.addEventListener('click', () => {
+                const currentValue = parseInt(inputField.value, 10);
+                if (currentValue < parseInt(inputField.max, 10)) {
+                    inputField.value = currentValue + 1;
+                }
+            });
+        });
+
+        // Owl Carousel initialization
         $(".product-thumb-carousel").owlCarousel({
-            loop: true, // التكرار التلقائي للسلايدر
-            margin: 10, // المسافة بين العناصر
-            nav: true, // إظهار الأسهم
-            dots: true, // إظهار النقاط
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: true,
             responsive: {
                 0: {
                     items: 1
-                }, // شاشة صغيرة: عنصر واحد
+                },
                 600: {
                     items: 2
-                }, // شاشة متوسطة: عنصران
+                },
                 1000: {
                     items: 3
-                } // شاشة كبيرة: ثلاثة عناصر
+                }
             }
         });
     });
     </script>
+
     @endsection

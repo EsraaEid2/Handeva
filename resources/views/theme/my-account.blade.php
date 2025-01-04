@@ -45,12 +45,12 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                    <button type="submit" class="ep-add-to-cart">Filter</button>
                                 </div>
                             </form>
                         </div>
 
-                        <div class="table-responsive">
+                        <div class=" table-responsive">
                             <table class="profile-table">
                                 <thead>
                                     <tr>

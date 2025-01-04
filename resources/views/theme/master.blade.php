@@ -10,10 +10,6 @@
 
     @include('theme.partials.footer')
 
-    <!-- Start All Modal Content -->
-    @include('theme.partials.quick-view-modal')
-    <!-- End All Modal Content -->
-
     @include('theme.partials.scripts')
 
     @if(session('successUpdate'))
@@ -133,6 +129,11 @@
         timer: 3000
     });
     </script>
+    @endif
+    @if(session('orderSuccess'))
+    <div class="alert alert-success">
+        {{ session('orderSuccess') }}
+    </div>
     @endif
 
     <script>

@@ -14,34 +14,41 @@ class ProductController extends Controller
 
     public function showProductDetails($id)
     {
-        // Fetch the product with its relationships, including approved reviews and customizations
+        // Fetch the product with relationships
         $product = Product::with([
             'category',
             'vendor',
             'productImages',
             'primaryImage',
             'customizations.customization', // Fetch related customizations
-            'reviews' => function ($query) {
-                $query->where('status', 'approved');
-            },
         ])->findOrFail($id);
     
         // Calculate the average rating for the product
-        $product->avg_rating = $product->reviews->avg('rating');
+        $product->avg_rating = DB::table('reviews')
+            ->where('product_id', $id)
+            ->where('status', 'approved')
+            ->avg('rating');
     
-        // Return the product details view, passing product, reviews, and customizations
+        // Fetch approved reviews with pagination
+        $reviews = DB::table('reviews')
+            ->where('product_id', $id)
+            ->where('status', 'approved')
+            ->paginate(3); // 4 reviews per page
+    
+        // Return the product details view
         return view('theme.single-product', [
             'product' => $product,
-            'reviews' => $product->reviews,
+            'reviews' => $reviews, // Paginated reviews
             'customizations' => $product->customizations->map(function ($customization) {
                 return [
                     'id' => $customization->id,
-                    'custom_type' => $customization->customization->custom_type, // Assuming 'type' is a field in Customization model
-                    'options' => $customization->customization->options, // Assuming 'options' are related to Customization
+                    'custom_type' => $customization->customization->custom_type,
+                    'options' => $customization->customization->options,
                 ];
             }),
         ]);
     }
+    
     public function getProductsByCategory($id)
     {
         // جلب القسم المطلوب

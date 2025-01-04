@@ -24,33 +24,30 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Single Vendor Item Start -->
                     <div class="single-vendor-wrap">
-                        <div class="vendor-thumb">
-                            <a href="{{ route('vendor.dashboard', $vendor->vendor_id) }}">
-                                <img src="{{ asset('assets/img/vendor-placeholder.jpg') }}"
-                                    alt="{{ $vendor->vendor_name }}" class="img-fluid">
-                            </a>
-                        </div>
                         <div class="vendor-details">
-                            <h3 style="font-family: var(--font-family-secondary); color: var(--dark-color);">
+                            <h3 class="vendor-name">
                                 <a
                                     href="{{ route('vendor.dashboard', $vendor->vendor_id) }}">{{ $vendor->vendor_name }}</a>
+                                <span class="top-seller-icon" title="Top Seller">&#9733;</span>
+                                <!-- Star icon for top seller -->
                             </h3>
-                            <p class="vendor-sales" style="font-family: var(--font-family-secondary);">
+                            <p class="vendor-sales">
+                                <span class="icon-upload">&#128228;</span> <!-- Upload icon -->
                                 Products Uploaded: {{ $vendor->total_uploaded_products }}<br>
+                                <span class="icon-sold">&#128176;</span> <!-- Money bag icon -->
                                 Products Sold: {{ $vendor->total_sold_products }}
                             </p>
-                            <p style="font-family: var(--font-family-body); color: var(--neutral-color);">
-                                {{ $vendor->vendor_email }}
+                            <p class="vendor-quote">
+                                "Keep creating, keep shining!"
                             </p>
-                            <a href="{{ route('vendor.dashboard', $vendor->vendor_id) }}" class="btn-long-arrow">
-                                View Profile
-                            </a>
                         </div>
                     </div>
                     <!-- Single Vendor Item End -->
                 </div>
                 @endforeach
             </div>
+
+
         </div>
     </div>
 </section>

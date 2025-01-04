@@ -11,7 +11,7 @@
         </div>
         <div class="admin-card-body">
             <table id="messagesTable"
-                class="admin-table dataTable table table-bordered table-hover text-center align-middle">
+                class=" dataTable table table-bordered admin-table table-hover text-center align-middle">
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
@@ -25,8 +25,8 @@
                 <tbody>
                     @forelse($messages as $item)
                     <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->user->first_name . ' ' . $item->user->last_name }}</td>
+                        <td data-label="ID">{{ $item->id }}</td>
+                        <td data-label="Name">{{ $item->user->first_name . ' ' . $item->user->last_name }}</td>
                         <td>{{ $item->user->email }}</td>
                         <td>{{ $item->subject }}</td>
                         <td>{{ Str::limit($item->message, 50) }}</td>
