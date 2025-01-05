@@ -16,7 +16,7 @@
         </ul>
     </div>
     <!-- Product Types -->
-    <div class="single-sidebar-wrap">
+    <!-- <div class="single-sidebar-wrap">
         <h2 class="sidebar-title">Product Type</h2>
         <ul class="sidebar-list">
             <li><a href="{{ route('collections', array_merge(request()->all(), ['type' => 'custom'])) }}">Custom
@@ -26,7 +26,7 @@
             </li>
             <li><a href="{{ route('collections', array_merge(request()->all(), ['type' => 'sale'])) }}">On Sale</a></li>
         </ul>
-    </div>
+    </div> -->
 
     <!-- Price Range -->
     <div class="single-sidebar-wrap">

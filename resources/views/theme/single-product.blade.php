@@ -53,41 +53,39 @@
                                             {{ $product->stock_quantity > 0 ? 'In Stock' : 'Out of Stock' }}
                                         </span>
                                     </div>
+
                                     @if($product->is_traditional)
                                     <strong>Traditional Accessory</strong>
                                     @endif
+
                                     @if ($product->is_customizable)
                                     <span class="ep-customizable">
                                         <i class="fa fa-paint-brush"></i> Customized
                                     </span>
 
-                                    <!-- Display customization type -->
+                                    <!-- Display customization options for ID=4 -->
+                                    @if ($customizations->isNotEmpty())
                                     @foreach ($customizations as $customization)
                                     <p><strong>{{ $customization['custom_type'] }}</strong></p>
 
-                                    <!-- Check if there are customization options -->
-                                    @if (!empty($customization['options']))
-                                    <label for="custom-options">Choose an option:</label>
-
-                                    @if ($customization['id'] == 1)
-                                    <!-- Dropdown for Letters -->
-                                    <select id="custom-options" class="form-control">
+                                    @if ($customization['options']->isNotEmpty())
+                                    <label for="custom-options-{{ $customization['id'] }}">Choose an option:</label>
+                                    <select id="custom-options-{{ $customization['id'] }}" class="form-control">
                                         @foreach ($customization['options'] as $option)
-                                        <option value="{{ $option->id }}">{{ $option->option_value }}</option>
+                                        <option value="{{ $option['id'] }}">{{ $option['option_value'] }}</option>
                                         @endforeach
                                     </select>
-                                    @elseif ($customization['id'] == 2)
-                                    <!-- Input for Custom Name -->
-                                    <input type="text" id="custom-name" class="form-control" name="custom_name"
-                                        placeholder="Enter your custom name" value="{{ old('custom_name') }}">
-                                    @endif
                                     @else
                                     <p>No customization options available.</p>
                                     @endif
                                     @endforeach
+                                    @else
+                                    <p>No customizations available for this product.</p>
                                     @endif
-
+                                    @endif
                                 </div>
+
+
                                 <div class="ep-price">
                                     @if($product->price_after_discount)
                                     <span>JOD {{ $product->price_after_discount }}</span>

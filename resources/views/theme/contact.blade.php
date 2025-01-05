@@ -9,7 +9,10 @@
             <!-- Contact Form Start -->
             <div class="col-lg-9 m-auto">
                 <div class="contact-form-wrap">
-                    <h2>Request a Quote</h2>
+                    <h2>Get in Touch</h2>
+                    <p>Have a question or feedback? We'd love to hear from you. Fill out the form below and we'll get
+                        back to you as
+                        soon as possible.</p>
                     <form id="contact-form" action="{{ route('contact.store') }}" method="post">
                         @csrf
                         <div class="row">
@@ -67,48 +70,7 @@
         <div class="row">
             <!-- Contact Page Content Start -->
             <div class="col-lg-12">
-                <!-- Contact Method Start -->
-                <div class="contact-method-wrap">
-                    <div class="row">
-                        <!-- Single Method Start -->
-                        <div class="col-lg-3 col-sm-6 text-center">
-                            <div class="contact-method-item">
-                                <span class="method-icon"><i class="fa fa-map-marker"></i></span>
-                                <div class="method-info">
-                                    <h3>Street Address</h3>
-                                    <p>Address : Nairobi 3232 <br> Nairobi, Kenya</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Method End -->
-
-                        <!-- Single Method Start -->
-                        <div class="col-lg-3 col-sm-6 text-center">
-                            <div class="contact-method-item">
-                                <span class="method-icon"><i class="fa fa-phone"></i></span>
-                                <div class="method-info">
-                                    <h3>Phone Number</h3>
-                                    <a href="tel:0(1234)56789012">0(1234) 567 89012</a>
-                                    <a href="tel:0(1234)56789012">0(1323) 466 89012</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Method Start -->
-                        <div class="col-lg-3 col-sm-6 text-center">
-                            <div class="contact-method-item">
-                                <span class="method-icon"><i class="fa fa-envelope"></i></span>
-                                <div class="method-info">
-                                    <h3>Email Address</h3>
-                                    <a href="mailto:your@email.here">your@email.here</a>
-                                    <a href="mailto:your@email.here">your@email.here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Method End -->
-                    </div>
-                </div>
-                <!-- Contact Method End -->
+                @include('theme.partials.features')
             </div>
             <!-- Contact Page Content End -->
         </div>

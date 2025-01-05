@@ -39,18 +39,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="{{ url('admin/users/'.$item->id) }}" method="POST"
-                                        enctype="multipart/form-data"> @csrf @method('PUT') <div class="mb-3"> <label
-                                                for="first_name" class="form-label">First Name</label> <input
-                                                type="text" name="first_name" class="form-control"
-                                                value="{{ $item->first_name }}" required> </div>
-                                        <div class="mb-3"> <label for="last_name" class="form-label">Last Name</label>
-                                            <input type="text" name="last_name" class="form-control"
-                                                value="{{ $item->last_name }}" required>
-                                        </div>
-                                        <div class="mb-3"> <label for="email" class="form-label">User Email</label>
-                                            <input type="email" name="email" class="form-control"
-                                                value="{{ $item->email }}" required>
-                                        </div>
+                                        enctype="multipart/form-data">
+                                        @csrf @method('PUT')
                                         <div class="mb-3"> <label for="role_id" class="form-label">User Role</label>
                                             <select name="role_id" class="form-control" required>
                                                 <option value="" disabled selected>Select a Role</option>
@@ -59,13 +49,6 @@
                                                     {{ $role->role_type }}</option> @endforeach
                                             </select>
                                         </div>
-                                        <div class="mb-3"> <label for="address" class="form-label">Address</label>
-                                            <input type="text" name="address" class="form-control"
-                                                value="{{ $item->address }}">
-                                        </div>
-                                        <div class="mb-3"> <label for="phone_number" class="form-label">Phone
-                                                Number</label> <input type="text" name="phone_number"
-                                                class="form-control" value="{{ $item->phone_number }}"> </div>
                                         <div class="mb-3"> <label for="is_deleted" class="form-label">Status</label>
                                             <select name="is_deleted" class="form-control" required>
                                                 <option value="0" {{ $item->is_deleted == 0 ? 'selected' : '' }}>Active
@@ -74,12 +57,6 @@
                                                     Inactive</option>
                                             </select>
                                         </div>
-                                        <div class="mb-3"> <label for="age" class="form-label">Age</label> <input
-                                                type="number" name="age" class="form-control" value="{{ $item->age }}">
-                                        </div>
-                                        <div class="mb-3"> <label for="points" class="form-label">Points</label> <input
-                                                type="number" name="points" class="form-control"
-                                                value="{{ $item->points }}"> </div>
                                         <div class="text-center"> <button type="submit" class="btn btn-primary">Update
                                                 User</button> </div>
                                     </form>

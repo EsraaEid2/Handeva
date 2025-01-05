@@ -22,8 +22,9 @@
                         <td>{{ $item->last_name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->products_count }}</td>
-                        <td> <a href="#" class="text-success mx-2" title="Edit" data-bs-toggle="modal"
-                                data-bs-target="#editVendorModal{{ $item->id }}"> <i class="fas fa-edit fa-lg"></i> </a>
+                        <td class="flexed-icons"> <a href="#" class="text-success mx-2" title="Edit"
+                                data-bs-toggle="modal" data-bs-target="#editVendorModal{{ $item->id }}"> <i
+                                    class="fas fa-edit fa-lg"></i> </a>
                             <a href="#" class="text-danger mx-2" title="Delete"
                                 onclick="event.preventDefault(); deleteVendor('{{ $item->id }}')"> <i
                                     class="fas fa-trash-alt fa-lg"></i> </a>
@@ -40,18 +41,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="{{ url('admin/vendors/'.$item->id) }}" method="POST"
-                                        enctype="multipart/form-data"> @csrf @method('PUT') <div class="mb-3"> <label
-                                                for="first_name" class="form-label">First Name</label> <input
-                                                type="text" name="first_name" class="form-control"
-                                                value="{{ $item->first_name }}" required> </div>
-                                        <div class="mb-3"> <label for="last_name" class="form-label">Last Name</label>
-                                            <input type="text" name="last_name" class="form-control"
-                                                value="{{ $item->last_name }}" required>
-                                        </div>
-                                        <div class="mb-3"> <label for="email" class="form-label">Vendor Email</label>
-                                            <input type="email" name="email" class="form-control"
-                                                value="{{ $item->email }}" required>
-                                        </div>
+                                        enctype="multipart/form-data"> @csrf @method('PUT')
+
                                         <div class="mb-3"> <label for="role_id" class="form-label">Vendor Role</label>
                                             <select name="role_id" class="form-control" required>
                                                 <option value="" disabled selected>Select a Role</option>
@@ -60,10 +51,7 @@
                                                     {{ $role->role_type }} </option> @endforeach
                                             </select>
                                         </div>
-                                        <div class="mb-3"> <label for="phone" class="form-label">Phone Number</label>
-                                            <input type="text" name="phone" class="form-control"
-                                                value="{{ $item->phone}}">
-                                        </div>
+
                                         <div class="mb-3"> <label for="is_deleted" class="form-label">Status</label>
                                             <select name="is_deleted" class="form-control" required>
                                                 <option value="0" {{ $item->is_deleted == 0 ? 'selected' : '' }}>Active

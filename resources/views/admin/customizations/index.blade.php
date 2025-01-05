@@ -35,16 +35,22 @@
                             </ul>
                         </td>
                         <td>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editCustomizationModal{{ $customization->id }}">Edit</button>
-                            <form action="{{ route('admin.customizations.destroy', $customization->id) }}" method="POST"
+                            <button class="btn btn-warning btn-sm custom-edit-btn" data-bs-toggle="modal"
+                                data-bs-target="#editCustomizationModal{{ $customization->id }}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <form id="delete-form-{{ $customization->id }}"
+                                action="{{ route('admin.customizations.destroy', $customization->id) }}" method="POST"
                                 style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
+                                <button type="button" class="btn btn-danger btn-sm custom-delete-btn"
+                                    data-id="{{ $customization->id }}">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
                             </form>
                         </td>
+
                     </tr>
 
                     <!-- Edit Customization Modal -->
@@ -140,4 +146,31 @@ function addOption(containerId = null) {
     container.appendChild(input);
 }
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteButtons = document.querySelectorAll('.custom-delete-btn');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const customizationId = this.getAttribute('data-id');
+            const form = document.getElementById(`delete-form-${customizationId}`);
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+});
+</script>
+
 @endsection

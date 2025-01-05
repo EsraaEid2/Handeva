@@ -7,7 +7,8 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single-callto-action d-flex">
                         <figure class="callto-thumb">
-                            <img src="{{ asset('assets') }}/img/handmade-icon.png" alt="Handmade" />
+                            <i class="fas fa-hand-sparkles"></i>
+
                         </figure>
                         <div class="callto-info">
                             <h2>100% Handmade</h2>
@@ -15,12 +16,11 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Feature 2: Customization Options -->
                 <div class="col-lg-3 col-md-6">
                     <div class="single-callto-action d-flex">
                         <figure class="callto-thumb">
-                            <img src="{{ asset('assets') }}/img/customize-icon.png" alt="Customization" />
+                            <i class="fas fa-paint-brush"></i>
                         </figure>
                         <div class="callto-info">
                             <h2>Personalized Designs</h2>
@@ -33,7 +33,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single-callto-action d-flex">
                         <figure class="callto-thumb">
-                            <img src="{{ asset('assets') }}/img/artisan-icon.png" alt="Local Artisans" />
+                            <i class="fas fa-users"></i>
                         </figure>
                         <div class="callto-info">
                             <h2>Support Local Artisans</h2>
@@ -46,7 +46,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="single-callto-action d-flex">
                         <figure class="callto-thumb">
-                            <img src="{{ asset('assets') }}/img/heritage.jpg" alt="Traditional Accessories" />
+                            <i class="fas fa-landmark"></i>
                         </figure>
                         <div class="callto-info">
                             <h2>Celebrate Heritage</h2>

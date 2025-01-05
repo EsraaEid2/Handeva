@@ -19,13 +19,15 @@
                 <tbody> @forelse($products as $item) <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->title }}</td>
-                        <td> @if($item->primaryImage) <img
-                                src="{{ asset('uploads/product/'.$item->primaryImage->image_path) }}"
-                                alt="Primary Image" width="50" height="50" class="rounded shadow-sm"> @else <span>No
-                                Image</span> @endif </td>
+                        <td> @if($item->primaryImage)
+                            <img src="{{ asset('product_images/'.$item->primaryImage->image_url) }}" alt="Primary Image"
+                                width="50" height="50" class="rounded shadow-sm">
+                            @else <span>No
+                                Image</span> @endif
+                        </td>
                         <td>{{ $item->price }}</td>
                         <td>{{ $item->stock_quantity }}</td>
-                        <td> <a href="#" class="text-success mx-2" title="Edit" data-bs-toggle="modal"
+                        <td class="flexed-icons"> <a href="#" class="text-success mx-2" title="Edit" data-bs-toggle="modal"
                                 data-bs-target="#editProductModal{{ $item->id }}"> <i class="fas fa-edit fa-lg"></i>
                             </a> <a href="#" class="text-danger mx-2" title="Delete"
                                 onclick="event.preventDefault(); deleteProduct('{{ $item->id }}')"> <i
@@ -98,7 +100,7 @@
                                 }
                             })
                             .then(response => response
-                        .json()) // Assuming the controller returns a JSON response
+                                .json()) // Assuming the controller returns a JSON response
                             .then(data => {
                                 if (data.success) {
                                     Swal.fire(
@@ -107,7 +109,7 @@
                                         'success'
                                     ).then(() => {
                                         location
-                                    .reload(); // Reload the page after successful deletion
+                                            .reload(); // Reload the page after successful deletion
                                     });
                                 } else {
                                     Swal.fire(

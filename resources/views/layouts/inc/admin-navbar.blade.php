@@ -1,11 +1,9 @@
 <nav class="admin-top-nav">
-    <!-- Brand -->
-    <a class="admin-brand" href="{{ url('admin') }}">Handi</a>
 
     <!-- Sidebar Toggle -->
-    <button class="admin-sidebar-toggle" id="sidebarToggle">
+    <!-- <button class="admin-sidebar-toggle" id="sidebarToggle">
         <i class="fas fa-bars"></i>
-    </button>
+    </button> -->
 
     <!-- Messages -->
     <div class="admin-messages">
@@ -20,16 +18,18 @@
 
     <!-- User -->
     <div class="admin-user-nav">
-        <div class="admin-user-dropdown">
-            <a class="admin-user-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+        <div class="admin-user-dropdown dropdown">
+            <!-- Add 'dropdown' class -->
+            <a class="admin-user-toggle dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fas fa-user fa-fw"></i>
                 <span class="admin-user-name">{{ Auth::user()->name }}</span>
             </a>
-            <ul class="admin-user-menu" aria-labelledby="navbarDropdown">
+            <ul class="admin-user-menu dropdown-menu" aria-labelledby="navbarDropdown">
+                <!-- Add 'dropdown-menu' class -->
                 <li><a class="admin-menu-item" href="{{ route('admin.profile')}}">Your Profile</a></li>
                 <li>
-                    <div class="admin-menu-divider"></div>
+                    <hr class="admin-menu-divider">
                 </li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST">

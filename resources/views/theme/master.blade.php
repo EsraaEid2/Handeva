@@ -130,6 +130,20 @@
     });
     </script>
     @endif
+
+    @if(session('successSent'))
+    <script>
+    Swal.fire({
+        icon: 'successSent',
+        title: 'Message Sent',
+        text: '{{ session('
+        success ') }}',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    </script>
+    @endif
+
     @if(session('orderSuccess'))
     <div class="alert alert-success">
         {{ session('orderSuccess') }}

@@ -96,7 +96,8 @@
                                 <i class="fa fa-user-circle"></i>
                             </a>
                             <ul class="custom-dropdown-menu">
-                                <li><a href="{{ route('vendor.profile') }}">Your profile</a></li>
+                                <li><a href=" {{ route('vendor.profile') }}" style="color: var(--dark-color)">Your
+                                        profile</a></li>
                                 <li>
                                     <form action="{{ route('userLogout') }}" method="POST">
                                         @csrf

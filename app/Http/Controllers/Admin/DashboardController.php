@@ -71,16 +71,17 @@ class DashboardController extends Controller
     
         // Pass the data to the view
         return view('admin.dashboard', compact(
-            'visibilityLabels',
             'totalUsers',
             'totalVendors',
-            'totalOrders',
             'totalProducts',
-            'topVendors',
+            'totalOrders',
+            'visibilityLabels',
             'visibilityCounts',
             'categoryLabels',
-            'categoryCounts'
+            'categoryCounts',
+            'topVendors'
         ));
+        
     }
     
     public function getUnreadMessagesCount()

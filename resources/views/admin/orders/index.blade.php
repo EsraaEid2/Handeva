@@ -49,16 +49,18 @@
                         <td>${{ $order->total_price }}</td>
                         <td>{{ ucfirst($order->status) }}</td>
                         <td>{{ $order->created_at->format('d-m-Y H:i') }}</td>
-                        <td>
+                        <td class="flexed-icons">
                             <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-primary btn-sm"
-                                data-bs-toggle="modal" data-bs-target="#viewOrderModal{{ $order->id }}">
-                                <i class="fas fa-eye"></i>
+                                data-bs-toggle="modal" data-bs-target="#viewOrderModal{{ $order->id }}"
+                                title="View Order">
+                                <i class="fas fa-eye fa-lg"></i>
                             </a>
-                            <a href="#" class="text-success mx-2" title="Edit" data-bs-toggle="modal"
-                                data-bs-target="#editOrderStatusModal{{ $order->id }}">
+                            <a href="#" class="text-success mx-2 custom-icon-btn" title="Edit Order"
+                                data-bs-toggle="modal" data-bs-target="#editOrderStatusModal{{ $order->id }}">
                                 <i class="fas fa-edit fa-lg"></i>
                             </a>
                         </td>
+
                     </tr>
 
                     <!-- View Order Modal -->

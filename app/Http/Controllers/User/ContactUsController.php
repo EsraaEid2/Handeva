@@ -27,6 +27,6 @@ class ContactUsController extends Controller
         ]);
 
         // Redirect back with a success message for SweetAlert
-        return redirect()->back()->with('successSent', __('Your message has been sent successfully!'));
+        return redirect()->back()->with('successSent', 'Your message has been sent successfully!');
     }
 }

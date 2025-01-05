@@ -14,40 +14,50 @@ class ProductController extends Controller
 
     public function showProductDetails($id)
     {
-        // Fetch the product with relationships
         $product = Product::with([
             'category',
             'vendor',
             'productImages',
             'primaryImage',
-            'customizations.customization', // Fetch related customizations
+            'customizations.customization.options',
         ])->findOrFail($id);
     
-        // Calculate the average rating for the product
         $product->avg_rating = DB::table('reviews')
             ->where('product_id', $id)
             ->where('status', 'approved')
             ->avg('rating');
     
-        // Fetch approved reviews with pagination
         $reviews = DB::table('reviews')
             ->where('product_id', $id)
             ->where('status', 'approved')
-            ->paginate(3); // 4 reviews per page
+            ->paginate(3);
     
-        // Return the product details view
+        $customizations = $product->customizations->filter(function ($customization) {
+            return $customization->customization && $customization->customization->id == 4;
+        })->map(function ($customization) {
+            return [
+                'id' => $customization->customization->id,
+                'custom_type' => $customization->customization->custom_type,
+                'options' => $customization->customization->options->map(function ($option) {
+                    return [
+                        'id' => $option->id,
+                        'option_value' => $option->option_value,
+                    ];
+                }),
+            ];
+        });
+    
+        if ($customizations->isNotEmpty()) {
+            // dd($customizations);
+        }
+    
         return view('theme.single-product', [
             'product' => $product,
-            'reviews' => $reviews, // Paginated reviews
-            'customizations' => $product->customizations->map(function ($customization) {
-                return [
-                    'id' => $customization->id,
-                    'custom_type' => $customization->customization->custom_type,
-                    'options' => $customization->customization->options,
-                ];
-            }),
+            'reviews' => $reviews,
+            'customizations' => $customizations,
         ]);
     }
+    
     
     public function getProductsByCategory($id)
     {

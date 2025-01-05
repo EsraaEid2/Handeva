@@ -16,11 +16,8 @@ class Customization extends Model
    
    public function options()
    {
-       return $this->hasMany(CustomizationOption::class);
+       return $this->hasMany(CustomizationOption::class, 'customization_id', 'id');
    }
-
-   public function products()
-   {
-       return $this->hasMany(ProductCustomization::class);
-   }
+   
+   
 }

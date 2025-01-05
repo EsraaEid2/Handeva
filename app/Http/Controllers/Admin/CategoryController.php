@@ -18,7 +18,7 @@ class CategoryController extends Controller
         if ($request->has('search') && !empty($request->search)) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-        
+      
         // Instead of paginate, use get() to retrieve all categories
         $categories = $query->get();  // No pagination, retrieve all categories
         

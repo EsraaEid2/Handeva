@@ -13,6 +13,8 @@ class CustomizationOption extends Model
 
     public function customization()
     {
-        return $this->belongsTo(Customization::class);
+        return $this->belongsTo(Customization::class, 'customization_id');
     }
+    
+    
 }

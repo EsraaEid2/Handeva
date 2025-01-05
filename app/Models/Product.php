@@ -47,10 +47,11 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-
     public function customizations()
     {
-        return $this->hasMany(ProductCustomization::class);
+        return $this->hasMany(ProductCustomization::class, 'product_id', 'id');
     }
+    
+    
 
 }

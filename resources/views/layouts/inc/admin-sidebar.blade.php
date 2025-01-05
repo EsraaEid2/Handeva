@@ -2,6 +2,13 @@
     <nav class="admin-sidebar admin-sidebar-dark" id="adminSidebarMenu">
         <div class="admin-sidebar-content">
             <div class="admin-nav-list">
+                <!-- Logo Section -->
+                <div class="admin-nav-logo">
+                    <a href="{{ route('user.home') }}" class="logo-area" class="img-fluid">
+                        <img src="{{ asset('assets') }}/img/HandevaLogo.png" alt="Logo" class="img-fluid" />
+                    </a>
+                </div>
+
                 <!-- Dashboard Section -->
                 <a class="admin-nav-item {{ request()->is('admin') ? 'active' : '' }}"
                     href="{{ url('admin/dashboard') }}">
@@ -58,6 +65,7 @@
                     <span class="admin-nav-text">Roles</span>
                 </a>
             </div>
+
         </div>
     </nav>
 </div>

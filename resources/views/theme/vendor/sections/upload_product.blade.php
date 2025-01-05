@@ -64,7 +64,7 @@
 
     <!-- Step 3: Options -->
     <div class="vd-step-content" data-step="3">
-        <div class="flexed-container">
+        <div class="flexed-containers">
             <div class="vd-toggle-container">
                 <label class="vd-toggle">
                     <input type="checkbox" name="is_traditional" id="is_traditional">

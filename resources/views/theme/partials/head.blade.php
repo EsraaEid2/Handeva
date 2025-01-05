@@ -9,7 +9,6 @@
 
     <!--=== Favicon ===-->
     <link rel="shortcut icon" href="{{ asset('assets') }}/img/favicon.png" type="image/x-icon" />
-
     <!--== Google Fonts ==-->
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" />
