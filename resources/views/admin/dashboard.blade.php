@@ -69,7 +69,7 @@
                         <th>Email</th>
                         <th>Total Uploaded Products</th>
                         <th>Total Sold Products</th>
-                        <th>Total Sales</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -79,15 +79,18 @@
                         <td>{{ $vendor->vendor_name }}</td>
                         <td>{{ $vendor->vendor_email }}</td>
                         <td>{{ $vendor->total_uploaded_products }}</td>
-                        <td>{{ $vendor->total_sold_products }}</td>
-                        <td>{{ number_format($vendor->total_sold_products * $vendor->product_price, 2) }}</td>
+                        <td>{{ $vendor->total_sold_products ?? 0 }}</td>
+
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-            {{ $topVendors->links() }}
+            <div class="pagination-container">
+                {{ $topVendors->links() }}
+            </div>
         </div>
     </div>
+
 </div>
 
 

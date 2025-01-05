@@ -26,19 +26,18 @@ class DashboardController extends Controller
         
         // Fetch vendors with their product count and total sales
         $topVendors = DB::table('vendors')
-            ->join('products', 'vendors.id', '=', 'products.vendor_id')
-            ->leftJoin('order_items', 'products.id', '=', 'order_items.product_id')
-            ->select(
-                'vendors.id as vendor_id',
-                DB::raw("CONCAT(vendors.first_name, ' ', vendors.last_name) as vendor_name"),
-                'vendors.email as vendor_email',
-                DB::raw('COUNT(products.id) as total_uploaded_products'),
-                DB::raw('SUM(order_items.quantity) as total_sold_products'),
-                DB::raw('IFNULL(products.price_after_discount, products.price) as product_price')
-            )
-            ->groupBy('vendors.id', 'vendors.first_name', 'vendors.last_name', 'vendors.email', 'products.price', 'products.price_after_discount')
-            ->orderByDesc(DB::raw('SUM(order_items.quantity)'))
-            ->paginate(10);
+        ->join('products', 'vendors.id', '=', 'products.vendor_id')
+        ->leftJoin('order_items', 'products.id', '=', 'order_items.product_id')
+        ->select(
+            'vendors.id as vendor_id',
+            DB::raw("CONCAT(vendors.first_name, ' ', vendors.last_name) as vendor_name"),
+            'vendors.email as vendor_email',
+            DB::raw('COUNT(DISTINCT products.id) as total_uploaded_products'),
+            DB::raw('SUM(order_items.quantity) as total_sold_products')
+        )
+        ->groupBy('vendors.id', 'vendors.first_name', 'vendors.last_name', 'vendors.email')
+        ->orderByDesc(DB::raw('SUM(order_items.quantity)'))
+        ->paginate(10);
     
         // Fetch data for products by visibility
         $productsByVisibility = DB::table('products')
