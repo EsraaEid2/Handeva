@@ -1,4 +1,4 @@
-# Handmadث Accessories Marketplace
+# Handmade Accessories Marketplace
 
 Welcome to the Handmade Accessories Marketplace! This project is designed to provide a platform for artisans to showcase and sell their handmade accessories, such as necklaces, rings, bracelets, and more. Customers can explore unique, customizable, and traditional accessories, while artisans have the opportunity to grow their businesses and reach a wider audience.
 
